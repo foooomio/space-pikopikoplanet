@@ -1,0 +1,47 @@
+body {
+  background-color: aliceblue !important;
+}
+
+header {
+  background-color: #1b284f !important;
+  border-radius: 0 !important;
+}
+
+header h1 {
+  font-family: 'Nico Moji' !important;
+  padding: 0.8rem !important;
+}
+
+header h1 .star {
+  color: #64c0ab;
+  font-size: 1.2rem;
+}
+
+header h1 .title {
+  color: #f7d36e;
+  font-size: 1.7rem;
+}
+
+header h1 .subtitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+footer {
+  padding: 1rem 0;
+}
+
+h3.ui.header > .icon {
+  font-size: 0.8em;
+  margin-bottom: 0.7em;
+}
+
+.CodeMirror {
+  font-size: 16px;
+}
+
+pre {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
