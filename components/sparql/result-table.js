@@ -28,7 +28,7 @@ export default function SparqlResultTable({ result }) {
           {bindings.map((binding, index) => (
             <Table.Row key={index}>
               {variables.map((variable, index) => (
-                <Table.Cell key={index}>{binding[variable].value}</Table.Cell>
+                <Table.Cell key={index}>{binding[variable]?.value}</Table.Cell>
               ))}
             </Table.Row>
           ))}
