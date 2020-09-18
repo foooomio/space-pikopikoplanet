@@ -28,12 +28,16 @@ header h1 .subtitle {
 }
 
 footer {
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 
 h3.ui.header > .icon {
   font-size: 0.8em;
   margin-bottom: 0.7em;
+}
+
+.ui.horizontal.list > .item > .icon {
+  vertical-align: baseline;
 }
 
 .CodeMirror {
