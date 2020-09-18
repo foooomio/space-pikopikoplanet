@@ -12,7 +12,7 @@ export default function QueryCard({
   createdAt,
 }) {
   return (
-    <Card fluid>
+    <Card fluid color="grey">
       <Card.Content>
         <Card.Header>
           <Link href="/query/[queryId]" as={`/query/${queryId}`}>
@@ -36,7 +36,7 @@ export default function QueryCard({
             <List.Item
               icon="compass outline"
               content={endpoint}
-              style={{ overflow: 'auto' }}
+              style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
             />
             <List.Item icon="tags" content={tags.join(' / ')} />
           </List>

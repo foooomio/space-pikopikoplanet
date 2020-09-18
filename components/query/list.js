@@ -1,8 +1,7 @@
-import { Grid } from 'semantic-ui-react';
+import { Card, Divider } from 'semantic-ui-react';
 import QueryCard from '@/components/query/card';
 import QueryNextButton from '@/components/query/next-button';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
-import { unflat } from '@/lib/util';
 
 export default function QueryList({ queries }) {
   if (queries.length === 0) return null;
@@ -14,21 +13,14 @@ export default function QueryList({ queries }) {
   }
 
   return (
-    <Grid stackable>
-      {unflat(queries, 2).map((pair, index) => (
-        <Grid.Row columns={2} key={index}>
-          {pair.map((props) => (
-            <Grid.Column key={props.queryId}>
-              <QueryCard {...props} />
-            </Grid.Column>
-          ))}
-        </Grid.Row>
-      ))}
-      <Grid.Row>
-        <Grid.Column textAlign="center">
-          <QueryNextButton cursor={cursor} />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+    <>
+      <Card.Group itemsPerRow={2} stackable>
+        {queries.map((props) => (
+          <QueryCard {...props} key={props.queryId} />
+        ))}
+      </Card.Group>
+      <Divider hidden />
+      <QueryNextButton cursor={cursor} />
+    </>
   );
 }
