@@ -36,15 +36,15 @@ const SparqlComposer = forwardRef(({ endpoint, query }, ref) => {
           editorDidMount={(e) => (editor.current = e)}
         />
       </Segment>
-      <SparqlResultTable result={result} />
-      <SparqlResultError error={error} />
-      <Segment clearing attached="bottom">
+      <Segment clearing attached={result || error ? true : 'bottom'}>
         <SparqlQueryButton
           floated="right"
           onClick={handleQuery}
           loading={loading}
         />
       </Segment>
+      <SparqlResultTable result={result} />
+      <SparqlResultError error={error} />
     </>
   );
 });

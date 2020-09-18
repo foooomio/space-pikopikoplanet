@@ -24,15 +24,15 @@ export default function SparqlViewer({ endpoint, query }) {
       <Segment attached>
         <SparqlHighlighter value={query} />
       </Segment>
-      <SparqlResultTable result={result} />
-      <SparqlResultError error={error} />
-      <Segment clearing attached="bottom">
+      <Segment clearing attached={result || error ? true : 'bottom'}>
         <SparqlQueryButton
           onClick={handleQuery}
           floated="right"
           loading={loading}
         />
       </Segment>
+      <SparqlResultTable result={result} />
+      <SparqlResultError error={error} />
     </>
   );
 }

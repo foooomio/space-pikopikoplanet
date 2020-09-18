@@ -4,7 +4,7 @@ export default function SparqlResultError({ error }) {
   if (!error) return null;
 
   return (
-    <Segment inverted color="red" attached>
+    <Segment inverted color="red" attached="bottom">
       <Header
         icon="exclamation triangle"
         size="medium"

@@ -8,7 +8,7 @@ export default function SparqlResultTable({ result }) {
 
   return (
     <Segment
-      attached
+      attached="bottom"
       style={{
         borderBottom: result ? 'inherit' : 'none',
         padding: '0',
