@@ -26,7 +26,12 @@ export default function QueryPage({
 
   return (
     <Layout>
-      <Head subtitle={`${title} by ${authorName}`} type="article" />
+      <Head
+        subtitle={`${title} by ${authorName}`}
+        type="article"
+        image={`/api/og-image?id=${queryId}`}
+        card="summary_large_image"
+      />
 
       <Segment>
         <Header as="h2">

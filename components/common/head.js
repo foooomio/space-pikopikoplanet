@@ -2,8 +2,9 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { SITE_TITLE, BASE_URL } from '@/lib/constants';
 
-export default function Head({ title, subtitle, type }) {
+export default function Head({ title, subtitle, type, image, card }) {
   const router = useRouter();
+  const url = BASE_URL + router.asPath;
 
   const description =
     '☆ピコピコプラネット☆ SPACE は、SPARQLクエリの共有サイトです。';
@@ -12,7 +13,10 @@ export default function Head({ title, subtitle, type }) {
     title = `${subtitle} - ${SITE_TITLE}`;
   }
 
+  image = BASE_URL + (image ?? '/ogp.png');
+
   type = type ?? 'website';
+  card = card ?? 'summary';
 
   return (
     <NextHead>
@@ -20,11 +24,11 @@ export default function Head({ title, subtitle, type }) {
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />
       <meta property="og:type" content={type} />
-      <meta property="og:image" content={`${BASE_URL}/ogp.png`} />
-      <meta property="og:url" content={`${BASE_URL}${router.asPath}`} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={url} />
       <meta property="og:description" content={description} />
       <meta property="og:site_name" content={SITE_TITLE} />
-      <meta property="twitter:card" content="summary" />
+      <meta property="twitter:card" content={card} />
     </NextHead>
   );
 }
