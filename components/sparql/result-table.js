@@ -33,7 +33,13 @@ export default function SparqlResultTable({ result }) {
         overflow: 'auto',
       }}
     >
-      <Table celled striped compact unstackable style={{ border: '0' }}>
+      <Table
+        celled
+        striped
+        compact
+        unstackable
+        style={{ border: '0', whiteSpace: 'pre-wrap' }}
+      >
         <Table.Header>
           <Table.Row>
             {variables.map((variable, index) => (
