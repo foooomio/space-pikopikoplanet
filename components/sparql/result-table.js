@@ -2,7 +2,9 @@ import { Table, Segment } from 'semantic-ui-react';
 import { isUrl } from '@/lib/util';
 
 const SparqlResultCell = ({ data }) => {
-  const value = data?.value;
+  if (!data) return null;
+
+  const value = data?.value ?? null;
   if (isUrl(value)) {
     return (
       <>
