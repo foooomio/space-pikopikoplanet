@@ -5,7 +5,7 @@ import { SITE_TITLE, BASE_URL } from '@/lib/constants';
 export default function TweetButton({ title, authorName }) {
   const { asPath } = useRouter();
 
-  const text = `${title} by ${authorName} - ${SITE_TITLE} #ピコピコプラネットSPACE`;
+  const text = `${title} by ${authorName} #ピコピコプラネットSPACE`;
 
   const tweet = new URL('https://twitter.com/intent/tweet');
   tweet.searchParams.set('text', text);
