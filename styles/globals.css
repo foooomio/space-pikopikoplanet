@@ -42,6 +42,11 @@ h3.ui.header > .icon {
 
 .CodeMirror {
   font-size: 16px;
+  height: auto !important;
+}
+
+.CodeMirror-scroll {
+  min-height: 300px;
 }
 
 pre {
