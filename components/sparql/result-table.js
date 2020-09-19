@@ -1,4 +1,20 @@
 import { Table, Segment } from 'semantic-ui-react';
+import { isUrl } from '@/lib/util';
+
+const SparqlResultCell = ({ data }) => {
+  const value = data?.value;
+  if (isUrl(value)) {
+    return (
+      <>
+        {'<'}
+        <a href={value}>{value}</a>
+        {'>'}
+      </>
+    );
+  } else {
+    return value;
+  }
+};
 
 export default function SparqlResultTable({ result }) {
   if (!result) return null;
@@ -28,7 +44,9 @@ export default function SparqlResultTable({ result }) {
           {bindings.map((binding, index) => (
             <Table.Row key={index}>
               {variables.map((variable, index) => (
-                <Table.Cell key={index}>{binding[variable]?.value}</Table.Cell>
+                <Table.Cell key={index}>
+                  <SparqlResultCell data={binding[variable]} />
+                </Table.Cell>
               ))}
             </Table.Row>
           ))}
