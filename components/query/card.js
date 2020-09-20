@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Card, Header, List, Icon } from 'semantic-ui-react';
 import QueryMeta from '@/components/query/meta';
+import LikeButton from '@/components/like-button';
 
 export default function QueryCard({
   queryId,
@@ -41,6 +42,9 @@ export default function QueryCard({
             <List.Item icon="tags" content={tags.join(' / ')} />
           </List>
         </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <LikeButton queryId={queryId} />
       </Card.Content>
     </Card>
   );

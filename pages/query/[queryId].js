@@ -4,6 +4,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
 import SparqlComposer from '@/components/sparql/composer';
+import LikeButton from '@/components/like-button';
 import TweetButton from '@/components/tweet-button';
 import FacebookButton from '@/components/facebook-button';
 import QueryEditButton from '@/components/query/edit-button';
@@ -58,6 +59,9 @@ export default function QueryPage({
         <Divider />
 
         <List horizontal>
+          <List.Item>
+            <LikeButton queryId={queryId} />
+          </List.Item>
           <List.Item>
             <TweetButton title={title} authorName={authorName} />
           </List.Item>
