@@ -3,9 +3,8 @@ import { Segment, Header, Button, Icon, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryList from '@/components/query/list';
-import { fetchQueryList } from '@/lib/database';
 
-export default function Home({ queries }) {
+export default function Home() {
   return (
     <Layout>
       <Head title="☆ピコピコプラネット☆ SPACE - SPARQLクエリ共有サイト" />
@@ -26,17 +25,7 @@ export default function Home({ queries }) {
 
       <Divider hidden />
 
-      <QueryList queries={queries} />
+      <QueryList />
     </Layout>
   );
-}
-
-export async function getServerSideProps(context) {
-  const cursor = +context.query.t || Infinity;
-  const queries = await fetchQueryList(cursor);
-  return {
-    props: {
-      queries,
-    },
-  };
 }

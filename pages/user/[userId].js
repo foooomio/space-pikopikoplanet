@@ -2,16 +2,16 @@ import { Segment, Item, List, Divider, Icon } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryList from '@/components/query/list';
-import { fetchUserByUserId, fetchQueryList } from '@/lib/database';
+import { fetchUserByUserId } from '@/lib/database';
 
 export default function UserPage({
+  uid,
   userId,
   userName,
   website,
   facebookId,
   twitterId,
   gitHubId,
-  queries,
 }) {
   return (
     <Layout>
@@ -73,39 +73,21 @@ export default function UserPage({
 
       <Divider hidden />
 
-      <QueryList queries={queries} />
+      <QueryList searchOptions={{ authorUid: uid }} />
     </Layout>
   );
 }
 
 export async function getServerSideProps(context) {
   const userId = context.params.userId;
-  const {
-    uid,
-    userName,
-    website,
-    facebookId,
-    twitterId,
-    gitHubId,
-  } = await fetchUserByUserId(userId);
+  const userData = await fetchUserByUserId(userId);
 
-  if (!uid) {
+  if (!userData.uid) {
     context.res.writeHead(307, { Location: '/404' }).end();
     return { props: {} };
   }
 
-  const cursor = +context.query.t || Infinity;
-  const queries = await fetchQueryList(cursor, { authorUid: uid });
-
   return {
-    props: {
-      userId,
-      userName,
-      website,
-      facebookId,
-      twitterId,
-      gitHubId,
-      queries,
-    },
+    props: userData,
   };
 }

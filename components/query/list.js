@@ -1,15 +1,41 @@
-import { Card, Divider } from 'semantic-ui-react';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { Card, Divider, Loader, Message } from 'semantic-ui-react';
 import QueryCard from '@/components/query/card';
 import QueryNextButton from '@/components/query/next-button';
+import { fetchQueryList } from '@/lib/database';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 
-export default function QueryList({ queries }) {
-  if (queries.length === 0) return null;
+export default function QueryList({ searchOptions }) {
+  const router = useRouter();
+  const cursor = +router.query.t || Infinity;
 
-  let cursor = null;
-  if (queries.length === NUMBER_IN_QUERY_LIST + 1) {
-    cursor = queries[NUMBER_IN_QUERY_LIST - 1].createdAt;
-    queries = queries.slice(0, -1);
+  const { data, error } = useSWR(
+    JSON.stringify({ cursor, ...searchOptions }),
+    () => fetchQueryList(cursor, searchOptions)
+  );
+
+  if (error) {
+    return (
+      <Message
+        negative
+        icon="exclamation triangle"
+        header="エラー"
+        content="クエリの取得に失敗しました。"
+      />
+    );
+  }
+
+  if (!data) {
+    return <Loader active inline="centered" size="large" />;
+  }
+
+  let next = null;
+  let queries = data;
+
+  if (data.length === NUMBER_IN_QUERY_LIST + 1) {
+    next = data[NUMBER_IN_QUERY_LIST - 1].createdAt;
+    queries = data.slice(0, -1);
   }
 
   return (
@@ -20,7 +46,7 @@ export default function QueryList({ queries }) {
         ))}
       </Card.Group>
       <Divider hidden />
-      <QueryNextButton cursor={cursor} />
+      <QueryNextButton cursor={next} />
     </>
   );
 }
