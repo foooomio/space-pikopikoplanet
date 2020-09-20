@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
 import { useUser } from '@/lib/user-context';
 import { fetchUser, userExists, saveUser } from '@/lib/database';
@@ -31,6 +31,7 @@ export default function SettingsForm() {
   const [twitterId, setTwitterId] = useState('');
   const [gitHubId, setGitHubId] = useState('');
 
+  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [done, setDone] = useState(false);
@@ -61,9 +62,7 @@ export default function SettingsForm() {
     setErrors(newErrors);
   };
 
-  useEffect(() => {
-    if (!user) return;
-
+  if (user) {
     fetchUser(user.uid).then((data) => {
       setUserId(data.userId ?? '');
       setUserName(data.userName ?? '');
@@ -71,13 +70,14 @@ export default function SettingsForm() {
       setFacebookId(data.facebookId ?? '');
       setTwitterId(data.twitterId ?? '');
       setGitHubId(data.gitHubId ?? '');
+      setLoading(false);
     });
-  }, [user]);
+  }
 
   return (
     <>
       {errors.length !== 0 && <Message error header="エラー" list={errors} />}
-      <Form loading={!user}>
+      <Form loading={loading}>
         <Form.Field>
           <Form.Input
             type="text"
