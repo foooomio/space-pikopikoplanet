@@ -24,8 +24,7 @@ const reducer = (state, action) => {
   const set = new Set(state);
   switch (action.type) {
     case 'set':
-      action.payload.forEach((tag) => set.add(tag));
-      return [...set];
+      return action.payload;
     case 'add':
       set.add(action.payload);
       return [...set];
