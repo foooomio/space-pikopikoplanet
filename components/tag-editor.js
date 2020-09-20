@@ -1,6 +1,7 @@
 import {
   useState,
   useReducer,
+  useEffect,
   useRef,
   useImperativeHandle,
   forwardRef,
@@ -22,6 +23,9 @@ const validateTag = (value) => {
 const reducer = (state, action) => {
   const set = new Set(state);
   switch (action.type) {
+    case 'set':
+      action.payload.forEach((tag) => set.add(tag));
+      return [...set];
     case 'add':
       set.add(action.payload);
       return [...set];
@@ -35,6 +39,10 @@ const TagEditor = forwardRef((props, ref) => {
   const inputRef = useRef(null);
   const [inputError, setInputError] = useState(null);
   const [tags, dispatch] = useReducer(reducer, props.tags);
+
+  useEffect(() => {
+    dispatch({ type: 'set', payload: props.tags });
+  }, [props.tags]);
 
   useImperativeHandle(ref, () => ({
     tags: () => tags,
