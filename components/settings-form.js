@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
 import { useUser } from '@/lib/user-context';
-import { fetchUser, userExists, saveUser } from '@/lib/database';
+import { fetchUser, fetchUserByUserId, saveUser } from '@/lib/database';
 
 const validateUserId = async (userId, uid) => {
   if (userId.length === 0) {
@@ -10,8 +10,8 @@ const validateUserId = async (userId, uid) => {
   if (/[^0-9A-Za-z-_]/.test(userId)) {
     return 'IDに使用できない文字が含まれています。';
   }
-  const exists = await userExists(userId, uid);
-  return exists ? 'IDがすでに使用されています。' : null;
+  const user = await fetchUserByUserId(userId, { excludeUid: uid });
+  return user.userId ? 'IDが他の人に使用されています。' : null;
 };
 
 const validateUserName = (userName) => {
