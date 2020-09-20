@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
 import { useUser } from '@/lib/user-context';
 import { fetchUser, userExists, saveUser } from '@/lib/database';
@@ -62,7 +62,9 @@ export default function SettingsForm() {
     setErrors(newErrors);
   };
 
-  if (user) {
+  useEffect(() => {
+    if (!user) return;
+
     fetchUser(user.uid).then((data) => {
       setUserId(data.userId ?? '');
       setUserName(data.userName ?? '');
@@ -72,7 +74,7 @@ export default function SettingsForm() {
       setGitHubId(data.gitHubId ?? '');
       setLoading(false);
     });
-  }
+  }, [user]);
 
   return (
     <>
