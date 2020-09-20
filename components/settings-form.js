@@ -10,8 +10,11 @@ const validateUserId = async (userId, uid) => {
   if (/[^0-9A-Za-z-_]/.test(userId)) {
     return 'IDに使用できない文字が含まれています。';
   }
-  const user = await fetchUserByUserId(userId, { excludeUid: uid });
-  return user.userId ? 'IDが他の人に使用されています。' : null;
+  const user = await fetchUserByUserId(userId);
+  if (user.userId === userId && user.uid !== uid) {
+    return 'IDが他の人に使用されています。';
+  }
+  return null;
 };
 
 const validateUserName = (userName) => {
