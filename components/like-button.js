@@ -22,7 +22,8 @@ export default function LikeButton({ queryId }) {
 
   const { data: likedByUserCache } = useSWR(
     `likedByUser:${likeId(user?.uid, queryId)}`,
-    () => fetchLikedByUser(user?.uid, queryId)
+    () =>
+      user ? fetchLikedByUser(user.uid, queryId) : Promise.resolve(undefined)
   );
 
   useEffect(() => {
