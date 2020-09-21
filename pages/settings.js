@@ -8,9 +8,9 @@ import { useUser } from '@/lib/user-context';
 
 export default function SettingsPage() {
   const [user, loading] = useUser();
+  const router = useRouter();
 
   if (typeof window !== 'undefined' && !user && !loading) {
-    const router = useRouter();
     router.replace('/sign-in');
   }
 
