@@ -10,7 +10,7 @@ import {
 } from '@/lib/database';
 import { likeId } from '@/lib/util';
 
-export default function LikeButton({ queryId }) {
+export default function QueryLikeButton({ queryId }) {
   const [user] = useUser();
 
   const [likeCount, setLikeCount] = useState(null);

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Button } from 'semantic-ui-react';
-import { SITE_TITLE, BASE_URL } from '@/lib/constants';
+import { BASE_URL } from '@/lib/constants';
 
 export default function TweetButton({ title, authorName }) {
   const { asPath } = useRouter();

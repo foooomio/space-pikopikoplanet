@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import { Segment, Header, Icon, Button } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
+import Head from '@/components/common/head';
 
 export default function Custom404() {
   return (
     <Layout>
+      <Head title="404 Not Found" />
       <Segment placeholder>
         <Header size="large" icon>
           <Icon name="times circle" />
