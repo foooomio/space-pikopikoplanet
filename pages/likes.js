@@ -14,7 +14,7 @@ export default function LikesPage() {
   const router = useRouter();
 
   if (typeof window !== 'undefined' && !loading && !user) {
-    router.replace('/');
+    router.replace('/sign-in');
   }
 
   const [queries, setQueries] = useState(null);
