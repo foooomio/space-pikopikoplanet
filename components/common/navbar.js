@@ -11,6 +11,9 @@ export default function Navbar() {
       <Link href="/compose" passHref>
         <Dropdown.Item text="新規作成" icon="file outline" />
       </Link>
+      <Link href="/likes" passHref>
+        <Dropdown.Item text="お気に入り" icon="heart" />
+      </Link>
       <Link href="/settings" passHref>
         <Dropdown.Item text="設定" icon="cog" />
       </Link>
