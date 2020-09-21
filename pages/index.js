@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Segment, Header, Button, Icon, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
-import QueryList from '@/components/query/list';
+import QuerySearchList from '@/components/query/search-list';
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
 
       <Divider hidden />
 
-      <QueryList />
+      <QuerySearchList />
     </Layout>
   );
 }

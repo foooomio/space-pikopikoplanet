@@ -1,7 +1,7 @@
 import { Segment, Item, List, Divider, Icon } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
-import QueryList from '@/components/query/list';
+import QuerySearchList from '@/components/query/search-list';
 import { fetchUserByUserId } from '@/lib/database';
 
 export default function UserPage({
@@ -73,7 +73,7 @@ export default function UserPage({
 
       <Divider hidden />
 
-      <QueryList searchOptions={{ authorUid: uid }} />
+      <QuerySearchList searchOptions={{ authorUid: uid }} />
     </Layout>
   );
 }

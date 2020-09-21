@@ -8,7 +8,6 @@ import {
   createLike,
   deleteLike,
 } from '@/lib/database';
-import { likeId } from '@/lib/util';
 
 export default function QueryLikeButton({ queryId }) {
   const [user] = useUser();
@@ -16,14 +15,13 @@ export default function QueryLikeButton({ queryId }) {
   const [likeCount, setLikeCount] = useState(null);
   const [likedByUser, setLikedByUser] = useState(false);
 
-  const { data: likeCountCache } = useSWR(`likeCount:${queryId}`, () =>
+  const { data: likeCountCache } = useSWR(['likeCount', queryId], () =>
     fetchLikeCount(queryId)
   );
 
   const { data: likedByUserCache } = useSWR(
-    `likedByUser:${likeId(user?.uid, queryId)}`,
-    () =>
-      user ? fetchLikedByUser(user.uid, queryId) : Promise.resolve(undefined)
+    user ? ['likedByUser', user.uid, queryId] : null,
+    () => fetchLikedByUser(user.uid, queryId)
   );
 
   useEffect(() => {

@@ -1,42 +1,19 @@
-import { useRouter } from 'next/router';
-import useSWR from 'swr';
-import { Card, Divider, Loader, Message } from 'semantic-ui-react';
+import { Button, Card, Divider, Loader } from 'semantic-ui-react';
 import QueryCard from '@/components/query/card';
-import QueryNextButton from '@/components/query/next-button';
-import { fetchQueryList } from '@/lib/database';
+import { useInfiniteScroll } from '@/lib/use-infinite-scroll';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 
-export default function QueryList({ searchOptions }) {
-  const router = useRouter();
-  const cursor = +router.query.t || Infinity;
+export default function QueryList({ getKey, fetcher }) {
+  const {
+    data,
+    size,
+    setSize,
+    isLoadingMore,
+    isEmpty,
+    isReachingEnd,
+  } = useInfiniteScroll(getKey, fetcher, {}, NUMBER_IN_QUERY_LIST);
 
-  const { data, error } = useSWR(
-    JSON.stringify({ cursor, ...searchOptions }),
-    () => fetchQueryList(cursor, searchOptions)
-  );
-
-  if (error) {
-    return (
-      <Message
-        negative
-        icon="exclamation triangle"
-        header="エラー"
-        content="クエリの取得に失敗しました。"
-      />
-    );
-  }
-
-  if (!data) {
-    return <Loader active inline="centered" size="large" />;
-  }
-
-  let next = null;
-  let queries = data;
-
-  if (data.length === NUMBER_IN_QUERY_LIST + 1) {
-    next = data[NUMBER_IN_QUERY_LIST - 1].createdAt;
-    queries = data.slice(0, -1);
-  }
+  const queries = data?.flat() ?? [];
 
   return (
     <>
@@ -46,7 +23,10 @@ export default function QueryList({ searchOptions }) {
         ))}
       </Card.Group>
       <Divider hidden />
-      <QueryNextButton cursor={next} />
+      {isLoadingMore && <Loader active inline="centered" size="large" />}
+      {!isLoadingMore && !isEmpty && !isReachingEnd && (
+        <Button fluid content="More" onClick={() => setSize(size + 1)} />
+      )}
     </>
   );
 }

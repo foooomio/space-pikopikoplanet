@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { Header, Divider, Icon } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
-import QueryList from '@/components/query/list';
+import QuerySearchList from '@/components/query/search-list';
 
 export default function SearchPage() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function SearchPage() {
 
       <Divider hidden />
 
-      <QueryList searchOptions={{ tag }} />
+      <QuerySearchList searchOptions={{ tag }} />
     </Layout>
   );
 }
