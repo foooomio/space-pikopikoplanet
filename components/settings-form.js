@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 import { fetchUser, fetchUserByUserId, saveUser } from '@/lib/database';
 
 const validateUserId = async (userId, uid) => {

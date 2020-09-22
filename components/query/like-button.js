@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { Button } from 'semantic-ui-react';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 import {
   fetchLikeCount,
   fetchLikedByUser,

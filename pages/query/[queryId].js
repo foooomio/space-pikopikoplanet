@@ -3,13 +3,13 @@ import { Segment, Header, List, Divider, Label } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
-import SparqlComposer from '@/components/sparql/composer';
+import SparqlEditor from '@/components/sparql/editor';
 import QueryLikeButton from '@/components/query/like-button';
 import TweetButton from '@/components/tweet-button';
 import FacebookButton from '@/components/facebook-button';
 import QueryEditButton from '@/components/query/edit-button';
 import QueryDeleteButton from '@/components/query/delete-button';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 import { fetchQuery } from '@/lib/database';
 
 export default function QueryPage({
@@ -46,7 +46,7 @@ export default function QueryPage({
           </Header.Subheader>
         </Header>
 
-        <SparqlComposer endpoint={endpoint} query={query} />
+        <SparqlEditor endpoint={endpoint} query={query} />
 
         <Label.Group tag>
           {tags.map((tag) => (

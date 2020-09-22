@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Menu, Dropdown } from 'semantic-ui-react';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 import firebase from '@/lib/firebase';
 
 export default function Navbar() {

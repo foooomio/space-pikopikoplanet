@@ -3,7 +3,7 @@ import { Header, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryLikesList from '@/components/query/likes-list';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 
 export default function LikesPage() {
   const [user, loading] = useUser();

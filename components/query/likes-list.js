@@ -1,6 +1,6 @@
 import QueryList from '@/components/query/list';
 import { fetchQueryListLikedByUser } from '@/lib/database';
-import { useUser } from '@/lib/user-context';
+import { useUser } from '@/hooks/use-user';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 
 export default function QueryLikesList() {

@@ -1,11 +1,4 @@
-import {
-  useState,
-  useReducer,
-  useEffect,
-  useRef,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import { useState, useRef } from 'react';
 import { Input, Button, Label, Icon, Divider } from 'semantic-ui-react';
 
 const invalidChars = ' !"#$%&\'()*+,./;<=>?[\\]^`{|}~';
@@ -20,32 +13,9 @@ const validateTag = (value) => {
   return null;
 };
 
-const reducer = (state, action) => {
-  const set = new Set(state);
-  switch (action.type) {
-    case 'set':
-      return action.payload;
-    case 'add':
-      set.add(action.payload);
-      return [...set];
-    case 'delete':
-      set.delete(action.payload);
-      return [...set];
-  }
-};
-
-const TagEditor = forwardRef((props, ref) => {
+export default function TagEditor({ tags, addTag, deleteTag }) {
   const inputRef = useRef(null);
   const [inputError, setInputError] = useState(null);
-  const [tags, dispatch] = useReducer(reducer, props.tags);
-
-  useEffect(() => {
-    dispatch({ type: 'set', payload: props.tags });
-  }, [props.tags]);
-
-  useImperativeHandle(ref, () => ({
-    tags: () => tags,
-  }));
 
   const handleAdd = () => {
     const value = inputRef.current.inputRef.current.value;
@@ -53,7 +23,7 @@ const TagEditor = forwardRef((props, ref) => {
     if (error) {
       setInputError(error);
     } else {
-      dispatch({ type: 'add', payload: value });
+      addTag(value);
       setInputError(null);
       inputRef.current.inputRef.current.value = null;
     }
@@ -85,15 +55,10 @@ const TagEditor = forwardRef((props, ref) => {
         {tags.map((tag) => (
           <Label key={tag}>
             {tag}
-            <Icon
-              name="delete"
-              onClick={() => dispatch({ type: 'delete', payload: tag })}
-            />
+            <Icon name="delete" onClick={() => deleteTag(tag)} />
           </Label>
         ))}
       </Label.Group>
     </>
   );
-});
-
-export default TagEditor;
+}

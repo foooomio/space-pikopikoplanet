@@ -1,25 +1,53 @@
-import { UnControlled as CodeMirror } from 'react-codemirror2';
-import 'codemirror/mode/sparql/sparql';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/addon/edit/closebrackets';
+import { useRef, useImperativeHandle, forwardRef } from 'react';
+import dynamic from 'next/dynamic';
+import { Segment } from 'semantic-ui-react';
+import SparqlEndpointInput from '@/components/sparql/endpoint-input';
+import SparqlResultTable from '@/components/sparql/result-table';
+import SparqlResultError from '@/components/sparql/result-error';
+import SparqlQueryButton from '@/components/sparql/query-button';
+import { useQuery } from '@/hooks/use-query';
 
-export default function SparqlEditor({ value, editorDidMount }) {
-  const options = {
-    mode: 'sparql',
-    lineWrapping: true,
-    lineNumbers: true,
-    matchBrackets: true,
-    autoCloseBrackets: true,
-    extraKeys: {
-      Tab: (cm) => cm.execCommand('indentMore'),
-    },
-  };
+const SparqlEditorInner = dynamic(
+  () => import('@/components/sparql/editor-inner'),
+  { ssr: false }
+);
+
+const SparqlEditor = forwardRef(({ endpoint, query }, ref) => {
+  const endpointRef = useRef(null);
+  const editorInnerRef = useRef(null);
+
+  const [{ result, loading, error }, handleQuery] = useQuery(
+    () => endpointRef.current.inputRef.current.value,
+    () => editorInnerRef.current.getValue()
+  );
+
+  useImperativeHandle(ref, () => ({
+    endpoint: () => endpointRef.current.inputRef.current.value,
+    query: () => editorInnerRef.current.getValue(),
+  }));
 
   return (
-    <CodeMirror
-      value={value}
-      options={options}
-      editorDidMount={editorDidMount}
-    />
+    <>
+      <Segment attached="top">
+        <SparqlEndpointInput defaultValue={endpoint} ref={endpointRef} />
+      </Segment>
+      <Segment attached style={{ padding: '0' }}>
+        <SparqlEditorInner
+          value={query}
+          editorDidMount={(editor) => (editorInnerRef.current = editor)}
+        />
+      </Segment>
+      <Segment clearing attached={result || error ? true : 'bottom'}>
+        <SparqlQueryButton
+          floated="right"
+          onClick={handleQuery}
+          loading={loading}
+        />
+      </Segment>
+      <SparqlResultTable result={result} />
+      <SparqlResultError error={error} />
+    </>
   );
-}
+});
+
+export default SparqlEditor;
