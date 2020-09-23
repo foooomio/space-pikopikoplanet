@@ -35,15 +35,13 @@ const initialState = {
   createdAt: null,
 };
 
-export const useComposeForm = (sparqlEditor) => {
+export const useComposeForm = (editId, sparqlEditor) => {
   const [user] = useUser();
   const router = useRouter();
 
   const [form, setForm] = useState(initialState);
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState([]);
-
-  const editId = router.query.edit;
 
   useEffect(() => {
     if (!editId) return;
@@ -55,7 +53,7 @@ export const useComposeForm = (sparqlEditor) => {
         router.replace('/404');
       }
     });
-  }, [editId]);
+  }, []);
 
   const setTitle = (value) => {
     setForm({ ...form, title: value });

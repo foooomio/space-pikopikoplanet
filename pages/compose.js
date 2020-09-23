@@ -5,7 +5,7 @@ import Head from '@/components/common/head';
 import ComposeForm from '@/components/compose-form';
 import { useUser } from '@/hooks/use-user';
 
-export default function ComposePage() {
+export default function ComposePage({ editId }) {
   const [user, loading] = useUser();
   const router = useRouter();
 
@@ -24,8 +24,16 @@ export default function ComposePage() {
       <Segment clearing>
         <Header as="h2">{pageTitle}</Header>
 
-        <ComposeForm />
+        <ComposeForm editId={editId} />
       </Segment>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      editId: context.query.edit ?? null,
+    },
+  };
 }

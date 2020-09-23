@@ -4,7 +4,7 @@ import SparqlEditor from '@/components/sparql/editor';
 import TagEditor from '@/components/tag-editor';
 import { useComposeForm } from '@/hooks/use-compose-form';
 
-export default function ComposeForm() {
+export default function ComposeForm({ editId }) {
   const sparqlEditor = useRef(null);
 
   const {
@@ -15,7 +15,7 @@ export default function ComposeForm() {
     addTag,
     deleteTag,
     handleSubmit,
-  } = useComposeForm(sparqlEditor);
+  } = useComposeForm(editId, sparqlEditor);
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function ComposeForm() {
         primary
         type="submit"
         content="Submit"
-        icon="cloud upload"
+        icon="paper plane"
         labelPosition="left"
         floated="right"
         onClick={handleSubmit}
