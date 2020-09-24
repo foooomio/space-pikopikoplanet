@@ -21,7 +21,10 @@ export default function Navbar() {
       <Dropdown.Item
         text="サインアウト"
         icon="sign-out"
-        onClick={() => firebase.auth().signOut()}
+        onClick={() => {
+          firebase.auth().signOut();
+          location.href = '/sign-out';
+        }}
       />
     </>
   ) : (
