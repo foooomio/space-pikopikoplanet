@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { SITE_TITLE, BASE_URL } from '@/lib/constants';
 
 export default function Head({ title, subtitle, type, image, card }) {
-  const router = useRouter();
-  const url = BASE_URL + router.asPath;
+  const { asPath } = useRouter();
+  const url = BASE_URL + asPath;
 
   const description =
     '☆ピコピコプラネット☆ SPACE は、SPARQLクエリの共有サイトです。';

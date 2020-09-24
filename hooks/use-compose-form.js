@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/use-user';
 import { fetchUserData, fetchQuery, saveQuery } from '@/lib/database';
 import { generateId } from '@/lib/util';
@@ -37,7 +36,6 @@ const initialState = {
 
 export const useComposeForm = (editId, sparqlEditor) => {
   const [user] = useUser();
-  const router = useRouter();
 
   const [form, setForm] = useState(initialState);
   const [processing, setProcessing] = useState(false);
@@ -50,7 +48,7 @@ export const useComposeForm = (editId, sparqlEditor) => {
       if (data) {
         setForm(data);
       } else {
-        router.replace('/404');
+        location.href = '/404';
       }
     });
   }, []);
