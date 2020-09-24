@@ -30,7 +30,7 @@ export default function UserPage({
                 <List>
                   {website && (
                     <List.Item
-                      icon="globe"
+                      icon="home"
                       content={<a href={website}>{website}</a>}
                     />
                   )}
