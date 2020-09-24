@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/use-user';
-import { fetchUser, fetchQuery, saveQuery } from '@/lib/database';
+import { fetchUserData, fetchQuery, saveQuery } from '@/lib/database';
 import { generateId } from '@/lib/util';
 
 const validateTitle = (title) => {
@@ -85,14 +85,14 @@ export const useComposeForm = (editId, sparqlEditor) => {
       updateAt: Date.now(),
     };
 
-    let newErrors = [
+    const newErrors = [
       validateTitle(data.title),
       validateEndpoint(data.endpoint),
       validateQuery(data.query),
-    ];
+    ].filter((e) => e !== null);
 
     if (!form.authorUid) {
-      const { userId, userName } = await fetchUser(user.uid);
+      const { userId, userName } = await fetchUserData(user.uid);
       if (userId && userName) {
         data.authorId = userId;
         data.authorName = userName;
@@ -100,8 +100,6 @@ export const useComposeForm = (editId, sparqlEditor) => {
         newErrors.unshift('ユーザーIDまたはユーザー名が設定されていません。');
       }
     }
-
-    newErrors = newErrors.filter((e) => e !== null);
 
     if (newErrors.length === 0) {
       await saveQuery(data.queryId, data);

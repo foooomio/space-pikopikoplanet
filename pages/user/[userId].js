@@ -2,7 +2,7 @@ import { Segment, Item, List, Divider, Icon } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QuerySearchList from '@/components/query/search-list';
-import { fetchUserByUserId } from '@/lib/database';
+import { fetchUserDataByUserId } from '@/lib/database';
 
 export default function UserPage({
   uid,
@@ -80,7 +80,7 @@ export default function UserPage({
 
 export async function getServerSideProps(context) {
   const userId = context.params.userId;
-  const userData = await fetchUserByUserId(userId);
+  const userData = await fetchUserDataByUserId(userId);
 
   if (!userData.uid) {
     context.res.writeHead(307, { Location: '/404' }).end();
