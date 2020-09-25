@@ -20,6 +20,9 @@
     "swr": "^0.3.3"
   },
   "devDependencies": {
-    "prettier": "^2.1.2"
+    "@types/codemirror": "^0.0.98",
+    "@types/react": "^16.9.49",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.3"
   }
 }
