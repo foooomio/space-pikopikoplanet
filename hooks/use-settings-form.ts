@@ -19,7 +19,7 @@ const validateUserId = async (
     return 'IDに使用できない文字が含まれています。';
   }
   const userData = await fetchUserDataByUserId(userId);
-  if (userData.userId === userId && userData.uid !== uid) {
+  if (userData && userData.uid !== uid) {
     return 'IDが他の人に使用されています。';
   }
   return null;
@@ -55,7 +55,7 @@ export const useSettingsForm = () => {
     if (!user) return;
 
     fetchUserData(user.uid).then((userData) => {
-      if (userData.uid) {
+      if (userData) {
         setForm(userData);
       }
       setLoading(false);

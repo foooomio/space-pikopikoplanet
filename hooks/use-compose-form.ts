@@ -81,9 +81,11 @@ export const useComposeForm = (
   const handleSubmit = async () => {
     setProcessing(true);
 
-    const data: Partial<Query> = {
+    const data: Query = {
       queryId: form.queryId ?? generateId(),
       authorUid: user!.uid,
+      authorId: form.authorId ?? '',
+      authorName: form.authorName ?? '',
       title: form.title,
       endpoint: sparqlEditor.current!.endpoint(),
       query: sparqlEditor.current!.query(),
@@ -93,23 +95,23 @@ export const useComposeForm = (
     };
 
     const newErrors = [
-      validateTitle(data.title!),
-      validateEndpoint(data.endpoint!),
-      validateQuery(data.query!),
+      validateTitle(data.title),
+      validateEndpoint(data.endpoint),
+      validateQuery(data.query),
     ].filter((e): e is string => e !== null);
 
     if (!form.authorUid) {
-      const { userId, userName } = await fetchUserData(user!.uid);
-      if (userId && userName) {
-        data.authorId = userId;
-        data.authorName = userName;
+      const userData = await fetchUserData(user!.uid);
+      if (userData && userData.userId && userData.userName) {
+        data.authorId = userData.userId;
+        data.authorName = userData.userName;
       } else {
         newErrors.unshift('ユーザーIDまたはユーザー名が設定されていません。');
       }
     }
 
     if (newErrors.length === 0) {
-      await saveQuery(data.queryId!, data as Query);
+      await saveQuery(data.queryId, data);
       location.href = `/query/${data.queryId}`;
     }
 

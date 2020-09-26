@@ -9,10 +9,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;
 
-    const { title, authorName } = await fetchQuery(id as string);
+    const query = await fetchQuery(id as string);
 
-    const center = doubleEscape(title!);
-    const bottom = doubleEscape(authorName!);
+    if (!query) {
+      throw new Error('Query Not Found');
+    }
+
+    const center = doubleEscape(query.title);
+    const bottom = doubleEscape(query.authorName);
 
     const transformations = [
       `l_text:notosansjp-bold.otf_70_bold:${center},co_rgb:333,w_1000,c_fit`,

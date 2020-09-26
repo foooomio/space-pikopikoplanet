@@ -7,24 +7,25 @@ import type {
   QueryWithLikedAt,
 } from '@/lib/types';
 
-export const fetchUserData = (uid: string): Promise<UserData> => {
+export const fetchUserData = (uid: string): Promise<UserData | null> => {
   return db
     .collection('users')
     .doc(uid)
     .get()
-    .then((doc) => (doc.data() ?? {}) as UserData);
+    .then((doc) => (doc.data() as UserData) ?? null);
 };
 
-export const fetchUserDataByUserId = (userId: string): Promise<UserData> => {
+export const fetchUserDataByUserId = (
+  userId: string
+): Promise<UserData | null> => {
   return db
     .collection('users')
     .where('userId', '==', userId)
     .get()
-    .then(
-      (querySnapshot) =>
-        (querySnapshot.size !== 0
-          ? querySnapshot.docs[0].data()
-          : {}) as UserData
+    .then((querySnapshot) =>
+      querySnapshot.size !== 0
+        ? (querySnapshot.docs[0].data() as UserData)
+        : null
     );
 };
 
@@ -56,12 +57,12 @@ export const saveUserData = (userData: UserData): Promise<[void, void]> => {
   ]);
 };
 
-export const fetchQuery = (queryId: string): Promise<Query> => {
+export const fetchQuery = (queryId: string): Promise<Query | null> => {
   return db
     .collection('queries')
     .doc(queryId)
     .get()
-    .then((doc) => doc.data() as Query);
+    .then((doc) => (doc.data() as Query) ?? null);
 };
 
 export const fetchQueryList = (
