@@ -1,11 +1,10 @@
-import React from 'react';
 import { Button } from 'semantic-ui-react';
 
 type Props = {
-  [P in string]: any;
+  [key: string]: any;
 };
 
-const SparqlQueryButton: React.FC<Props> = (props) => {
+const SparqlQueryButton = (props: Props) => {
   return (
     <Button
       positive

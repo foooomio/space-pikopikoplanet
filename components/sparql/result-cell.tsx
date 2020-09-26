@@ -1,15 +1,16 @@
-import React from 'react';
 import { isUrl } from '@/lib/util';
 
 type Props = {
-  data: any;
+  data?: {
+    value?: string;
+  };
 };
 
-const SparqlResultCell: React.FC<Props> = ({ data }) => {
+const SparqlResultCell = ({ data }: Props) => {
   if (!data) return null;
 
   const value = data?.value ?? null;
-  if (isUrl(value)) {
+  if (value && isUrl(value)) {
     return (
       <>
         {'<'}
@@ -18,7 +19,7 @@ const SparqlResultCell: React.FC<Props> = ({ data }) => {
       </>
     );
   } else {
-    return value;
+    return <>{value}</>;
   }
 };
 

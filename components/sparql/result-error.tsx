@@ -1,11 +1,10 @@
-import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
 
 type Props = {
   error: Error | null;
 };
 
-const SparqlResultError: React.FC<Props> = ({ error }) => {
+const SparqlResultError = ({ error }: Props) => {
   if (!error) return null;
 
   return (

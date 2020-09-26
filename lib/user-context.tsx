@@ -1,12 +1,13 @@
-import React, { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import firebase from '@/lib/firebase';
 import { User } from '@/lib/types';
+import type { FunctionComponent } from 'react';
 
 type ContextProps = [User | null, boolean];
 
 export const UserContext = createContext<ContextProps>([null, true]);
 
-const UserProvider: React.FC = ({ children }) => {
+const UserProvider: FunctionComponent = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 

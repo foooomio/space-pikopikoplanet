@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser } from '@/hooks/use-user';
 import { fetchUserData, fetchQuery, saveQuery } from '@/lib/database';
 import { generateId } from '@/lib/util';
+import type { RefObject, ElementRef } from 'react';
 import type { Query } from '@/lib/types';
 import type SparqlEditor from '@/components/sparql/editor';
 
@@ -39,18 +40,13 @@ const initialState = {
   updatedAt: null,
 };
 
-type State = typeof initialState;
-type IncompleteQuery = {
-  [P in keyof State]: State[P] extends null ? Query[P] | null : State[P];
-};
-
 export const useComposeForm = (
   editId: string,
-  sparqlEditor: React.RefObject<React.ElementRef<typeof SparqlEditor>>
+  sparqlEditor: RefObject<ElementRef<typeof SparqlEditor>>
 ) => {
   const [user] = useUser();
 
-  const [form, setForm] = useState<IncompleteQuery>(initialState);
+  const [form, setForm] = useState<Query | typeof initialState>(initialState);
   const [processing, setProcessing] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>([]);
 

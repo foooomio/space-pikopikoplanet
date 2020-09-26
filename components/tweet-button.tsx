@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'semantic-ui-react';
 import { BASE_URL } from '@/lib/constants';
@@ -8,7 +7,7 @@ type Props = {
   authorName: string;
 };
 
-const TweetButton: React.FC<Props> = ({ title, authorName }) => {
+const TweetButton = ({ title, authorName }: Props) => {
   const { asPath } = useRouter();
 
   const text = `${title} by ${authorName} #ピコピコプラネットSPACE`;

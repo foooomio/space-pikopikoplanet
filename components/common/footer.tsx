@@ -1,8 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container, List } from 'semantic-ui-react';
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <Container as="footer" textAlign="center">
       <List horizontal celled>

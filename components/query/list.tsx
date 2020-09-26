@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSWRInfinite } from 'swr';
 import { Button, Card, Divider, Loader } from 'semantic-ui-react';
 import QueryCard from '@/components/query/card';
@@ -9,7 +8,7 @@ type Props = {
   fetcher: (...args: any[]) => Promise<any[]>;
 };
 
-const QueryList: React.FC<Props> = ({ getKey, fetcher }) => {
+const QueryList = ({ getKey, fetcher }: Props) => {
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
 
   const queries = data?.flat() ?? [];

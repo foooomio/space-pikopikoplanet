@@ -1,10 +1,9 @@
-import React from 'react';
 import Link from 'next/link';
 import { Menu, Dropdown } from 'semantic-ui-react';
 import { useUser } from '@/hooks/use-user';
 import firebase from '@/lib/firebase';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const [user] = useUser();
 
   const dropdownMenuItems = user ? (

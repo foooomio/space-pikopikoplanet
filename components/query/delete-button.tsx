@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Modal, Button } from 'semantic-ui-react';
 import { deleteQuery } from '@/lib/database';
@@ -7,7 +7,7 @@ type Props = {
   queryId: string;
 };
 
-const QueryDeleteButton: React.FC<Props> = ({ queryId }) => {
+const QueryDeleteButton = ({ queryId }: Props) => {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();

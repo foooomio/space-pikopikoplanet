@@ -120,7 +120,7 @@ export const fetchQueryListLikedByUser = (
         .where('queryId', 'in', ids)
         .get()
         .then((querySnapshot) => {
-          const queries = {} as { [P in string]: Query };
+          const queries = {} as { [key: string]: Query };
           querySnapshot.forEach((doc) => {
             queries[doc.id] = doc.data() as Query;
           });

@@ -1,11 +1,19 @@
-import React from 'react';
 import Link from 'next/link';
 import { Card, Header, List, Icon } from 'semantic-ui-react';
 import QueryMeta from '@/components/query/meta';
 import QueryLikeButton from '@/components/query/like-button';
-import type { Query } from '@/lib/types';
 
-const QueryCard: React.FC<Query> = ({
+type Props = {
+  queryId: string;
+  title: string;
+  authorId: string;
+  authorName: string;
+  endpoint: string;
+  tags: string[];
+  createdAt: number;
+};
+
+const QueryCard = ({
   queryId,
   title,
   authorId,
@@ -13,7 +21,7 @@ const QueryCard: React.FC<Query> = ({
   endpoint,
   tags,
   createdAt,
-}) => {
+}: Props) => {
   return (
     <Card fluid color="grey">
       <Card.Content>

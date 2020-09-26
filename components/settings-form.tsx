@@ -1,8 +1,7 @@
-import React from 'react';
 import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
 import { useSettingsForm } from '@/hooks/use-settings-form';
 
-const SettingsForm: React.FC = () => {
+const SettingsForm = () => {
   const {
     form,
     loading,

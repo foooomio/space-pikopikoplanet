@@ -1,4 +1,3 @@
-import React from 'react';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { SITE_TITLE, BASE_URL } from '@/lib/constants';
@@ -11,7 +10,7 @@ type Props = {
   card?: string;
 };
 
-const Head: React.FC<Props> = ({ title, subtitle, type, image, card }) => {
+const Head = ({ title, subtitle, type, image, card }: Props) => {
   const { asPath } = useRouter();
   const url = BASE_URL + asPath;
 

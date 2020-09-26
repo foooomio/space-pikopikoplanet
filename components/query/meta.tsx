@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { List, Icon } from 'semantic-ui-react';
 
@@ -8,7 +7,7 @@ type Props = {
   createdAt: number;
 };
 
-const QueryMeta: React.FC<Props> = ({ authorId, authorName, createdAt }) => {
+const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
   const timestamp = new Date(createdAt)
     .toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
     .replace(/-/g, '/');

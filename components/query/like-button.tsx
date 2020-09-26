@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { Button } from 'semantic-ui-react';
 import { useUser } from '@/hooks/use-user';
@@ -13,7 +13,7 @@ type Props = {
   queryId: string;
 };
 
-const QueryLikeButton: React.FC<Props> = ({ queryId }) => {
+const QueryLikeButton = ({ queryId }: Props) => {
   const [user] = useUser();
 
   const [likeCount, setLikeCount] = useState<number | null>(null);

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser } from '@/hooks/use-user';
 import {
   fetchUserData,
   fetchUserDataByUserId,
   saveUserData,
 } from '@/lib/database';
+import type { ChangeEvent } from 'react';
 import type { UserData } from '@/lib/types';
 
 const validateUserId = async (
@@ -61,7 +62,7 @@ export const useSettingsForm = () => {
     });
   }, [user]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 

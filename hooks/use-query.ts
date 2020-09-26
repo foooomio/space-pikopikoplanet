@@ -1,5 +1,6 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import { SparqlResult } from '@/lib/types';
+import type { Reducer } from 'react';
 
 type State = {
   result: SparqlResult | null;
@@ -18,7 +19,7 @@ const initialState = {
   error: null,
 };
 
-const reducer: React.Reducer<State, Action> = (state, action) => {
+const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case 'loading':
       return {

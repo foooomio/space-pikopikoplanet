@@ -1,6 +1,6 @@
-import React from 'react';
 import { useState, useRef } from 'react';
 import { Input, Button, Label, Icon, Divider } from 'semantic-ui-react';
+import type { KeyboardEvent } from 'react';
 import type { InputWithRef } from '@/lib/types';
 
 const invalidChars = ' !"#$%&\'()*+,./;<=>?[\\]^`{|}~';
@@ -21,7 +21,7 @@ type Props = {
   deleteTag: (tag: string) => void;
 };
 
-const TagEditor: React.FC<Props> = ({ tags, addTag, deleteTag }) => {
+const TagEditor = ({ tags, addTag, deleteTag }: Props) => {
   const inputRef = useRef<InputWithRef>(null);
   const [inputError, setInputError] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ const TagEditor: React.FC<Props> = ({ tags, addTag, deleteTag }) => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleAdd();
     }

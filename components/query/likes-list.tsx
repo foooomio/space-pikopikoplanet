@@ -1,11 +1,10 @@
-import React from 'react';
 import QueryList from '@/components/query/list';
 import { fetchQueryListLikedByUser } from '@/lib/database';
 import { useUser } from '@/hooks/use-user';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 import type { QueryWithLikedAt } from '@/lib/types';
 
-const QueryLikesList: React.FC = () => {
+const QueryLikesList = () => {
   const [user] = useUser();
 
   const getKey = (

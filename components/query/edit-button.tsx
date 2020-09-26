@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { Button } from 'semantic-ui-react';
 
@@ -6,7 +5,7 @@ type Props = {
   queryId: string;
 };
 
-const QueryEditButton: React.FC<Props> = ({ queryId }) => {
+const QueryEditButton = ({ queryId }: Props) => {
   return (
     <Link href={`/compose?edit=${queryId}`}>
       <a>

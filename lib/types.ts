@@ -1,4 +1,4 @@
-import React from 'react';
+import type { RefObject } from 'react';
 import type { Input } from 'semantic-ui-react';
 
 export type User = {
@@ -42,10 +42,14 @@ export type SparqlResult = {
     vars: string[];
   };
   results: {
-    bindings: any[];
+    bindings: {
+      [key: string]: {
+        value?: string;
+      };
+    }[];
   };
 };
 
 export type InputWithRef = Input & {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: RefObject<HTMLInputElement>;
 };

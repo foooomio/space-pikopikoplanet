@@ -1,4 +1,3 @@
-import React from 'react';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/mode/sparql/sparql';
 import 'codemirror/addon/edit/matchbrackets';
@@ -7,10 +6,10 @@ import type { Editor } from 'codemirror';
 
 type Props = {
   value: string;
-  editorDidMount: (editor: any) => void;
+  editorDidMount: (editor: Editor) => void;
 };
 
-const SparqlEditorInner: React.FC<Props> = ({ value, editorDidMount }) => {
+const SparqlEditorInner = ({ value, editorDidMount }: Props) => {
   const options = {
     mode: 'sparql',
     lineWrapping: true,

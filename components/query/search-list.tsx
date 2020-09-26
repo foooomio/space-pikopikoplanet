@@ -1,4 +1,3 @@
-import React from 'react';
 import QueryList from '@/components/query/list';
 import { fetchQueryList } from '@/lib/database';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
@@ -8,7 +7,7 @@ type Props = {
   searchOptions?: SearchOptions;
 };
 
-const QuerySearchList: React.FC<Props> = ({ searchOptions }) => {
+const QuerySearchList = ({ searchOptions }: Props) => {
   const getKey = (pageIndex: number, previousPageData: Query[]): any => {
     const cursor =
       pageIndex === 0

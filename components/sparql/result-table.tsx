@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, Segment } from 'semantic-ui-react';
 import SparqlResultCell from '@/components/sparql/result-cell';
 import type { SparqlResult } from '@/lib/types';
@@ -7,7 +6,7 @@ type Props = {
   result: SparqlResult | null;
 };
 
-const SparqlResultTable: React.FC<Props> = ({ result }) => {
+const SparqlResultTable = ({ result }: Props) => {
   if (!result) return null;
 
   const variables = result.head.vars;

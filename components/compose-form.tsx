@@ -1,15 +1,16 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Input, Button, Divider, Message } from 'semantic-ui-react';
 import SparqlEditor from '@/components/sparql/editor';
 import TagEditor from '@/components/tag-editor';
 import { useComposeForm } from '@/hooks/use-compose-form';
+import type { ElementRef } from 'react';
 
 type Props = {
   editId: string;
 };
 
-const ComposeForm: React.FC<Props> = ({ editId }) => {
-  const sparqlEditor = useRef<React.ElementRef<typeof SparqlEditor>>(null);
+const ComposeForm = ({ editId }: Props) => {
+  const sparqlEditor = useRef<ElementRef<typeof SparqlEditor>>(null);
 
   const {
     form,
