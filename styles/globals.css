@@ -5,6 +5,7 @@ body {
 header {
   background-color: #1b284f !important;
   border-radius: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 header h1 {
@@ -27,8 +28,28 @@ header h1 .subtitle {
   font-size: 1.2rem;
 }
 
+main {
+  margin-top: 1rem;
+}
+
 footer {
   padding: 2rem 0;
+}
+
+/* Hero image from https://www.pexels.com/ja-jp/photo/956999/ */
+
+#hero {
+  padding: 4rem 0;
+  margin-bottom: 2rem;
+  background-size: cover;
+  background-position: center;
+  background-image: url(/hero.jpg);
+}
+
+@media screen and (max-width: 1280px) {
+  #hero {
+    background-image: url(/hero-s.jpg);
+  }
 }
 
 h3.ui.header > .icon {
