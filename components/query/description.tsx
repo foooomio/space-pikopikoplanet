@@ -8,7 +8,7 @@ type Props = {
 
 const QueryDescription = ({ endpoint, tags }: Props) => {
   return (
-    <List>
+    <List style={{ overflow: 'auto' }}>
       <List.Item>
         <List.Icon name="compass outline" />
         <Link

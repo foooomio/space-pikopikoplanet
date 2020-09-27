@@ -75,9 +75,3 @@ h3.ui.header > .icon {
 .CodeMirror-scroll {
   min-height: 300px;
 }
-
-pre {
-  margin: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-}

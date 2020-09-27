@@ -50,7 +50,7 @@ const QueryPage = ({
 
         <SparqlEditor endpoint={endpoint} query={query} />
 
-        <List>
+        <List style={{ overflow: 'auto' }}>
           <List.Item>
             <Link
               href={`/search?endpoint=${encodeURIComponent(endpoint)}`}
