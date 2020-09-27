@@ -11,6 +11,10 @@ type Props = {
 const QueryList = ({ getKey, fetcher }: Props) => {
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
 
+  if (error) {
+    console.error(error);
+  }
+
   const queries = data?.flat() ?? [];
 
   const isLoadingInitialData = !data && !error;

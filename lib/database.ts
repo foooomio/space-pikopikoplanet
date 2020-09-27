@@ -80,6 +80,10 @@ export const fetchQueryList = (
     query = query.where('authorUid', '==', searchOptions.authorUid);
   }
 
+  if (searchOptions.endpoint) {
+    query = query.where('endpoint', '==', searchOptions.endpoint);
+  }
+
   if (searchOptions.tag) {
     query = query.where('tags', 'array-contains', searchOptions.tag);
   }

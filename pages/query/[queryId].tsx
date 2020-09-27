@@ -50,13 +50,26 @@ const QueryPage = ({
 
         <SparqlEditor endpoint={endpoint} query={query} />
 
-        <Label.Group tag>
-          {tags.map((tag) => (
-            <Link href={`/search?tag=${tag}`} passHref key={tag}>
-              <Label as="a" content={tag} />
+        <List>
+          <List.Item>
+            <Link
+              href={`/search?endpoint=${encodeURIComponent(endpoint)}`}
+              passHref
+            >
+              <Label content={endpoint} />
             </Link>
-          ))}
-        </Label.Group>
+          </List.Item>
+
+          <List.Item>
+            <Label.Group tag>
+              {tags.map((tag) => (
+                <Link href={`/search?tag=${tag}`} passHref key={tag}>
+                  <Label as="a" content={tag} />
+                </Link>
+              ))}
+            </Label.Group>
+          </List.Item>
+        </List>
 
         <Divider />
 

@@ -57,8 +57,14 @@ h3.ui.header > .icon {
   margin-bottom: 0.7em;
 }
 
-.ui.horizontal.list > .item > .icon {
+.ui.card .ui.list > .item > .icon {
+  display: inline-block;
   vertical-align: baseline;
+  margin-right: 0.3rem;
+}
+
+.ui.card .ui.labels {
+  display: inline-block;
 }
 
 .CodeMirror {

@@ -34,6 +34,7 @@ export type QueryWithLikedAt = Query & {
 
 export type SearchOptions = {
   authorUid?: string;
+  endpoint?: string;
   tag?: string;
 };
 

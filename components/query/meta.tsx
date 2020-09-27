@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { List, Icon } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 
 type Props = {
   authorId: string;
@@ -15,13 +15,13 @@ const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
   return (
     <List horizontal>
       <List.Item>
-        <Icon name="user circle" />
+        <List.Icon name="user circle" />
         <Link href="/user/[userId]" as={`/user/${authorId}`}>
           <a>{authorName}</a>
         </Link>
       </List.Item>
       <List.Item>
-        <Icon name="calendar alternate outline" />
+        <List.Icon name="calendar alternate outline" />
         {timestamp}
       </List.Item>
     </List>

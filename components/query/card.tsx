@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Card, Header, List, Icon } from 'semantic-ui-react';
+import { Card, Header, Icon } from 'semantic-ui-react';
 import QueryMeta from '@/components/query/meta';
+import QueryDescription from '@/components/query/description';
 import QueryLikeButton from '@/components/query/like-button';
 
 type Props = {
@@ -43,14 +44,7 @@ const QueryCard = ({
           />
         </Card.Meta>
         <Card.Description>
-          <List>
-            <List.Item
-              icon="compass outline"
-              content={endpoint}
-              style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
-            />
-            <List.Item icon="tags" content={tags.join(' / ')} />
-          </List>
+          <QueryDescription endpoint={endpoint} tags={tags} />
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
