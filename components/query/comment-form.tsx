@@ -1,5 +1,6 @@
 import { Comment, Header, Form, Message, Button } from 'semantic-ui-react';
 import QueryComment from '@/components/query/comment';
+import { useUser } from '@/hooks/use-user';
 import { useCommentForm } from '@/hooks/use-comment-form';
 
 type Props = {
@@ -7,6 +8,8 @@ type Props = {
 };
 
 const QueryCommentForm = ({ queryId }: Props) => {
+  const [user] = useUser();
+
   const {
     comments,
     errors,
@@ -29,22 +32,26 @@ const QueryCommentForm = ({ queryId }: Props) => {
         />
       ))}
 
-      <Form>
-        {errors.length !== 0 && <Message error header="エラー" list={errors} />}
-        <Form.TextArea
-          value={text}
-          onChange={(e) => setText(e.currentTarget.value)}
-          style={{ marginTop: '1rem' }}
-        />
-        <Button
-          primary
-          icon="comment alternate"
-          labelPosition="left"
-          content="Comment"
-          onClick={handleSubmit}
-          loading={processing}
-        />
-      </Form>
+      {user && (
+        <Form>
+          {errors.length !== 0 && (
+            <Message error header="エラー" list={errors} />
+          )}
+          <Form.TextArea
+            value={text}
+            onChange={(e) => setText(e.currentTarget.value)}
+            style={{ marginTop: '1rem' }}
+          />
+          <Button
+            primary
+            icon="comment alternate"
+            labelPosition="left"
+            content="Submit"
+            onClick={handleSubmit}
+            loading={processing}
+          />
+        </Form>
+      )}
     </Comment.Group>
   );
 };
