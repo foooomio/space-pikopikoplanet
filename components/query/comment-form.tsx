@@ -19,7 +19,7 @@ const QueryCommentForm = ({ queryId }: Props) => {
 
   return (
     <Comment.Group>
-      <Header as="h3">Comments</Header>
+      <Header as="h3" icon="comments" content="Comments" />
 
       {comments?.map((comment) => (
         <QueryComment
