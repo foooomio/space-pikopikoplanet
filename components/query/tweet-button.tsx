@@ -7,7 +7,7 @@ type Props = {
   authorName: string;
 };
 
-const TweetButton = ({ queryId, title, authorName }: Props) => {
+const QueryTweetButton = ({ queryId, title, authorName }: Props) => {
   const url = new URL(`/query/${queryId}`, BASE_URL);
   const text = `${title} by ${authorName} #ピコピコプラネットSPACE`;
 
@@ -23,4 +23,4 @@ const TweetButton = ({ queryId, title, authorName }: Props) => {
   );
 };
 
-export default TweetButton;
+export default QueryTweetButton;
