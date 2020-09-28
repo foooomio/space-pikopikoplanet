@@ -4,6 +4,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
 import SparqlEditor from '@/components/sparql/editor';
+import QueryDescription from '@/components/query/description';
 import QueryCommentForm from '@/components/query/comment-form';
 import QueryLikeButton from '@/components/query/like-button';
 import QueryTweetButton from '@/components/query/tweet-button';
@@ -51,26 +52,7 @@ const QueryPage = ({
 
         <SparqlEditor endpoint={endpoint} query={query} />
 
-        <List style={{ overflow: 'auto' }}>
-          <List.Item>
-            <Link
-              href={`/search?endpoint=${encodeURIComponent(endpoint)}`}
-              passHref
-            >
-              <Label content={endpoint} />
-            </Link>
-          </List.Item>
-
-          <List.Item>
-            <Label.Group tag>
-              {tags.map((tag) => (
-                <Link href={`/search?tag=${tag}`} passHref key={tag}>
-                  <Label as="a" content={tag} />
-                </Link>
-              ))}
-            </Label.Group>
-          </List.Item>
-        </List>
+        <QueryDescription endpoint={endpoint} tags={tags} />
 
         <Divider />
 

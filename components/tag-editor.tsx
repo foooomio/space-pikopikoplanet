@@ -59,9 +59,9 @@ const TagEditor = ({ tags, addTag, deleteTag }: Props) => {
 
       <Divider hidden />
 
-      <Label.Group tag>
+      <Label.Group>
         {tags.map((tag) => (
-          <Label key={tag}>
+          <Label basic key={tag}>
             {tag}
             <Icon name="delete" onClick={() => deleteTag(tag)} />
           </Label>

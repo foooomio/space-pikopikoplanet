@@ -57,13 +57,13 @@ h3.ui.header > .icon {
   margin-bottom: 0.7em;
 }
 
-.ui.card .ui.list > .item > .icon {
-  display: inline-block;
-  vertical-align: baseline;
-  margin-right: 0.3rem;
+.ui.list > .item > .icon {
+  display: inline-block !important;
+  vertical-align: baseline !important;
+  margin-right: 0.3rem !important;
 }
 
-.ui.card .ui.labels {
+.ui.labels {
   display: inline-block;
 }
 
