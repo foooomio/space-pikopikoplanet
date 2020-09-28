@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { Segment, Header, List, Divider, Label } from 'semantic-ui-react';
+import { Segment, Header, List, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
