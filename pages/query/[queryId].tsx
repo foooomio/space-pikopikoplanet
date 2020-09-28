@@ -5,8 +5,8 @@ import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
 import SparqlEditor from '@/components/sparql/editor';
 import QueryLikeButton from '@/components/query/like-button';
-import TweetButton from '@/components/tweet-button';
-import FacebookButton from '@/components/facebook-button';
+import QueryTweetButton from '@/components/query/tweet-button';
+import QueryFacebookButton from '@/components/query/facebook-button';
 import QueryEditButton from '@/components/query/edit-button';
 import QueryDeleteButton from '@/components/query/delete-button';
 import { useUser } from '@/hooks/use-user';
@@ -78,10 +78,14 @@ const QueryPage = ({
             <QueryLikeButton queryId={queryId} />
           </List.Item>
           <List.Item>
-            <TweetButton title={title} authorName={authorName} />
+            <QueryTweetButton
+              queryId={queryId}
+              title={title}
+              authorName={authorName}
+            />
           </List.Item>
           <List.Item>
-            <FacebookButton />
+            <QueryFacebookButton queryId={queryId} />
           </List.Item>
         </List>
 

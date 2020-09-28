@@ -1,12 +1,15 @@
-import { useRouter } from 'next/router';
 import { Button } from 'semantic-ui-react';
 import { BASE_URL } from '@/lib/constants';
 
-const FacebookButton = () => {
-  const { asPath } = useRouter();
+type Props = {
+  queryId: string;
+};
+
+const QueryFacebookButton = ({ queryId }: Props) => {
+  const url = new URL(`/query/${queryId}`, BASE_URL);
 
   const sharer = new URL('https://www.facebook.com/sharer/sharer.php');
-  sharer.searchParams.set('u', new URL(asPath, BASE_URL).toString());
+  sharer.searchParams.set('u', url.toString());
   const href = sharer.toString();
 
   return (
@@ -16,4 +19,4 @@ const FacebookButton = () => {
   );
 };
 
-export default FacebookButton;
+export default QueryFacebookButton;
