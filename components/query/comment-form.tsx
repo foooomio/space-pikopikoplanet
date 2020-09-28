@@ -32,6 +32,8 @@ const QueryCommentForm = ({ queryId }: Props) => {
         />
       ))}
 
+      {comments?.length === 0 && <div>No comments.</div>}
+
       {user && (
         <Form>
           {errors.length !== 0 && (
