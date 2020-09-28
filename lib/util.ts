@@ -8,3 +8,15 @@ export const doubleEscape = (str: string): string =>
 
 export const isUrl = (str: string): boolean =>
   str.startsWith('http://') || str.startsWith('https://');
+
+export const formatDate = (date: Date): string =>
+  date
+    .toLocaleString('ja-JP', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZone: 'Asia/Tokyo',
+    })
+    .replace(/-/g, '/');

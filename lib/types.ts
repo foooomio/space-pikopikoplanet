@@ -32,6 +32,17 @@ export type QueryWithLikedAt = Query & {
   likedAt: number;
 };
 
+export type Comment = {
+  commentId: string;
+  queryId: string;
+  authorUid: string;
+  authorId: string;
+  authorName: string;
+  text: string;
+  createdAt: number;
+  updatedAt: number;
+};
+
 export type SearchOptions = {
   authorUid?: string;
   endpoint?: string;

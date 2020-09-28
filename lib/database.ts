@@ -3,6 +3,7 @@ import { likeId } from '@/lib/util';
 import type {
   UserData,
   Query,
+  Comment,
   SearchOptions,
   QueryWithLikedAt,
 } from '@/lib/types';
@@ -50,10 +51,31 @@ const updateUserDataInQueries = (userData: UserData): Promise<void> => {
     .then(() => batch.commit());
 };
 
-export const saveUserData = (userData: UserData): Promise<[void, void]> => {
+const updateUserDataInComments = (userData: UserData): Promise<void> => {
+  const batch = db.batch();
+  return db
+    .collection('users')
+    .doc(userData.uid)
+    .collection('comments')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) =>
+        batch.update(doc.ref, {
+          authorId: userData.userId,
+          authorName: userData.userName,
+        })
+      );
+    })
+    .then(() => batch.commit());
+};
+
+export const saveUserData = (
+  userData: UserData
+): Promise<[void, void, void]> => {
   return Promise.all([
     saveUserDataInUsers(userData),
     updateUserDataInQueries(userData),
+    updateUserDataInComments(userData),
   ]);
 };
 
@@ -95,8 +117,8 @@ export const fetchQueryList = (
     );
 };
 
-export const saveQuery = (queryId: string, query: Query): Promise<void> => {
-  return db.collection('queries').doc(queryId).set(query, { merge: true });
+export const saveQuery = (query: Query): Promise<void> => {
+  return db.collection('queries').doc(query.queryId).set(query);
 };
 
 export const deleteQuery = (queryId: string): Promise<void> => {
@@ -185,4 +207,36 @@ export const fetchEndpointList = (): Promise<string[]> => {
       querySnapshot.forEach((doc) => set.add(doc.data().endpoint));
       return [...set];
     });
+};
+
+export const fetchCommentList = (queryId: string): Promise<Comment[]> => {
+  return db
+    .collectionGroup('comments')
+    .where('queryId', '==', queryId)
+    .orderBy('createdAt', 'asc')
+    .get()
+    .then((querySnapshot) =>
+      querySnapshot.docs.map((doc) => doc.data() as Comment)
+    );
+};
+
+export const saveComment = (comment: Comment): Promise<void> => {
+  return db
+    .collection('users')
+    .doc(comment.authorUid)
+    .collection('comments')
+    .doc(comment.commentId)
+    .set(comment);
+};
+
+export const deleteComment = (
+  uid: string,
+  commentId: string
+): Promise<void> => {
+  return db
+    .collection('users')
+    .doc(uid)
+    .collection('comments')
+    .doc(commentId)
+    .delete();
 };

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { List } from 'semantic-ui-react';
+import { formatDate } from '@/lib/util';
 
 type Props = {
   authorId: string;
@@ -8,9 +9,7 @@ type Props = {
 };
 
 const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
-  const timestamp = new Date(createdAt)
-    .toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
-    .replace(/-/g, '/');
+  const timestamp = formatDate(new Date(createdAt));
 
   return (
     <List horizontal>

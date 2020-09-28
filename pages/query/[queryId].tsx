@@ -4,6 +4,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
 import SparqlEditor from '@/components/sparql/editor';
+import QueryCommentForm from '@/components/query/comment-form';
 import QueryLikeButton from '@/components/query/like-button';
 import QueryTweetButton from '@/components/query/tweet-button';
 import QueryFacebookButton from '@/components/query/facebook-button';
@@ -70,6 +71,10 @@ const QueryPage = ({
             </Label.Group>
           </List.Item>
         </List>
+
+        <Divider />
+
+        <QueryCommentForm queryId={queryId} />
 
         <Divider />
 

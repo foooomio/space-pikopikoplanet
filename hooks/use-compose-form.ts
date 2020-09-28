@@ -111,7 +111,7 @@ export const useComposeForm = (
     }
 
     if (newErrors.length === 0) {
-      await saveQuery(data.queryId, data);
+      await saveQuery(data);
       location.href = `/query/${data.queryId}`;
     }
 
