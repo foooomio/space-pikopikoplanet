@@ -10,20 +10,18 @@ const QueryDescription = ({ endpoint, tags }: Props) => {
   return (
     <List style={{ overflow: 'auto' }}>
       <List.Item>
-        <List.Icon name="compass outline" />
         <Link
           href={`/search?endpoint=${encodeURIComponent(endpoint)}`}
           passHref
         >
-          <Label basic content={endpoint} />
+          <Label basic icon="compass outline" content={endpoint} />
         </Link>
       </List.Item>
       <List.Item>
-        <List.Icon name="tags" />
         <Label.Group>
           {tags.map((tag) => (
             <Link href={`/search?tag=${tag}`} passHref key={tag}>
-              <Label as="a" basic content={tag} />
+              <Label basic icon="tag" content={tag} />
             </Link>
           ))}
         </Label.Group>

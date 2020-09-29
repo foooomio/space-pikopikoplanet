@@ -24,9 +24,7 @@ export const fetchUserDataByUserId = (
     .where('userId', '==', userId)
     .get()
     .then((querySnapshot) =>
-      querySnapshot.size !== 0
-        ? (querySnapshot.docs[0].data() as UserData)
-        : null
+      querySnapshot.empty ? null : (querySnapshot.docs[0].data() as UserData)
     );
 };
 
@@ -204,15 +202,16 @@ export const fetchEndpointList = (): Promise<string[]> => {
     .get()
     .then((querySnapshot) => {
       const set = new Set<string>();
-      querySnapshot.forEach((doc) => set.add(doc.data().endpoint));
+      querySnapshot.forEach((doc) => set.add(doc.get('endpoint')));
       return [...set];
     });
 };
 
 export const fetchCommentList = (queryId: string): Promise<Comment[]> => {
   return db
-    .collectionGroup('comments')
-    .where('queryId', '==', queryId)
+    .collection('queries')
+    .doc(queryId)
+    .collection('comments')
     .orderBy('createdAt', 'asc')
     .get()
     .then((querySnapshot) =>
@@ -222,20 +221,20 @@ export const fetchCommentList = (queryId: string): Promise<Comment[]> => {
 
 export const saveComment = (comment: Comment): Promise<void> => {
   return db
-    .collection('users')
-    .doc(comment.authorUid)
+    .collection('queries')
+    .doc(comment.queryId)
     .collection('comments')
     .doc(comment.commentId)
     .set(comment);
 };
 
 export const deleteComment = (
-  uid: string,
+  queryId: string,
   commentId: string
 ): Promise<void> => {
   return db
-    .collection('users')
-    .doc(uid)
+    .collection('queries')
+    .doc(queryId)
     .collection('comments')
     .doc(commentId)
     .delete();

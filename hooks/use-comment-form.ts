@@ -69,7 +69,7 @@ export const useCommentForm = (queryId: string) => {
   };
 
   const handleDelete = async (commentId: string) => {
-    await deleteComment(user!.uid, commentId);
+    await deleteComment(queryId, commentId);
     mutate();
   };
 

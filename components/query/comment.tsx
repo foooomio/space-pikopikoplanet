@@ -34,7 +34,7 @@ const QueryComment = ({
         <Comment.Metadata>{formatDate(new Date(createdAt))}</Comment.Metadata>
         <Comment.Text>{text}</Comment.Text>
         <Comment.Actions>
-          {authorUid === user!.uid && (
+          {authorUid === user?.uid && (
             <Comment.Action onClick={onDelete}>Delete</Comment.Action>
           )}
         </Comment.Actions>

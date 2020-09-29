@@ -61,7 +61,7 @@ const SparqlEditor = forwardRef<Handler, Props>(
         <Segment attached="top">
           <SparqlEndpointInput defaultValue={endpoint} ref={endpointRef} />
         </Segment>
-        <Segment attached style={{ padding: '0' }}>
+        <Segment attached style={{ padding: '0', minHeight: '300px' }}>
           <SparqlEditorInner
             value={query}
             editorDidMount={(editor) => (editorInnerRef.current = editor)}
