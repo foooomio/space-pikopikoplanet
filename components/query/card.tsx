@@ -12,6 +12,7 @@ type Props = {
   endpoint: string;
   tags: string[];
   createdAt: number;
+  forkedFrom?: string;
 };
 
 const QueryCard = ({
@@ -22,6 +23,7 @@ const QueryCard = ({
   endpoint,
   tags,
   createdAt,
+  forkedFrom,
 }: Props) => {
   return (
     <Card fluid color="grey">
@@ -44,6 +46,14 @@ const QueryCard = ({
           />
         </Card.Meta>
         <Card.Description>
+          {forkedFrom && (
+            <div>
+              Forked from{' '}
+              <Link href={`/query/[queryId]`} as={`/query/${forkedFrom}`}>
+                <a>{forkedFrom}</a>
+              </Link>
+            </div>
+          )}
           <QueryDescription endpoint={endpoint} tags={tags} />
         </Card.Description>
       </Card.Content>
