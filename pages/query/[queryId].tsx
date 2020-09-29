@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Segment, Header, List, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
@@ -25,6 +26,7 @@ const QueryPage = ({
   query,
   tags,
   createdAt,
+  forkedFrom,
 }: Query) => {
   const [user] = useUser();
 
@@ -49,7 +51,21 @@ const QueryPage = ({
           </Header.Subheader>
         </Header>
 
-        <SparqlEditor endpoint={endpoint} query={query} />
+        {forkedFrom && (
+          <div>
+            Forked from{' '}
+            <Link href={`/query/[queryId]`} as={`/query/${forkedFrom}`}>
+              <a>{forkedFrom}</a>
+            </Link>
+          </div>
+        )}
+
+        <SparqlEditor
+          viewer={true}
+          queryId={queryId}
+          endpoint={endpoint}
+          query={query}
+        />
 
         <QueryDescription endpoint={endpoint} tags={tags} />
 

@@ -38,10 +38,12 @@ const initialState = {
   tags: [] as string[],
   createdAt: null,
   updatedAt: null,
+  forkedFrom: '',
 };
 
 export const useComposeForm = (
-  editId: string,
+  editId: string | null,
+  fork: { queryId: string; endpoint: string; query: string } | null,
   sparqlEditor: RefObject<ElementRef<typeof SparqlEditor>>
 ) => {
   const [user] = useUser();
@@ -59,6 +61,17 @@ export const useComposeForm = (
       } else {
         location.href = '/404';
       }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!fork) return;
+
+    setForm({
+      ...form,
+      endpoint: fork.endpoint,
+      query: fork.query,
+      forkedFrom: fork.queryId,
     });
   }, []);
 
@@ -93,6 +106,10 @@ export const useComposeForm = (
       createdAt: form.createdAt ?? Date.now(),
       updatedAt: Date.now(),
     };
+
+    if (form.forkedFrom) {
+      data.forkedFrom = form.forkedFrom;
+    }
 
     const newErrors = [
       validateTitle(data.title),

@@ -6,10 +6,15 @@ import { useComposeForm } from '@/hooks/use-compose-form';
 import type { ElementRef } from 'react';
 
 type Props = {
-  editId: string;
+  editId: string | null;
+  fork: {
+    queryId: string;
+    endpoint: string;
+    query: string;
+  } | null;
 };
 
-const ComposeForm = ({ editId }: Props) => {
+const ComposeForm = ({ editId, fork }: Props) => {
   const sparqlEditor = useRef<ElementRef<typeof SparqlEditor>>(null);
 
   const {
@@ -20,7 +25,7 @@ const ComposeForm = ({ editId }: Props) => {
     addTag,
     deleteTag,
     handleSubmit,
-  } = useComposeForm(editId, sparqlEditor);
+  } = useComposeForm(editId, fork, sparqlEditor);
 
   return (
     <>

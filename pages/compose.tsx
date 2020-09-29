@@ -7,10 +7,15 @@ import { useUser } from '@/hooks/use-user';
 import type { GetServerSideProps } from 'next';
 
 type Props = {
-  editId: string;
+  editId: string | null;
+  fork: {
+    queryId: string;
+    endpoint: string;
+    query: string;
+  } | null;
 };
 
-const ComposePage = ({ editId }: Props) => {
+const ComposePage = ({ editId, fork }: Props) => {
   const [user, loading] = useUser();
   const router = useRouter();
 
@@ -18,9 +23,11 @@ const ComposePage = ({ editId }: Props) => {
     router.replace('/sign-in');
   }
 
-  const pageTitle = router.query.edit
-    ? 'SPARQLクエリ編集'
-    : 'SPARQLクエリ新規作成';
+  if (typeof window !== 'undefined' && editId && fork) {
+    location.href = '/404';
+  }
+
+  const pageTitle = editId ? 'SPARQLクエリ編集' : 'SPARQLクエリ新規作成';
 
   return (
     <Layout>
@@ -29,7 +36,7 @@ const ComposePage = ({ editId }: Props) => {
       <Segment clearing>
         <Header as="h2">{pageTitle}</Header>
 
-        <ComposeForm editId={editId} />
+        <ComposeForm editId={editId} fork={fork} />
       </Segment>
     </Layout>
   );
@@ -38,9 +45,12 @@ const ComposePage = ({ editId }: Props) => {
 export default ComposePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { edit, fork, endpoint, query } = context.query;
   return {
     props: {
-      editId: context.query.edit ?? null,
+      editId: edit ?? null,
+      fork:
+        fork && endpoint && query ? { queryId: fork, endpoint, query } : null,
     },
   };
 };

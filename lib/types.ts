@@ -26,6 +26,7 @@ export type Query = {
   tags: string[];
   createdAt: number;
   updatedAt: number;
+  forkedFrom?: string;
 };
 
 export type QueryWithLikedAt = Query & {
