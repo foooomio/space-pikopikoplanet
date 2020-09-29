@@ -57,6 +57,10 @@ h3.ui.header > .icon {
   margin-bottom: 0.7em;
 }
 
+.ui.horizontal.list > .item > i.icon {
+  vertical-align: baseline;
+}
+
 .ui.list > .item > .ui.label,
 .ui.list > .item > .ui.labels {
   display: table-cell;
