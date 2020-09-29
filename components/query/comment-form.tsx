@@ -41,7 +41,7 @@ const QueryCommentForm = ({ queryId }: Props) => {
           )}
           <Form.TextArea
             value={text}
-            onChange={(e) => setText(e.currentTarget.value)}
+            onChange={(e) => setText(e.target.value)}
             style={{ marginTop: '1rem' }}
           />
           <Button
