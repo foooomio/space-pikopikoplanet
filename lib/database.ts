@@ -51,9 +51,8 @@ const updateUserDataInQueries = (userData: UserData): Promise<void> => {
 
 const updateUserDataInComments = (userData: UserData): Promise<void> => {
   return db
-    .collection('users')
-    .doc(userData.uid)
-    .collection('comments')
+    .collectionGroup('comments')
+    .where('authorUid', '==', userData.uid)
     .get()
     .then((querySnapshot) => {
       const batch = db.batch();
