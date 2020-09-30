@@ -120,7 +120,17 @@ export const saveQuery = (query: Query): Promise<void> => {
 };
 
 export const deleteQuery = (queryId: string): Promise<void> => {
-  return db.collection('queries').doc(queryId).delete();
+  const batch = db.batch();
+  return db
+    .collectionGroup('likes')
+    .where('queryId', '==', queryId)
+    .get()
+    .then((querySnapshot) =>
+      querySnapshot.forEach((doc) => batch.delete(doc.ref))
+    )
+    .then(() =>
+      batch.commit().then(() => db.collection('queries').doc(queryId).delete())
+    );
 };
 
 export const fetchQueryListLikedByUser = (
