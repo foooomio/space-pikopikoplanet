@@ -33,38 +33,38 @@ const saveUserDataInUsers = (userData: UserData): Promise<void> => {
 };
 
 const updateUserDataInQueries = (userData: UserData): Promise<void> => {
-  const batch = db.batch();
   return db
     .collection('queries')
     .where('authorUid', '==', userData.uid)
     .get()
     .then((querySnapshot) => {
+      const batch = db.batch();
       querySnapshot.forEach((doc) =>
         batch.update(doc.ref, {
           authorId: userData.userId,
           authorName: userData.userName,
         })
       );
-    })
-    .then(() => batch.commit());
+      return batch.commit();
+    });
 };
 
 const updateUserDataInComments = (userData: UserData): Promise<void> => {
-  const batch = db.batch();
   return db
     .collection('users')
     .doc(userData.uid)
     .collection('comments')
     .get()
     .then((querySnapshot) => {
+      const batch = db.batch();
       querySnapshot.forEach((doc) =>
         batch.update(doc.ref, {
           authorId: userData.userId,
           authorName: userData.userName,
         })
       );
-    })
-    .then(() => batch.commit());
+      return batch.commit();
+    });
 };
 
 export const saveUserData = (
@@ -120,17 +120,27 @@ export const saveQuery = (query: Query): Promise<void> => {
 };
 
 export const deleteQuery = (queryId: string): Promise<void> => {
-  const batch = db.batch();
   return db
     .collectionGroup('likes')
     .where('queryId', '==', queryId)
     .get()
-    .then((querySnapshot) =>
-      querySnapshot.forEach((doc) => batch.delete(doc.ref))
-    )
-    .then(() =>
-      batch.commit().then(() => db.collection('queries').doc(queryId).delete())
-    );
+    .then((querySnapshot) => {
+      const batch = db.batch();
+      querySnapshot.forEach((doc) => batch.delete(doc.ref));
+      batch.commit(); // Delete likes linked to query
+    })
+    .then(() => {
+      const queryRef = db.collection('queries').doc(queryId);
+      queryRef
+        .collection('comments')
+        .get()
+        .then((querySnapshot) => {
+          const batch = db.batch();
+          querySnapshot.forEach((doc) => batch.delete(doc.ref));
+          return batch.commit(); // Delete comments linked to query
+        })
+        .then(() => queryRef.delete()); // Delete query itself
+    });
 };
 
 export const fetchQueryListLikedByUser = (
