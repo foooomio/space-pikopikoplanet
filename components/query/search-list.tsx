@@ -8,11 +8,11 @@ type Props = {
 };
 
 const QuerySearchList = ({ searchOptions }: Props) => {
-  const getKey = (pageIndex: number, previousPageData: Query[]): any => {
+  const getKey = (pageIndex: number, previousPageData: Query[] | null): any => {
     const cursor =
       pageIndex === 0
         ? Infinity
-        : previousPageData[NUMBER_IN_QUERY_LIST - 1].createdAt;
+        : previousPageData![NUMBER_IN_QUERY_LIST - 1].createdAt;
     return [cursor, JSON.stringify(searchOptions)];
   };
 

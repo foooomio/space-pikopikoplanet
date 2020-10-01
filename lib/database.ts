@@ -4,6 +4,7 @@ import type {
   UserData,
   Query,
   Comment,
+  Notification,
   SearchOptions,
   QueryWithLikedAt,
 } from '@/lib/types';
@@ -66,14 +67,12 @@ const updateUserDataInComments = (userData: UserData): Promise<void> => {
     });
 };
 
-export const saveUserData = (
-  userData: UserData
-): Promise<[void, void, void]> => {
+export const saveUserData = (userData: UserData): Promise<void> => {
   return Promise.all([
     saveUserDataInUsers(userData),
     updateUserDataInQueries(userData),
     updateUserDataInComments(userData),
-  ]);
+  ]).then();
 };
 
 export const fetchQuery = (queryId: string): Promise<Query | null> => {
@@ -118,7 +117,7 @@ export const saveQuery = (query: Query): Promise<void> => {
   return db.collection('queries').doc(query.queryId).set(query);
 };
 
-export const deleteQuery = (queryId: string): Promise<void> => {
+const deleteLikesLinkedToQuery = (queryId: string): Promise<void> => {
   return db
     .collectionGroup('likes')
     .where('queryId', '==', queryId)
@@ -126,20 +125,28 @@ export const deleteQuery = (queryId: string): Promise<void> => {
     .then((querySnapshot) => {
       const batch = db.batch();
       querySnapshot.forEach((doc) => batch.delete(doc.ref));
-      batch.commit(); // Delete likes linked to query
-    })
-    .then(() => {
-      const queryRef = db.collection('queries').doc(queryId);
-      queryRef
-        .collection('comments')
-        .get()
-        .then((querySnapshot) => {
-          const batch = db.batch();
-          querySnapshot.forEach((doc) => batch.delete(doc.ref));
-          return batch.commit(); // Delete comments linked to query
-        })
-        .then(() => queryRef.delete()); // Delete query itself
+      batch.commit();
     });
+};
+
+const deleteCommentsLinkedToQuery = (queryId: string): Promise<void> => {
+  return db
+    .collection('queries')
+    .doc(queryId)
+    .collection('comments')
+    .get()
+    .then((querySnapshot) => {
+      const batch = db.batch();
+      querySnapshot.forEach((doc) => batch.delete(doc.ref));
+      return batch.commit();
+    });
+};
+
+export const deleteQuery = (queryId: string): Promise<void> => {
+  return Promise.all([
+    deleteLikesLinkedToQuery(queryId),
+    deleteCommentsLinkedToQuery(queryId),
+  ]).then(() => db.collection('queries').doc(queryId).delete());
 };
 
 export const fetchQueryListLikedByUser = (
@@ -256,5 +263,61 @@ export const deleteComment = (
     .doc(queryId)
     .collection('comments')
     .doc(commentId)
+    .delete();
+};
+
+export const fetchNotifications = (
+  uid: string,
+  cursor: number,
+  limit: number
+): Promise<Notification[]> => {
+  return db
+    .collection('users')
+    .doc(uid)
+    .collection('notifications')
+    .orderBy('createdAt', 'desc')
+    .startAfter(cursor)
+    .limit(limit)
+    .get()
+    .then((querySnapshot) => {
+      const batch = db.batch();
+      querySnapshot.forEach((doc) => batch.update(doc.ref, { unread: false }));
+      batch.commit(); // Mark read
+
+      return querySnapshot.docs.map((doc) => doc.data() as Notification);
+    });
+};
+
+export const fetchUnreadNotificationCount = (uid: string): Promise<number> => {
+  return db
+    .collection('users')
+    .doc(uid)
+    .collection('notifications')
+    .where('unread', '==', true)
+    .get()
+    .then((querySnapshot) => querySnapshot.size);
+};
+
+export const createNotification = (
+  destinationUid: string,
+  notification: Notification
+): Promise<void> => {
+  return db
+    .collection('users')
+    .doc(destinationUid)
+    .collection('notifications')
+    .doc(notification.notificationId)
+    .set(notification);
+};
+
+export const deleteNotification = (
+  destinationUid: string,
+  notificationId: string
+): Promise<void> => {
+  return db
+    .collection('users')
+    .doc(destinationUid)
+    .collection('notifications')
+    .doc(notificationId)
     .delete();
 };

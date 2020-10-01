@@ -44,6 +44,19 @@ export type Comment = {
   updatedAt: number;
 };
 
+export type NotificationType = 'like' | 'comment';
+
+export type Notification = {
+  type: NotificationType;
+  notificationId: string;
+  queryId: string;
+  authorUid: string;
+  authorId: string;
+  authorName: string;
+  createdAt: number;
+  unread: boolean;
+};
+
 export type SearchOptions = {
   authorUid?: string;
   endpoint?: string;

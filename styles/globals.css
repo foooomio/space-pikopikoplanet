@@ -15,17 +15,17 @@ header h1 {
 
 header h1 .star {
   color: #64c0ab;
-  font-size: 1.2rem;
+  font-size: min(1.6rem, 4vw);
 }
 
 header h1 .title {
   color: #f7d36e;
-  font-size: 1.7rem;
+  font-size: min(2.2rem, 5.5vw);
 }
 
 header h1 .subtitle {
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: min(1.6rem, 4vw);
 }
 
 main {

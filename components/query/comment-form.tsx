@@ -5,9 +5,10 @@ import { useCommentForm } from '@/hooks/use-comment-form';
 
 type Props = {
   queryId: string;
+  queryAuthorUid: string;
 };
 
-const QueryCommentForm = ({ queryId }: Props) => {
+const QueryCommentForm = ({ queryId, queryAuthorUid }: Props) => {
   const [user] = useUser();
 
   const {
@@ -18,7 +19,7 @@ const QueryCommentForm = ({ queryId }: Props) => {
     setText,
     handleSubmit,
     handleDelete,
-  } = useCommentForm(queryId);
+  } = useCommentForm(queryId, queryAuthorUid);
 
   return (
     <Comment.Group>

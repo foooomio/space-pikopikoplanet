@@ -9,13 +9,13 @@ const QueryLikesList = () => {
 
   const getKey = (
     pageIndex: number,
-    previousPageData: QueryWithLikedAt[]
+    previousPageData: QueryWithLikedAt[] | null
   ): any => {
     if (!user) return null;
     const cursor =
       pageIndex === 0
         ? Infinity
-        : previousPageData[NUMBER_IN_QUERY_LIST - 1].likedAt;
+        : previousPageData![NUMBER_IN_QUERY_LIST - 1].likedAt;
     return [cursor, 'likes'];
   };
 

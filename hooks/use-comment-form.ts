@@ -6,6 +6,8 @@ import {
   saveComment,
   deleteComment,
   fetchUserData,
+  createNotification,
+  deleteNotification,
 } from '@/lib/database';
 import { generateId } from '@/lib/util';
 import type { Comment } from '@/lib/types';
@@ -17,7 +19,7 @@ const validateText = (text: string): string | null => {
   return null;
 };
 
-export const useCommentForm = (queryId: string) => {
+export const useCommentForm = (queryId: string, queryAuthorUid: string) => {
   const [user] = useUser();
 
   const [text, setText] = useState<string>('');
@@ -59,18 +61,34 @@ export const useCommentForm = (queryId: string) => {
     }
 
     if (newErrors.length === 0) {
-      await saveComment(data);
-      setText('');
-      mutate();
+      saveComment(data).then(() => {
+        setText('');
+        mutate();
+      });
+
+      if (user!.uid !== queryAuthorUid) {
+        createNotification(queryAuthorUid, {
+          type: 'comment',
+          notificationId: data.commentId,
+          queryId,
+          authorUid: user!.uid,
+          authorId: userData!.userId,
+          authorName: userData!.userName,
+          createdAt: Date.now(),
+          unread: true,
+        });
+      }
     }
 
     setErrors(newErrors);
     setProcessing(false);
   };
 
-  const handleDelete = async (commentId: string) => {
-    await deleteComment(queryId, commentId);
-    mutate();
+  const handleDelete = (commentId: string) => {
+    deleteComment(queryId, commentId).then(() => mutate());
+    if (user!.uid !== queryAuthorUid) {
+      deleteNotification(queryAuthorUid, commentId);
+    }
   };
 
   return {

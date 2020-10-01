@@ -71,13 +71,13 @@ const QueryPage = ({
 
         <Divider />
 
-        <QueryCommentForm queryId={queryId} />
+        <QueryCommentForm queryId={queryId} queryAuthorUid={authorUid} />
 
         <Divider />
 
         <List horizontal>
           <List.Item>
-            <QueryLikeButton queryId={queryId} />
+            <QueryLikeButton queryId={queryId} queryAuthorUid={authorUid} />
           </List.Item>
           <List.Item>
             <QueryTweetButton

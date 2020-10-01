@@ -1,44 +1,19 @@
-import { useState, useEffect } from 'react';
-import useSWR from 'swr';
 import { Button } from 'semantic-ui-react';
 import { useUser } from '@/hooks/use-user';
-import {
-  fetchLikeCount,
-  fetchLikedByUser,
-  createLike,
-  deleteLike,
-} from '@/lib/database';
+import { useLikeButton } from '@/hooks/use-like-button';
 
 type Props = {
   queryId: string;
+  queryAuthorUid: string;
 };
 
-const QueryLikeButton = ({ queryId }: Props) => {
+const QueryLikeButton = ({ queryId, queryAuthorUid }: Props) => {
   const [user] = useUser();
 
-  const [likeCount, setLikeCount] = useState<number | null>(null);
-  const [likedByUser, setLikedByUser] = useState<boolean>(false);
-
-  const { data: likeCountCache } = useSWR(['likeCount', queryId], () =>
-    fetchLikeCount(queryId)
+  const { likeCount, likedByUser, handleLike, handleUnlike } = useLikeButton(
+    queryId,
+    queryAuthorUid
   );
-
-  const { data: likedByUserCache } = useSWR(
-    user ? ['likedByUser', user.uid, queryId] : null,
-    () => fetchLikedByUser(user!.uid, queryId)
-  );
-
-  useEffect(() => {
-    if (typeof likeCountCache !== 'undefined') {
-      setLikeCount(likeCountCache);
-    }
-  }, [likeCountCache]);
-
-  useEffect(() => {
-    if (typeof likedByUserCache !== 'undefined') {
-      setLikedByUser(likedByUserCache);
-    }
-  }, [likedByUserCache]);
 
   const loading = likeCount === null;
 
@@ -62,11 +37,7 @@ const QueryLikeButton = ({ queryId }: Props) => {
         color="red"
         content={likeCount ?? 0}
         loading={loading}
-        onClick={async () => {
-          await deleteLike(user.uid, queryId);
-          setLikeCount((count) => count! - 1);
-          setLikedByUser(false);
-        }}
+        onClick={handleUnlike}
       />
     );
   } else {
@@ -76,11 +47,7 @@ const QueryLikeButton = ({ queryId }: Props) => {
         icon="heart outline"
         content={likeCount ?? 0}
         loading={loading}
-        onClick={async () => {
-          await createLike(user.uid, queryId);
-          setLikeCount((count) => count! + 1);
-          setLikedByUser(true);
-        }}
+        onClick={handleLike}
       />
     );
   }

@@ -4,7 +4,7 @@ import QueryCard from '@/components/query/card';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 
 type Props = {
-  getKey: (pageIndex: number, previousPageData: any) => any;
+  getKey: (pageIndex: number, previousPageData: any[] | null) => any;
   fetcher: (...args: any[]) => Promise<any[]>;
 };
 
@@ -28,9 +28,9 @@ const QueryList = ({ getKey, fetcher }: Props) => {
   return (
     <>
       <Card.Group itemsPerRow={2} stackable>
-        {queries.map((props) => (
-          <QueryCard {...props} key={props.queryId} />
-        ))}
+        {queries.map(
+          (query) => query && <QueryCard {...query} key={query.queryId} />
+        )}
       </Card.Group>
       <Divider hidden />
       {isLoadingMore && <Loader active inline="centered" size="large" />}

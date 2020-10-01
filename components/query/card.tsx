@@ -7,6 +7,7 @@ import QueryLikeButton from '@/components/query/like-button';
 type Props = {
   queryId: string;
   title: string;
+  authorUid: string;
   authorId: string;
   authorName: string;
   endpoint: string;
@@ -18,6 +19,7 @@ type Props = {
 const QueryCard = ({
   queryId,
   title,
+  authorUid,
   authorId,
   authorName,
   endpoint,
@@ -58,7 +60,7 @@ const QueryCard = ({
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <QueryLikeButton queryId={queryId} />
+        <QueryLikeButton queryId={queryId} queryAuthorUid={authorUid} />
       </Card.Content>
     </Card>
   );
