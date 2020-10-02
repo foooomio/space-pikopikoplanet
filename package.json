@@ -10,14 +10,19 @@
   "dependencies": {
     "codemirror": "^5.58.1",
     "firebase": "^7.22.0",
+    "github-markdown-css": "^4.0.0",
     "next": "9.5.3",
     "react": "16.13.1",
     "react-codemirror2": "^7.2.1",
     "react-dom": "16.13.1",
     "react-firebaseui": "^4.1.0",
+    "remark-breaks": "^2.0.0",
+    "remark-parse": "^8.0.3",
+    "remark-react": "^7.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0",
-    "swr": "^0.3.5"
+    "swr": "^0.3.5",
+    "unified": "^9.2.0"
   },
   "devDependencies": {
     "@types/codemirror": "^0.0.98",

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Comment, Icon } from 'semantic-ui-react';
 import { useUser } from '@/hooks/use-user';
 import { formatDate } from '@/lib/util';
+import { markdown } from '@/lib/markdown';
 
 type Props = {
   authorUid: string;
@@ -32,7 +33,9 @@ const QueryComment = ({
           </Link>
         </Comment.Author>
         <Comment.Metadata>{formatDate(new Date(createdAt))}</Comment.Metadata>
-        <Comment.Text>{text}</Comment.Text>
+        <Comment.Text>
+          <div className="markdown-body">{markdown(text)}</div>
+        </Comment.Text>
         <Comment.Actions>
           {authorUid === user?.uid && (
             <Comment.Action onClick={onDelete}>Delete</Comment.Action>
