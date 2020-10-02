@@ -32,7 +32,7 @@ const validateUserName = (userName: string): string | null => {
   return null;
 };
 
-const initialData = {
+const initialState = {
   uid: '',
   userId: '',
   userName: '',
@@ -45,7 +45,7 @@ const initialData = {
 export const useSettingsForm = () => {
   const [user] = useUser();
 
-  const [form, setForm] = useState<UserData>(initialData);
+  const [form, setForm] = useState<UserData>(initialState);
   const [loading, setLoading] = useState<boolean>(true);
   const [errors, setErrors] = useState<string[]>([]);
   const [processing, setProcessing] = useState<boolean>(false);

@@ -39,7 +39,7 @@ const NotificationEvent = ({
   unread,
 }: Props) => {
   return (
-    <Feed.Event style={{ backgroundColor: unread ? '#eee' : 'initial' }}>
+    <Feed.Event style={{ backgroundColor: unread ? '#eee' : 'inherit' }}>
       <Feed.Label icon={getIcon(type)} />
       <Feed.Content>
         <Feed.Summary>
