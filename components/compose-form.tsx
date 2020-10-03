@@ -7,14 +7,12 @@ import type { ElementRef } from 'react';
 
 type Props = {
   editId: string | null;
-  fork: {
-    queryId: string;
-    endpoint: string;
-    query: string;
-  } | null;
+  forkId: string | null;
+  endpoint: string | null;
+  query: string | null;
 };
 
-const ComposeForm = ({ editId, fork }: Props) => {
+const ComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
   const sparqlEditor = useRef<ElementRef<typeof SparqlEditor>>(null);
 
   const {
@@ -25,7 +23,7 @@ const ComposeForm = ({ editId, fork }: Props) => {
     addTag,
     deleteTag,
     handleSubmit,
-  } = useComposeForm(editId, fork, sparqlEditor);
+  } = useComposeForm(sparqlEditor, { editId, forkId, endpoint, query });
 
   return (
     <>

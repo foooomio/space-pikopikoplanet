@@ -33,6 +33,7 @@ const QueryList = ({ getKey, fetcher }: Props) => {
         )}
       </Card.Group>
       <Divider hidden />
+      {isEmpty && <div>クエリがありません。</div>}
       {isLoadingMore && <Loader active inline="centered" size="large" />}
       {!isLoadingMore && !isEmpty && !isReachingEnd && (
         <Button fluid content="More" onClick={() => setSize(size + 1)} />

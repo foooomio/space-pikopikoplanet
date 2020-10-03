@@ -36,19 +36,37 @@ footer {
   padding: 2rem 0;
 }
 
-/* Hero image from https://www.pexels.com/ja-jp/photo/956999/ */
+/* index hero image from https://www.pexels.com/ja-jp/photo/956999/ */
 
-#hero {
-  padding: 4rem 0;
-  margin-bottom: 2rem;
+.hero {
+  padding: 4rem 0 !important;
+  margin-bottom: 2rem !important;
+  text-align: center !important;
+}
+
+.hero .website {
+  margin: 1rem 0;
+}
+
+#index.hero {
   background-size: cover;
   background-position: center;
   background-image: url(/hero.jpg);
 }
 
 @media screen and (max-width: 1280px) {
-  #hero {
+  #index.hero {
     background-image: url(/hero-s.jpg);
+  }
+}
+
+.ui.inverted.segment .ui.header {
+  color: #fff;
+}
+
+@media only screen and (max-width: 767px) {
+  .ui.stackable.cards {
+    margin-top: 1rem;
   }
 }
 

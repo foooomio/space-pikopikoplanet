@@ -8,23 +8,17 @@ import type { GetServerSideProps } from 'next';
 
 type Props = {
   editId: string | null;
-  fork: {
-    queryId: string;
-    endpoint: string;
-    query: string;
-  } | null;
+  forkId: string | null;
+  endpoint: string | null;
+  query: string | null;
 };
 
-const ComposePage = ({ editId, fork }: Props) => {
+const ComposePage = ({ editId, forkId, endpoint, query }: Props) => {
   const [user, loading] = useUser();
   const router = useRouter();
 
   if (typeof window !== 'undefined' && !loading && !user) {
     router.replace('/sign-in');
-  }
-
-  if (typeof window !== 'undefined' && editId && fork) {
-    location.href = '/404';
   }
 
   const pageTitle = editId ? 'SPARQLクエリ編集' : 'SPARQLクエリ新規作成';
@@ -36,7 +30,12 @@ const ComposePage = ({ editId, fork }: Props) => {
       <Segment clearing>
         <Header as="h2">{pageTitle}</Header>
 
-        <ComposeForm editId={editId} fork={fork} />
+        <ComposeForm
+          editId={editId}
+          forkId={forkId}
+          endpoint={endpoint}
+          query={query}
+        />
       </Segment>
     </Layout>
   );
@@ -46,11 +45,25 @@ export default ComposePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { edit, fork, endpoint, query } = context.query;
+
+  if (
+    Array.isArray(edit) ||
+    Array.isArray(fork) ||
+    Array.isArray(endpoint) ||
+    Array.isArray(query) ||
+    (edit && fork) ||
+    (fork && (!endpoint || !query))
+  ) {
+    context.res.writeHead(307, { Location: '/404' }).end();
+    return { props: {} };
+  }
+
   return {
     props: {
       editId: edit ?? null,
-      fork:
-        fork && endpoint && query ? { queryId: fork, endpoint, query } : null,
+      forkId: fork ?? null,
+      endpoint: endpoint ?? null,
+      query: query ?? null,
     },
   };
 };

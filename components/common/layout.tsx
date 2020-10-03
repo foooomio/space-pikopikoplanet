@@ -1,18 +1,17 @@
 import { Container } from 'semantic-ui-react';
 import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
-import Hero from '@/components/common/hero';
 import type { FunctionComponent } from 'react';
 
 type Props = {
-  hero?: boolean;
+  hero?: JSX.Element;
 };
 
 const Layout: FunctionComponent<Props> = ({ children, hero }) => {
   return (
     <>
       <Navbar />
-      {hero && <Hero />}
+      {hero}
       <Container as="main">{children}</Container>
       <Footer />
     </>

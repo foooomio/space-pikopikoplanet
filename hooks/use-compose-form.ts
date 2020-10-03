@@ -41,10 +41,16 @@ const initialState = {
   forkedFrom: '',
 };
 
+type Props = {
+  editId: string | null;
+  forkId: string | null;
+  endpoint: string | null;
+  query: string | null;
+};
+
 export const useComposeForm = (
-  editId: string | null,
-  fork: { queryId: string; endpoint: string; query: string } | null,
-  sparqlEditor: RefObject<ElementRef<typeof SparqlEditor>>
+  sparqlEditor: RefObject<ElementRef<typeof SparqlEditor>>,
+  { editId, forkId, endpoint, query }: Props
 ) => {
   const [user] = useUser();
 
@@ -53,26 +59,27 @@ export const useComposeForm = (
   const [errors, setErrors] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!editId) return;
-
-    fetchQuery(editId).then((data) => {
-      if (data) {
-        setForm(data);
-      } else {
-        location.href = '/404';
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!fork) return;
-
-    setForm({
-      ...form,
-      endpoint: fork.endpoint,
-      query: fork.query,
-      forkedFrom: fork.queryId,
-    });
+    if (editId) {
+      fetchQuery(editId).then((data) => {
+        if (data) {
+          setForm(data);
+        } else {
+          location.href = '/404';
+        }
+      });
+    } else if (forkId && endpoint && query) {
+      setForm({
+        ...form,
+        endpoint,
+        query,
+        forkedFrom: forkId,
+      });
+    } else if (endpoint) {
+      setForm({
+        ...form,
+        endpoint,
+      });
+    }
   }, []);
 
   const setTitle = (value: string) => {
