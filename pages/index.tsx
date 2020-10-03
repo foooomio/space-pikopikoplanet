@@ -4,6 +4,7 @@ import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
 import Feature from '@/components/feature';
 import QuerySearchList from '@/components/query/search-list';
+import features from '@/lib/features';
 
 const Home = () => {
   const hero = (
@@ -22,11 +23,11 @@ const Home = () => {
       <Header size="tiny" icon="bookmark" content="Features" />
       <Segment padded>
         <List>
-          <Feature
-            id="im@sparql"
-            title="im@sparql"
-            description="広がるアイドルマスターの世界をオープンデータ化"
-          />
+          {Object.entries(features).map(
+            ([key, { title, caption }]: [string, any]) => (
+              <Feature id={key} title={title} caption={caption} key={key} />
+            )
+          )}
         </List>
       </Segment>
 
