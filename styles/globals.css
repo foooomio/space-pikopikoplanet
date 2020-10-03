@@ -79,11 +79,6 @@ h3.ui.header > .icon {
   vertical-align: baseline;
 }
 
-.ui.list > .item > .ui.label,
-.ui.list > .item > .ui.labels {
-  display: table-cell;
-}
-
 .CodeMirror {
   font-size: 16px;
   height: auto !important;

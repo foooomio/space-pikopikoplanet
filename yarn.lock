@@ -1434,6 +1434,13 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
 
+"@types/mdast@^3.0.0":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/mdast/-/mdast-3.0.3.tgz#2d7d671b1cd1ea3deb306ea75036c2a0407d2deb"
+  integrity sha512-SXPBMnFVQg1s00dlMCc/jCdvPqdE4mXaMMCeRlxLDmTAEoegHT53xKtkDnzDTOcmMHUfcjyf36/YYZ6SxRdnsw==
+  dependencies:
+    "@types/unist" "*"
+
 "@types/node@^12.12.47":
   version "12.12.54"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.54.tgz#a4b58d8df3a4677b6c08bfbc94b7ad7a7a5f82d1"
@@ -1464,7 +1471,7 @@
   dependencies:
     "@types/estree" "*"
 
-"@types/unist@^2.0.0", "@types/unist@^2.0.2":
+"@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2", "@types/unist@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
@@ -2279,7 +2286,7 @@ codemirror@^5.58.1:
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.58.1.tgz#ec6bf38ad2a17f74c61bd00cc6dc5a69bd167854"
   integrity sha512-UGb/ueu20U4xqWk8hZB3xIfV2/SFqnSLYONiM3wTMDqko0bsYrsAkGGhqUzbRkYm89aBKPyHtuNEbVWF9FTFzw==
 
-collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
+collapse-white-space@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.6.tgz#e63629c0016665792060dbbeb79c42239d2c5287"
   integrity sha512-jEovNnrhMuqyCcjfEJA56v0Xq8SkIoPKDyaHahwo3POf4qcSXqMYuwNcOTzp74vTsR9Tn08z4MxWqAhcekogkQ==
@@ -2630,13 +2637,6 @@ des.js@^1.0.0:
   dependencies:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
-
-detab@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/detab/-/detab-2.0.3.tgz#33e5dd74d230501bd69985a0d2b9a3382699a130"
-  integrity sha512-Up8P0clUVwq0FnFjDclzZsy9PadzRn5FFxrr47tQQvMHqyiFYVbpH8oXDzWtF0Q7pYy3l+RPmtBl+BsFF6wH0A==
-  dependencies:
-    repeat-string "^1.5.4"
 
 dialog-polyfill@^0.4.7:
   version "0.4.10"
@@ -3274,11 +3274,12 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hast-to-hyperscript@^8.0.0:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/hast-to-hyperscript/-/hast-to-hyperscript-8.1.1.tgz#081e5a98d961ab46277a844f97dfe8dae05a8479"
-  integrity sha512-IsVTowDrvX4n+Nt+zP0VLQmh/ddVtnFSLUv1gb/706ovL2VgFdnE5ior2fDHSp1Bc0E5GidF2ax+PMjd+TW7gA==
+hast-to-hyperscript@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/hast-to-hyperscript/-/hast-to-hyperscript-9.0.0.tgz#768fb557765fe28749169c885056417342d71e83"
+  integrity sha512-NJvMYU3GlMLs7hN3CRbsNlMzusVNkYBogVWDGybsuuVQ336gFLiD+q9qtFZT2meSHzln3pNISZWTASWothMSMg==
   dependencies:
+    "@types/unist" "^2.0.3"
     comma-separated-tokens "^1.0.0"
     property-information "^5.3.0"
     space-separated-tokens "^1.0.0"
@@ -3286,10 +3287,10 @@ hast-to-hyperscript@^8.0.0:
     unist-util-is "^4.0.0"
     web-namespaces "^1.0.0"
 
-hast-util-sanitize@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-2.0.3.tgz#3cf4a1f5adb7d3c0b1fbb5dc1b1930fab6574856"
-  integrity sha512-RILqWHmzU0Anmfw1KEP41LbCsJuJUVM0lQWAbTDk9+0bWqzRFXDaMdqIoRocLlOfR5NfcWyhFfZw/mGsuftwYA==
+hast-util-sanitize@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-3.0.0.tgz#4cdc26b2991b3bf90ee74b5c932e14d907549312"
+  integrity sha512-gxsM24ARtuulsrWEj8QtVM6FNeAEHklF/t7TEIWvX1wuQcoAQtJtEUcT8t0os4uxCUqh1epX/gTi8fp8gNKvCA==
   dependencies:
     xtend "^4.0.0"
 
@@ -3863,23 +3864,22 @@ md5.js@^1.3.4:
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
 
-mdast-util-definitions@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/mdast-util-definitions/-/mdast-util-definitions-2.0.1.tgz#2c931d8665a96670639f17f98e32c3afcfee25f3"
-  integrity sha512-Co+DQ6oZlUzvUR7JCpP249PcexxygiaKk9axJh+eRzHDZJk2julbIdKB4PXHVxdBuLzvJ1Izb+YDpj2deGMOuA==
+mdast-util-definitions@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/mdast-util-definitions/-/mdast-util-definitions-4.0.0.tgz#c5c1a84db799173b4dcf7643cda999e440c24db2"
+  integrity sha512-k8AJ6aNnUkB7IE+5azR9h81O5EQ/cTDXtWdMq9Kk5KcEW/8ritU5CeLg/9HhOC++nALHBlaogJ5jz0Ybk3kPMQ==
   dependencies:
     unist-util-visit "^2.0.0"
 
-mdast-util-to-hast@^8.0.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/mdast-util-to-hast/-/mdast-util-to-hast-8.2.0.tgz#adf9f824defcd382e53dd7bace4282a45602ac67"
-  integrity sha512-WjH/KXtqU66XyTJQ7tg7sjvTw1OQcVV0hKdFh3BgHPwZ96fSBCQ/NitEHsN70Mmnggt+5eUUC7pCnK+2qGQnCA==
+mdast-util-to-hast@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/mdast-util-to-hast/-/mdast-util-to-hast-10.0.0.tgz#744dfe7907bac0263398a68af5aba16d104a9a08"
+  integrity sha512-dRyAC5S4eDcIOdkz4jg0wXbUdlf+5YFu7KppJNHOsMaD7ql5bKIqVcvXYYkcrKjzUkfX8JsKFVMthsU8OWxQ+w==
   dependencies:
-    collapse-white-space "^1.0.0"
-    detab "^2.0.0"
-    mdast-util-definitions "^2.0.0"
+    "@types/mdast" "^3.0.0"
+    "@types/unist" "^2.0.0"
+    mdast-util-definitions "^4.0.0"
     mdurl "^1.0.0"
-    trim-lines "^1.0.0"
     unist-builder "^2.0.0"
     unist-util-generated "^1.0.0"
     unist-util-position "^3.0.0"
@@ -4851,15 +4851,15 @@ remark-parse@^8.0.3:
     vfile-location "^3.0.0"
     xtend "^4.0.1"
 
-remark-react@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/remark-react/-/remark-react-7.0.1.tgz#499c8b9384e0958834e57a49fe11e7af230936a4"
-  integrity sha512-JJ99WjMmYx2Yc/Nvg0PFH7qb4nw+POkSc8MQV0we95/cFfbUe7WLY7R+k7akAV5ZOOvv8YIkRmxuUFU+4XGPvA==
+remark-react@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/remark-react/-/remark-react-8.0.0.tgz#dc861df69c95e1084059effae699dac68a57191e"
+  integrity sha512-Dlafr0cejDMMMelH0MxkY3NYVelbMdqaoXuwIgWtWn5KGE0Jpko47NhkBzptxvzMqCdJxD6aoJTOFyJ1Re5Iyg==
   dependencies:
     "@mapbox/hast-util-table-cell-style" "^0.1.3"
-    hast-to-hyperscript "^8.0.0"
-    hast-util-sanitize "^2.0.0"
-    mdast-util-to-hast "^8.0.0"
+    hast-to-hyperscript "^9.0.0"
+    hast-util-sanitize "^3.0.0"
+    mdast-util-to-hast "^10.0.0"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
@@ -5486,11 +5486,6 @@ traverse@0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
-
-trim-lines@^1.0.0:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/trim-lines/-/trim-lines-1.1.3.tgz#839514be82428fd9e7ec89e35081afe8f6f93115"
-  integrity sha512-E0ZosSWYK2mkSu+KEtQ9/KqarVjA9HztOSX+9FDdNacRAq29RRV6ZQNgob3iuW8Htar9vAfEa6yyt5qBAHZDBA==
 
 trim-trailing-lines@^1.0.0:
   version "1.1.3"

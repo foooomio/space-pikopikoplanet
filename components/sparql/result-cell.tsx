@@ -10,14 +10,8 @@ const SparqlResultCell = ({ data }: Props) => {
   if (!data) return null;
 
   const value = data?.value ?? null;
-  if (value && isUrl(value)) {
-    return (
-      <>
-        {'<'}
-        <a href={value}>{value}</a>
-        {'>'}
-      </>
-    );
+  if (typeof value === 'string' && isUrl(value)) {
+    return <a href={value}>{value}</a>;
   } else {
     return <>{value}</>;
   }
