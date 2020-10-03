@@ -9,6 +9,13 @@ import 'codemirror/lib/codemirror.css';
 import 'github-markdown-css/github-markdown.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  if (
+    typeof navigator !== 'undefined' &&
+    navigator.userAgent.indexOf('Trident') !== -1
+  ) {
+    location.href = 'https://www.microsoft.com/ja-jp/edge';
+  }
+
   if (typeof window !== 'undefined') {
     firebase.analytics().logEvent('page_view', {});
   }
