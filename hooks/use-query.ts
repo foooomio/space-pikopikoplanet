@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { SparqlResult } from '@/lib/types';
 import type { Reducer } from 'react';
 
@@ -11,7 +12,8 @@ type State = {
 type Action =
   | { type: 'loading' }
   | { type: 'result'; payload: SparqlResult }
-  | { type: 'error'; payload: Error };
+  | { type: 'error'; payload: Error }
+  | { type: 'reset' };
 
 const initialState = {
   result: null,
@@ -39,6 +41,8 @@ const reducer: Reducer<State, Action> = (state, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'reset':
+      return initialState;
   }
 };
 
@@ -69,6 +73,12 @@ export const useQuery = (
       dispatch({ type: 'error', payload: e });
     }
   };
+
+  const { asPath } = useRouter();
+
+  useEffect(() => {
+    dispatch({ type: 'reset' });
+  }, [asPath]);
 
   return [state, handleQuery];
 };
