@@ -7,7 +7,7 @@ type Props = {
   caption: string;
 };
 
-const Feature = ({ id, title, caption }: Props) => {
+const FeatureItem = ({ id, title, caption }: Props) => {
   return (
     <List.Item>
       <List.Icon name="star outline" style={{ verticalAlign: 'middle' }} />
@@ -23,4 +23,4 @@ const Feature = ({ id, title, caption }: Props) => {
   );
 };
 
-export default Feature;
+export default FeatureItem;

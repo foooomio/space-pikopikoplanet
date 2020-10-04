@@ -1,9 +1,11 @@
+import { Header } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
 import QuerySearchList from '@/components/query/search-list';
 import features from '@/lib/features';
 import type { GetStaticProps, GetStaticPaths } from 'next';
+import PopularTags from '@/components/popular-tags';
 
 type Props = {
   title: string;
@@ -34,6 +36,10 @@ const FeaturePage = ({
     <Layout hero={hero}>
       <Head subtitle={title} />
 
+      <Header size="tiny" icon="star" content="Popular tags" />
+      <PopularTags endpoint={endpoint} />
+
+      <Header size="tiny" icon="bullhorn" content="Latest queries" />
       <QuerySearchList searchOptions={{ endpoint }} />
     </Layout>
   );

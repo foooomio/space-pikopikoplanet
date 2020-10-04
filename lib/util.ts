@@ -20,3 +20,13 @@ export const formatDate = (date: Date): string =>
       timeZone: 'Asia/Tokyo',
     })
     .replace(/-/g, '/');
+
+export const tally = (array: string[]): { [key: string]: number } =>
+  Object.fromEntries(
+    Object.entries(
+      array.reduce(
+        (acc, elem) => (elem in acc ? acc[elem]++ : (acc[elem] = 1), acc),
+        {} as { [key: string]: number }
+      )
+    ).sort((a, b) => b[1] - a[1])
+  );

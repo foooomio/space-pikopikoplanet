@@ -2,7 +2,7 @@ import { Header, Segment, List } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
-import Feature from '@/components/feature';
+import FeatureItem from '@/components/feature-item';
 import QuerySearchList from '@/components/query/search-list';
 import features from '@/lib/features';
 
@@ -25,7 +25,7 @@ const Home = () => {
         <List>
           {Object.entries(features).map(
             ([key, { title, caption }]: [string, any]) => (
-              <Feature id={key} title={title} caption={caption} key={key} />
+              <FeatureItem id={key} title={title} caption={caption} key={key} />
             )
           )}
         </List>
