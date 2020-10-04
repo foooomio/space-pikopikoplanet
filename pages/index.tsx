@@ -3,6 +3,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
 import FeatureItem from '@/components/feature-item';
+import PopularTags from '@/components/popular-tags';
 import QuerySearchList from '@/components/query/search-list';
 import features from '@/lib/features';
 
@@ -30,6 +31,9 @@ const Home = () => {
           )}
         </List>
       </Segment>
+
+      <Header size="tiny" icon="star" content="Popular tags" />
+      <PopularTags />
 
       <Header size="tiny" icon="bullhorn" content="Latest queries" />
       <QuerySearchList />

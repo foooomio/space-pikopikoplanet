@@ -113,6 +113,15 @@ export const fetchQueryList = (
     );
 };
 
+export const fetchAllQueries = (): Promise<Query[]> => {
+  return db
+    .collection('queries')
+    .get()
+    .then((querySnapshot) =>
+      querySnapshot.docs.map((doc) => doc.data() as Query)
+    );
+};
+
 export const fetchAllQueriesByEndpoint = (
   endpoint: string
 ): Promise<Query[]> => {
