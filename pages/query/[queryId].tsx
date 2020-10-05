@@ -76,6 +76,21 @@ const QueryPage = ({
         <Divider />
 
         <List horizontal>
+          <List.Item>Download as</List.Item>
+          <List.Item>
+            <a href={`/data/${queryId}.ttl`}>Turtle</a>
+          </List.Item>
+          <List.Item>
+            <a href={`/data/${queryId}.rdf`}>RDF/XML</a>
+          </List.Item>
+          <List.Item>
+            <a href={`/data/${queryId}.jsonld`}>JSON-LD</a>
+          </List.Item>
+        </List>
+
+        <Divider />
+
+        <List horizontal>
           <List.Item>
             <QueryLikeButton queryId={queryId} queryAuthorUid={authorUid} />
           </List.Item>
