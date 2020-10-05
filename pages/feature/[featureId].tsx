@@ -13,6 +13,7 @@ type Props = {
   endpoint: string;
   website: string;
   backgroundColor: string;
+  inverted?: boolean;
 };
 
 const FeaturePage = ({
@@ -21,6 +22,7 @@ const FeaturePage = ({
   endpoint,
   website,
   backgroundColor,
+  inverted,
 }: Props) => {
   const hero = (
     <Hero
@@ -29,6 +31,7 @@ const FeaturePage = ({
       endpoint={endpoint}
       website={website}
       style={{ backgroundColor }}
+      inverted={inverted}
     />
   );
 
@@ -49,7 +52,7 @@ export default FeaturePage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const featureId = context.params!.featureId as string;
-  const feature = features[featureId];
+  const feature = features.find(({ id }) => id === featureId)!;
 
   return {
     props: feature,
@@ -58,8 +61,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: Object.keys(features).map((featureId) => ({
-      params: { featureId },
+    paths: features.map(({ id }) => ({
+      params: { featureId: id },
     })),
     fallback: false,
   };

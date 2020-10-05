@@ -23,12 +23,10 @@ const Home = () => {
 
       <Header size="tiny" icon="bookmark" content="Features" />
       <Segment padded>
-        <List>
-          {Object.entries(features).map(
-            ([key, { title, caption }]: [string, any]) => (
-              <FeatureItem id={key} title={title} caption={caption} key={key} />
-            )
-          )}
+        <List relaxed="very">
+          {features.map(({ id, title, caption }) => (
+            <FeatureItem id={id} title={title} caption={caption} key={id} />
+          ))}
         </List>
       </Segment>
 
