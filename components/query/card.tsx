@@ -28,7 +28,7 @@ const QueryCard = ({
   forkedFrom,
 }: Props) => {
   return (
-    <Card fluid color="grey">
+    <Card fluid raised>
       <Card.Content>
         <Card.Header>
           <Link href="/query/[queryId]" as={`/query/${queryId}`}>

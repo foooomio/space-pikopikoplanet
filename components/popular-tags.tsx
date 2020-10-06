@@ -23,6 +23,7 @@ const PopularTags = ({ endpoint }: Props) => {
   return (
     <Label.Group>
       {Object.entries(tally(tags))
+        .sort((a, b) => b[1] - a[1])
         .slice(0, NUMBER_IN_POPULAR_TAGS)
         .map(([tag, count]) => {
           let href = `/search?tag=${tag}`;
