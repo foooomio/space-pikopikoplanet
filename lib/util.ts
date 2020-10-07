@@ -23,6 +23,6 @@ export const formatDate = (date: Date): string =>
 
 export const tally = (array: string[]): { [key: string]: number } =>
   array.reduce(
-    (acc, elem) => (elem in acc ? acc[elem]++ : (acc[elem] = 1), acc),
+    (acc, curr) => ((acc[curr] = (acc[curr] ?? 0) + 1), acc),
     {} as { [key: string]: number }
   );
