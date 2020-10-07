@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const [render, contentType] = selectByRDFType(rdfType);
 
-  context.res.setHeader('Content-Type', contentType);
+  context.res.setHeader('Content-Type', `${contentType}; charset=utf-8`);
   context.res.end(render(query));
 
   return { props: {} };
