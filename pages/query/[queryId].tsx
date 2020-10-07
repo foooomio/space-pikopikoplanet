@@ -88,6 +88,13 @@ const QueryPage = ({
           </List.Item>
         </List>
 
+        <div>
+          <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">
+            CC BY 4.0
+          </a>{' '}
+          © {new Date(createdAt).getUTCFullYear()} {authorName}
+        </div>
+
         <Divider />
 
         <List horizontal>

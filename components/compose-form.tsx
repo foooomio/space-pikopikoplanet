@@ -46,6 +46,14 @@ const ComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
 
       <Divider />
 
+      <span>
+        投稿されたクエリには{' '}
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">
+          CC BY 4.0
+        </a>{' '}
+        が付与されます。
+      </span>
+
       <Button
         primary
         type="submit"

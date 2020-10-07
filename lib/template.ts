@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/lib/constants';
 import type { Query } from '@/lib/types';
 
 export const renderAsTurtle = ({
@@ -17,7 +18,7 @@ export const renderAsTurtle = ({
 @prefix schema: <http://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://space.pikopikopla.net/resource/${queryId}> a schema:CreativeWork ;
+<${BASE_URL}/resource/${queryId}> a schema:CreativeWork ;
     schema:name "${escape(title)}" ;
     schema:creator "${escape(authorName)}" ;
     schema:material <${endpoint}> ;
@@ -25,11 +26,14 @@ export const renderAsTurtle = ({
     schema:dateCreated "${new Date(createdAt).toISOString()}"^^xsd:dateTime ;
     schema:dateModified "${new Date(updatedAt).toISOString()}"^^xsd:dateTime ;
     schema:keywords "${tags.join(',')}" ;
-    schema:url <https://space.pikopikopla.net/query/${queryId}> .
+    schema:license <https://creativecommons.org/licenses/by/4.0/legalcode> ;
+    schema:copyrightYear ${new Date(createdAt).getUTCFullYear()} ;
+    schema:copyrightHolder "${escape(authorName)}" ;
+    schema:url <${BASE_URL}/query/${queryId}> .
 `.trim();
 
   if (forkedFrom) {
-    const isBasedOn = `    schema:isBasedOn <https://space.pikopikopla.net/query/${forkedFrom}> ;`;
+    const isBasedOn = `    schema:isBasedOn <${BASE_URL}/query/${forkedFrom}> ;`;
     const splitted = template.split('\n');
     splitted.splice(-1, 0, isBasedOn);
     return splitted.join('\n');
@@ -62,7 +66,7 @@ export const renderAsRDFXML = ({
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:schema="http://schema.org/"
   >
-  <rdf:Description rdf:about="https://space.pikopikopla.net/resource/${queryId}">
+  <rdf:Description rdf:about="${BASE_URL}/resource/${queryId}">
     <rdf:type rdf:resource="http://schema.org/CreativeWork" />
     <schema:name>${escape(title)}</schema:name>
     <schema:creator>${escape(authorName)}</schema:creator>
@@ -75,13 +79,18 @@ export const renderAsRDFXML = ({
       updatedAt
     ).toISOString()}</schema:dateModified>
     <schema:keywords>${tags.map(escape).join(',')}</schema:keywords>
-    <schema:url rdf:resource="https://space.pikopikopla.net/query/${queryId}" />
+    <schema:license rdf:resource="https://creativecommons.org/licenses/by/4.0/legalcode" />
+    <schema:copyrightYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">${new Date(
+      createdAt
+    ).getUTCFullYear()}</schema:copyrightYear>
+    <schema:copyrightHolder>${escape(authorName)}</schema:copyrightHolder>
+    <schema:url rdf:resource="${BASE_URL}/query/${queryId}" />
   </rdf:Description>
 </rdf:RDF>
 `.trim();
 
   if (forkedFrom) {
-    const isBasedOn = `    <schema:isBasedOn rdf:resource="https://space.pikopikopla.net/query/${forkedFrom}" />`;
+    const isBasedOn = `    <schema:isBasedOn rdf:resource="${BASE_URL}/query/${forkedFrom}" />`;
     const splitted = template.split('\n');
     splitted.splice(-3, 0, isBasedOn);
     return splitted.join('\n');
@@ -117,11 +126,14 @@ export const renderAsJSONLD = ({
       'schema:isBasedOn': {
         '@type': '@id',
       },
+      'schema:license': {
+        '@type': '@id',
+      },
       'schema:url': {
         '@type': '@id',
       },
     },
-    '@id': `https://space.pikopikopla.net/resource/${queryId}`,
+    '@id': `${BASE_URL}/resource/${queryId}`,
     '@type': 'schema:CreativeWork',
     'schema:name': title,
     'schema:creator': authorName,
@@ -130,12 +142,14 @@ export const renderAsJSONLD = ({
     'schema:dateCreated': new Date(createdAt).toISOString(),
     'schema:dateModified': new Date(updatedAt).toISOString(),
     'schema:keywords': tags.join(','),
-    'schema:url': `https://space.pikopikopla.net/query/${queryId}`,
+    'schema:license': 'https://creativecommons.org/licenses/by/4.0/legalcode',
+    'schema:copyrightYear': new Date(createdAt).getUTCFullYear(),
+    'schema:copyrightHolder': authorName,
+    'schema:url': `${BASE_URL}/query/${queryId}`,
   };
 
   if (forkedFrom) {
-    const isBasedOn = `https://space.pikopikopla.net/query/${forkedFrom}`;
-    jsonld['schema:isBasedOn'] = isBasedOn;
+    jsonld['schema:isBasedOn'] = `${BASE_URL}/query/${forkedFrom}`;
   }
 
   return JSON.stringify(jsonld, null, 2);
