@@ -33,7 +33,7 @@ export const renderAsTurtle = ({
 `.trim();
 
   if (forkedFrom) {
-    const isBasedOn = `    schema:isBasedOn <${BASE_URL}/query/${forkedFrom}> ;`;
+    const isBasedOn = `    schema:isBasedOn <${BASE_URL}/resource/${forkedFrom}> ;`;
     const splitted = template.split('\n');
     splitted.splice(-1, 0, isBasedOn);
     return splitted.join('\n');
@@ -90,7 +90,7 @@ export const renderAsRDFXML = ({
 `.trim();
 
   if (forkedFrom) {
-    const isBasedOn = `    <schema:isBasedOn rdf:resource="${BASE_URL}/query/${forkedFrom}" />`;
+    const isBasedOn = `    <schema:isBasedOn rdf:resource="${BASE_URL}/resource/${forkedFrom}" />`;
     const splitted = template.split('\n');
     splitted.splice(-3, 0, isBasedOn);
     return splitted.join('\n');
@@ -149,7 +149,7 @@ export const renderAsJSONLD = ({
   };
 
   if (forkedFrom) {
-    jsonld['schema:isBasedOn'] = `${BASE_URL}/query/${forkedFrom}`;
+    jsonld['schema:isBasedOn'] = `${BASE_URL}/resource/${forkedFrom}`;
   }
 
   return JSON.stringify(jsonld, null, 2);
