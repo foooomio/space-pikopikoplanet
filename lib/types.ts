@@ -70,7 +70,10 @@ export type SparqlResult = {
   results: {
     bindings: {
       [key: string]: {
-        value?: string;
+        type: 'uri' | 'literal' | 'bnode';
+        value: string;
+        datatype?: string;
+        'xml:lang'?: string;
       };
     }[];
   };

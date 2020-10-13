@@ -1,19 +1,19 @@
-import { isUrl } from '@/lib/util';
-
 type Props = {
   data?: {
-    value?: string;
+    type: 'uri' | 'literal' | 'bnode';
+    value: string;
+    datatype?: string;
+    'xml:lang'?: string;
   };
 };
 
 const SparqlResultCell = ({ data }: Props) => {
   if (!data) return null;
 
-  const value = data?.value ?? null;
-  if (typeof value === 'string' && isUrl(value)) {
-    return <a href={value}>{value}</a>;
+  if (data.type === 'uri') {
+    return <a href={data.value}>{data.value}</a>;
   } else {
-    return <>{value}</>;
+    return <>{data.value}</>;
   }
 };
 
