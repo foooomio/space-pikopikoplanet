@@ -1,6 +1,3 @@
-import type { RefObject } from 'react';
-import type { Input } from 'semantic-ui-react';
-
 export type User = {
   uid: string;
 };
@@ -77,8 +74,4 @@ export type SparqlResult = {
       };
     }[];
   };
-};
-
-export type InputWithRef = Input & {
-  inputRef: RefObject<HTMLInputElement>;
 };

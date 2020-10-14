@@ -1,9 +1,7 @@
-import { useRef } from 'react';
 import { Input, Button, Divider, Message } from 'semantic-ui-react';
 import SparqlEditor from '@/components/sparql/editor';
 import TagEditor from '@/components/tag-editor';
 import { useComposeForm } from '@/hooks/use-compose-form';
-import type { ElementRef } from 'react';
 
 type Props = {
   editId: string | null;
@@ -13,17 +11,17 @@ type Props = {
 };
 
 const ComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
-  const sparqlEditor = useRef<ElementRef<typeof SparqlEditor>>(null);
-
   const {
     form,
     processing,
     errors,
     setTitle,
+    setEndpoint,
+    setQuery,
     addTag,
     deleteTag,
     handleSubmit,
-  } = useComposeForm(sparqlEditor, { editId, forkId, endpoint, query });
+  } = useComposeForm({ editId, forkId, endpoint, query });
 
   return (
     <>
@@ -39,7 +37,8 @@ const ComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
       <SparqlEditor
         endpoint={form.endpoint}
         query={form.query}
-        ref={sparqlEditor}
+        onEndpointChange={(value) => setEndpoint(value)}
+        onQueryChange={(value) => setQuery(value)}
       />
 
       <TagEditor tags={form.tags} addTag={addTag} deleteTag={deleteTag} />

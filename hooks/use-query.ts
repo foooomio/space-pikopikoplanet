@@ -46,10 +46,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
   }
 };
 
-export const useQuery = (
-  getEndpoint: () => string,
-  getQuery: () => string
-): [State, () => Promise<void>] => {
+export const useQuery = (endpoint: string, query: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleQuery = async () => {
@@ -57,8 +54,8 @@ export const useQuery = (
       dispatch({ type: 'loading' });
 
       const url = new URL('/api/proxy', location.origin);
-      url.searchParams.set('endpoint', getEndpoint());
-      url.searchParams.set('query', getQuery());
+      url.searchParams.set('endpoint', endpoint);
+      url.searchParams.set('query', query);
 
       const response = await fetch(url.toString());
 
@@ -80,5 +77,5 @@ export const useQuery = (
     dispatch({ type: 'reset' });
   }, [asPath]);
 
-  return [state, handleQuery];
+  return { ...state, handleQuery };
 };

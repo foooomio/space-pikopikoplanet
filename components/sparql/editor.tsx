@@ -1,4 +1,3 @@
-import { useRef, useImperativeHandle, forwardRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Segment } from 'semantic-ui-react';
@@ -8,78 +7,66 @@ import SparqlResultError from '@/components/sparql/result-error';
 import SparqlForkButton from '@/components/sparql/fork-button';
 import SparqlQueryButton from '@/components/sparql/query-button';
 import { useQuery } from '@/hooks/use-query';
-import type { InputWithRef } from '@/lib/types';
-import type { Editor } from 'codemirror';
 
 const SparqlEditorInner = dynamic(
   () => import('@/components/sparql/editor-inner'),
   { ssr: false }
 );
 
-type Handler = {
-  endpoint: () => string;
-  query: () => string;
-};
-
 type Props = {
   viewer?: boolean;
   queryId?: string;
   endpoint: string;
   query: string;
+  onEndpointChange: (value: string) => void;
+  onQueryChange: (value: string) => void;
 };
 
-const SparqlEditor = forwardRef<Handler, Props>(
-  ({ viewer, queryId, endpoint, query }, ref) => {
-    const endpointRef = useRef<InputWithRef>(null);
-    const editorInnerRef = useRef<Editor | null>(null);
+const SparqlEditor = ({
+  viewer,
+  queryId,
+  endpoint,
+  query,
+  onEndpointChange,
+  onQueryChange,
+}: Props) => {
+  const { result, loading, error, handleQuery } = useQuery(endpoint, query);
 
-    const [{ result, loading, error }, handleQuery] = useQuery(
-      () => endpointRef.current!.inputRef.current!.value,
-      () => editorInnerRef.current!.getValue()
-    );
+  const router = useRouter();
 
-    useImperativeHandle(ref, () => ({
-      endpoint: () => endpointRef.current!.inputRef.current!.value,
-      query: () => editorInnerRef.current!.getValue(),
-    }));
+  const handleFork = () => {
+    router.push({
+      pathname: '/compose',
+      query: { fork: queryId, endpoint, query },
+    });
+  };
 
-    const router = useRouter();
-
-    const handleFork = () => {
-      router.push({
-        pathname: '/compose',
-        query: {
-          fork: queryId,
-          endpoint: endpointRef.current!.inputRef.current!.value,
-          query: editorInnerRef.current!.getValue(),
-        },
-      });
-    };
-
-    return (
-      <>
-        <Segment attached="top">
-          <SparqlEndpointInput defaultValue={endpoint} ref={endpointRef} />
-        </Segment>
-        <Segment attached style={{ padding: '0', minHeight: '300px' }}>
-          <SparqlEditorInner
-            value={query}
-            editorDidMount={(editor) => (editorInnerRef.current = editor)}
-          />
-        </Segment>
-        <Segment clearing attached={result || error ? true : 'bottom'}>
-          {viewer && <SparqlForkButton onClick={handleFork} />}
-          <SparqlQueryButton
-            floated="right"
-            onClick={handleQuery}
-            loading={loading}
-          />
-        </Segment>
-        <SparqlResultTable result={result} />
-        <SparqlResultError error={error} />
-      </>
-    );
-  }
-);
+  return (
+    <>
+      <Segment attached="top">
+        <SparqlEndpointInput
+          value={endpoint}
+          onChange={(e) => onEndpointChange(e.target.value)}
+        />
+      </Segment>
+      <Segment attached style={{ padding: '0', minHeight: '300px' }}>
+        <SparqlEditorInner
+          value={query}
+          onChange={(editor, data, value) => onQueryChange(value)}
+        />
+      </Segment>
+      <Segment clearing attached={result || error ? true : 'bottom'}>
+        {viewer && <SparqlForkButton onClick={handleFork} />}
+        <SparqlQueryButton
+          floated="right"
+          onClick={handleQuery}
+          loading={loading}
+        />
+      </Segment>
+      <SparqlResultTable result={result} />
+      <SparqlResultError error={error} />
+    </>
+  );
+};
 
 export default SparqlEditor;

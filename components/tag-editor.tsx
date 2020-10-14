@@ -1,7 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Input, Button, Label, Icon, Divider } from 'semantic-ui-react';
 import type { KeyboardEvent } from 'react';
-import type { InputWithRef } from '@/lib/types';
 
 const invalidChars = ' !"#$%&\'()*+,./;<=>?[\\]^`{|}~';
 
@@ -22,18 +21,17 @@ type Props = {
 };
 
 const TagEditor = ({ tags, addTag, deleteTag }: Props) => {
-  const inputRef = useRef<InputWithRef>(null);
+  const [input, setInput] = useState('');
   const [inputError, setInputError] = useState<string | null>(null);
 
   const handleAdd = () => {
-    const value = inputRef.current!.inputRef.current!.value;
-    const error = validateTag(value);
+    const error = validateTag(input);
     if (error) {
       setInputError(error);
     } else {
-      addTag(value);
+      addTag(input);
       setInputError(null);
-      inputRef.current!.inputRef.current!.value = '';
+      setInput('');
     }
   };
 
@@ -50,8 +48,9 @@ const TagEditor = ({ tags, addTag, deleteTag }: Props) => {
         icon="tags"
         iconPosition="left"
         action={<Button basic content="Add" onClick={handleAdd} />}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
         onKeyPress={handleKeyPress}
-        ref={inputRef}
       />
       {inputError && (
         <Label pointing="left" color="red" basic content={inputError} />

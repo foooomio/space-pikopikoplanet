@@ -3,7 +3,7 @@ import { Segment, Header, List, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryMeta from '@/components/query/meta';
-import SparqlEditor from '@/components/sparql/editor';
+import SparqlViewer from '@/components/sparql/viewer';
 import QueryDescription from '@/components/query/description';
 import QueryCommentForm from '@/components/query/comment-form';
 import QueryLikeButton from '@/components/query/like-button';
@@ -60,12 +60,7 @@ const QueryPage = ({
           </div>
         )}
 
-        <SparqlEditor
-          viewer={true}
-          queryId={queryId}
-          endpoint={endpoint}
-          query={query}
-        />
+        <SparqlViewer queryId={queryId} endpoint={endpoint} query={query} />
 
         <QueryDescription endpoint={endpoint} tags={tags} />
 

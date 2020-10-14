@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from '@/hooks/use-user';
 import { fetchUserData, fetchQuery, saveQuery } from '@/lib/database';
 import { generateId } from '@/lib/util';
-import type { RefObject, ElementRef } from 'react';
 import type { Query } from '@/lib/types';
-import type SparqlEditor from '@/components/sparql/editor';
 
 const validateTitle = (title: string): string | null => {
   if (title.length === 0) {
@@ -48,10 +46,7 @@ type Props = {
   query: string | null;
 };
 
-export const useComposeForm = (
-  sparqlEditor: RefObject<ElementRef<typeof SparqlEditor>>,
-  { editId, forkId, endpoint, query }: Props
-) => {
+export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
   const [user] = useUser();
 
   const [form, setForm] = useState<Query | typeof initialState>(initialState);
@@ -86,6 +81,14 @@ export const useComposeForm = (
     setForm({ ...form, title: value });
   };
 
+  const setEndpoint = (value: string) => {
+    setForm({ ...form, endpoint: value });
+  };
+
+  const setQuery = (value: string) => {
+    setForm({ ...form, query: value });
+  };
+
   const addTag = (tag: string) => {
     const set = new Set(form.tags);
     set.add(tag);
@@ -107,8 +110,8 @@ export const useComposeForm = (
       authorId: form.authorId ?? '',
       authorName: form.authorName ?? '',
       title: form.title,
-      endpoint: sparqlEditor.current!.endpoint(),
-      query: sparqlEditor.current!.query(),
+      endpoint: form.endpoint,
+      query: form.query,
       tags: form.tags,
       createdAt: form.createdAt ?? Date.now(),
       updatedAt: Date.now(),
@@ -148,6 +151,8 @@ export const useComposeForm = (
     processing,
     errors,
     setTitle,
+    setEndpoint,
+    setQuery,
     addTag,
     deleteTag,
     handleSubmit,

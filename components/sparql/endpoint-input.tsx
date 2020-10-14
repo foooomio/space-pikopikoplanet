@@ -1,18 +1,20 @@
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from 'semantic-ui-react';
 import { fetchEndpointList } from '@/lib/database';
-import type { InputWithRef } from '@/lib/types';
+import type { ChangeEvent } from 'react';
 
 type Props = {
-  defaultValue?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const SparqlEndpointInput = forwardRef<InputWithRef, Props>((props, ref) => {
+const SparqlEndpointInput = ({ value, onChange }: Props) => {
   const [list, setList] = useState<string[]>([]);
 
   useEffect(() => {
-    if (props.defaultValue) return;
-    fetchEndpointList().then((data) => setList(data));
+    if (!value) {
+      fetchEndpointList().then((data) => setList(data));
+    }
   }, []);
 
   return (
@@ -25,8 +27,8 @@ const SparqlEndpointInput = forwardRef<InputWithRef, Props>((props, ref) => {
         iconPosition="left"
         fluid
         transparent
-        {...props}
-        ref={ref}
+        value={value}
+        onChange={onChange}
       />
       <datalist id="endpoint-list">
         {list.map((endpoint) => (
@@ -35,6 +37,6 @@ const SparqlEndpointInput = forwardRef<InputWithRef, Props>((props, ref) => {
       </datalist>
     </>
   );
-});
+};
 
 export default SparqlEndpointInput;
