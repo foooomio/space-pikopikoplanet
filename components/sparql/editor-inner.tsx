@@ -1,4 +1,4 @@
-import { UnControlled as CodeMirror } from 'react-codemirror2';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/mode/sparql/sparql';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
@@ -6,10 +6,10 @@ import type { Editor, EditorChange } from 'codemirror';
 
 type Props = {
   value: string;
-  onChange: (editor: Editor, data: EditorChange, value: string) => void;
+  onBeforeChange: (editor: Editor, data: EditorChange, value: string) => void;
 };
 
-const SparqlEditorInner = ({ value, onChange }: Props) => {
+const SparqlEditorInner = ({ value, onBeforeChange }: Props) => {
   const options = {
     mode: 'sparql',
     lineWrapping: true,
@@ -21,7 +21,13 @@ const SparqlEditorInner = ({ value, onChange }: Props) => {
     },
   };
 
-  return <CodeMirror value={value} options={options} onChange={onChange} />;
+  return (
+    <CodeMirror
+      value={value}
+      options={options}
+      onBeforeChange={onBeforeChange}
+    />
+  );
 };
 
 export default SparqlEditorInner;

@@ -52,7 +52,7 @@ const SparqlEditor = ({
       <Segment attached style={{ padding: '0', minHeight: '300px' }}>
         <SparqlEditorInner
           value={query}
-          onChange={(editor, data, value) => onQueryChange(value)}
+          onBeforeChange={(editor, data, value) => onQueryChange(value)}
         />
       </Segment>
       <Segment clearing attached={result || error ? true : 'bottom'}>
