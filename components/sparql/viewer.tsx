@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SparqlEditor from '@/components/sparql/editor';
 
 type Props = {
@@ -9,6 +9,10 @@ type Props = {
 
 const SparqlViewer = ({ queryId, endpoint, query }: Props) => {
   const [form, setForm] = useState({ endpoint, query });
+
+  useEffect(() => {
+    setForm({ endpoint, query });
+  }, [endpoint, query]);
 
   return (
     <SparqlEditor
