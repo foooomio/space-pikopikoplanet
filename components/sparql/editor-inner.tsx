@@ -2,6 +2,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/mode/sparql/sparql';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
+import { autocomplete, getPrefixes } from '@/lib/autocomplete';
 import type { Editor, EditorChange } from 'codemirror';
 
 type Props = {
@@ -26,6 +27,8 @@ const SparqlEditorInner = ({ value, onBeforeChange }: Props) => {
       value={value}
       options={options}
       onBeforeChange={onBeforeChange}
+      onChange={autocomplete}
+      onFocus={getPrefixes}
     />
   );
 };
