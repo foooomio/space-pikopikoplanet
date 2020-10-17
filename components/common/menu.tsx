@@ -17,6 +17,9 @@ const DropdownMenu = () => {
       <Link href="/settings" passHref>
         <Dropdown.Item text="設定" icon="cog" />
       </Link>
+      <Link href="/sparql-guide" passHref>
+        <Dropdown.Item text="エンドポイント" icon="question circle" />
+      </Link>
       <Dropdown.Divider />
       <Dropdown.Item
         text="サインアウト"
@@ -28,9 +31,15 @@ const DropdownMenu = () => {
       />
     </>
   ) : (
-    <Link href="/sign-in" passHref>
-      <Dropdown.Item text="サインイン" icon="sign-in" />
-    </Link>
+    <>
+      <Link href="/sparql-guide" passHref>
+        <Dropdown.Item text="エンドポイント" icon="question circle" />
+      </Link>
+      <Dropdown.Divider />
+      <Link href="/sign-in" passHref>
+        <Dropdown.Item text="サインイン" icon="sign-in" />
+      </Link>
+    </>
   );
 
   return (
