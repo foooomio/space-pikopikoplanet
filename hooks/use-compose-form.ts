@@ -140,6 +140,7 @@ export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
     if (newErrors.length === 0) {
       await saveQuery(data);
       location.href = `/query/${data.queryId}`;
+      return;
     }
 
     setErrors(newErrors);
