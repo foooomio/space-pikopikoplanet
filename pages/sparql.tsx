@@ -32,7 +32,7 @@ const createQuads = ({
     ),
     quad(subject, namedNode('http://schema.org/name'), literal(title)),
     quad(subject, namedNode('http://schema.org/creator'), literal(authorName)),
-    quad(subject, namedNode('http://schema.org/material'), literal(endpoint)),
+    quad(subject, namedNode('http://schema.org/material'), namedNode(endpoint)),
     quad(subject, namedNode('http://schema.org/text'), literal(query)),
     quad(
       subject,
