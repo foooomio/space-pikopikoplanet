@@ -1,4 +1,5 @@
 import { SWRConfig } from 'swr';
+import PageLoader from '@/components/common/page-loader';
 import UserProvider from '@/lib/user-context';
 import firebase from '@/lib/firebase';
 import type { AppProps } from 'next/app';
@@ -31,6 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     >
       <UserProvider>
         <Component {...pageProps} />
+        <PageLoader />
       </UserProvider>
     </SWRConfig>
   );

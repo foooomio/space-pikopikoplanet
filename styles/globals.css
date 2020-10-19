@@ -36,6 +36,14 @@ footer {
   padding: 2rem 0;
 }
 
+#page-loader {
+  position: fixed;
+  top: auto;
+  left: auto;
+  bottom: 1vh;
+  right: 1vw;
+}
+
 /* index hero image from https://www.pexels.com/ja-jp/photo/956999/ */
 
 .hero {
