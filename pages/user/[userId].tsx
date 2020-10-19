@@ -1,20 +1,41 @@
-import { Segment, Item, List, Divider, Icon } from 'semantic-ui-react';
+import useSWR from 'swr';
+import { Segment, Item, List, Divider, Loader, Icon } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QuerySearchList from '@/components/query/search-list';
 import { fetchUserDataByUserId } from '@/lib/database';
+import { isBot } from '@/lib/util';
 import type { GetServerSideProps } from 'next';
 import type { UserData } from '@/lib/types';
 
-const UserPage = ({
-  uid,
-  userId,
-  userName,
-  website,
-  facebookId,
-  twitterId,
-  gitHubId,
-}: UserData) => {
+type Props = {
+  userId: string;
+  initialData?: UserData;
+};
+
+const UserPage = ({ userId, initialData }: Props) => {
+  const { data, error } = useSWR(
+    ['user', userId],
+    () => fetchUserDataByUserId(userId),
+    { initialData }
+  );
+
+  if (error) {
+    console.log(error);
+  }
+
+  if (!data) {
+    return (
+      <Layout>
+        <Segment>
+          <Loader active inline="centered" size="massive" />
+        </Segment>
+      </Layout>
+    );
+  }
+
+  const { uid, userName, website, facebookId, twitterId, gitHubId } = data;
+
   return (
     <Layout>
       <Head subtitle={`${userName}が作成したSPARQLクエリ一覧`} />
@@ -84,14 +105,20 @@ export default UserPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = context.params!.userId as string;
-  const userData = await fetchUserDataByUserId(userId);
 
-  if (!userData) {
+  if (isBot(context.req.headers['user-agent'] ?? '')) {
     context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return {
+      props: {
+        userId,
+        initialData: await fetchUserDataByUserId(userId),
+      },
+    };
   }
 
   return {
-    props: userData,
+    props: {
+      userId,
+    },
   };
 };

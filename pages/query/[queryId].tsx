@@ -1,124 +1,44 @@
-import Link from 'next/link';
-import { Segment, Header, List, Divider } from 'semantic-ui-react';
+import useSWR from 'swr';
+import { Loader } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
-import QueryMeta from '@/components/query/meta';
-import SparqlViewer from '@/components/sparql/viewer';
-import QueryDescription from '@/components/query/description';
-import QueryCommentForm from '@/components/query/comment-form';
-import QueryLikeButton from '@/components/query/like-button';
-import QueryTweetButton from '@/components/query/tweet-button';
-import QueryFacebookButton from '@/components/query/facebook-button';
-import QueryEditButton from '@/components/query/edit-button';
-import QueryDeleteButton from '@/components/query/delete-button';
-import { useUser } from '@/hooks/use-user';
+import QueryViewer from '@/components/query/viewer';
 import { fetchQuery } from '@/lib/database';
+import { isBot } from '@/lib/util';
 import type { GetServerSideProps } from 'next';
 import type { Query } from '@/lib/types';
 
-const QueryPage = ({
-  queryId,
-  title,
-  authorUid,
-  authorId,
-  authorName,
-  endpoint,
-  query,
-  tags,
-  createdAt,
-  forkedFrom,
-}: Query) => {
-  const [user] = useUser();
+type Props = {
+  queryId: string;
+  initialData?: Query;
+};
+
+const QueryPage = ({ queryId, initialData }: Props) => {
+  const { data, error } = useSWR(
+    ['query', queryId],
+    () => fetchQuery(queryId),
+    { initialData }
+  );
+
+  if (error) {
+    console.error(error);
+  }
 
   return (
     <Layout>
-      <Head
-        subtitle={`${title} by ${authorName}`}
-        type="article"
-        image={`/api/og-image?id=${queryId}`}
-        card="summary_large_image"
-      />
-
-      <Segment>
-        <Header as="h2">
-          {title}
-          <Header.Subheader>
-            <QueryMeta
-              authorId={authorId}
-              authorName={authorName}
-              createdAt={createdAt}
-            />
-          </Header.Subheader>
-        </Header>
-
-        {forkedFrom && (
-          <div>
-            Forked from{' '}
-            <Link href={`/query/[queryId]`} as={`/query/${forkedFrom}`}>
-              <a>{forkedFrom}</a>
-            </Link>
-          </div>
-        )}
-
-        <SparqlViewer queryId={queryId} endpoint={endpoint} query={query} />
-
-        <QueryDescription endpoint={endpoint} tags={tags} />
-
-        <Divider />
-
-        <QueryCommentForm queryId={queryId} queryAuthorUid={authorUid} />
-
-        <Divider />
-
-        <List horizontal>
-          <List.Item>Download as</List.Item>
-          <List.Item>
-            <a href={`/data/${queryId}.ttl`}>Turtle</a>
-          </List.Item>
-          <List.Item>
-            <a href={`/data/${queryId}.rdf`}>RDF/XML</a>
-          </List.Item>
-          <List.Item>
-            <a href={`/data/${queryId}.jsonld`}>JSON-LD</a>
-          </List.Item>
-        </List>
-
-        <div>
-          <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">
-            CC BY 4.0
-          </a>{' '}
-          © {new Date(createdAt).getUTCFullYear()} {authorName}
-        </div>
-
-        <Divider />
-
-        <List horizontal>
-          <List.Item>
-            <QueryLikeButton queryId={queryId} queryAuthorUid={authorUid} />
-          </List.Item>
-          <List.Item>
-            <QueryTweetButton
-              queryId={queryId}
-              title={title}
-              authorName={authorName}
-            />
-          </List.Item>
-          <List.Item>
-            <QueryFacebookButton queryId={queryId} />
-          </List.Item>
-        </List>
-
-        {user?.uid === authorUid && (
-          <List horizontal floated="right">
-            <List.Item>
-              <QueryEditButton queryId={queryId} />
-            </List.Item>
-            <List.Item>
-              <QueryDeleteButton queryId={queryId} />
-            </List.Item>
-          </List>
-        )}
-      </Segment>
+      {data ? (
+        <>
+          <Head
+            subtitle={`${data.title} by ${data.authorName}`}
+            type="article"
+            image={`/api/og-image?id=${queryId}`}
+            card="summary_large_image"
+          />
+          <QueryViewer {...data} />
+        </>
+      ) : (
+        <Loader active inline="centered" size="massive" />
+      )}
     </Layout>
   );
 };
@@ -127,14 +47,19 @@ export default QueryPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryId = context.params!.queryId as string;
-  const query = await fetchQuery(queryId);
 
-  if (!query) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+  if (isBot(context.req.headers['user-agent'] ?? '')) {
+    return {
+      props: {
+        queryId,
+        initialData: await fetchQuery(queryId),
+      },
+    };
   }
 
   return {
-    props: query,
+    props: {
+      queryId,
+    },
   };
 };
