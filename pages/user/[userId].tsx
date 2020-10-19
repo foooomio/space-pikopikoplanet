@@ -107,7 +107,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = context.params!.userId as string;
 
   if (isBot(context.req.headers['user-agent'] ?? '')) {
-    context.res.writeHead(307, { Location: '/404' }).end();
     return {
       props: {
         userId,
