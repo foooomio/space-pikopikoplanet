@@ -27,7 +27,8 @@ const QueryViewer = ({
 }: Query) => {
   const [user] = useUser();
 
-  const [editor, setEditor] = useState({ endpoint, query });
+  type EditorState = { endpoint: string; query: string };
+  const [editor, setEditor] = useState<EditorState>({ endpoint, query });
 
   useEffect(() => {
     setEditor({ endpoint, query });

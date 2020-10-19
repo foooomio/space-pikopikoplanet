@@ -21,7 +21,7 @@ type Props = {
 };
 
 const TagEditor = ({ tags, addTag, deleteTag }: Props) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
   const [inputError, setInputError] = useState<string | null>(null);
 
   const handleAdd = () => {

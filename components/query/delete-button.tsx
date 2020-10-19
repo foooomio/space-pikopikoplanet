@@ -8,7 +8,7 @@ type Props = {
 };
 
 const QueryDeleteButton = ({ queryId }: Props) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
