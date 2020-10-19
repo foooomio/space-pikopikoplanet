@@ -23,12 +23,3 @@ export const tally = (array: string[]): { [key: string]: number } =>
     (acc, curr) => ((acc[curr] = (acc[curr] ?? 0) + 1), acc),
     {} as { [key: string]: number }
   );
-
-export const isBot = (userAgent: string): boolean =>
-  [
-    'bot',
-    'Bot',
-    'facebookexternalhit',
-    'SkypeUriPreview',
-    'HatenaBookmark',
-  ].some((bot) => userAgent.includes(bot));
