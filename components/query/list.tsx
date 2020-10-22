@@ -2,10 +2,11 @@ import { useSWRInfinite } from 'swr';
 import { Button, Card, Divider, Loader } from 'semantic-ui-react';
 import QueryCard from '@/components/query/card';
 import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
+import type { Query } from '@/lib/types';
 
 type Props = {
-  getKey: (pageIndex: number, previousPageData: any[] | null) => any;
-  fetcher: (...args: any[]) => Promise<any[]>;
+  getKey: (pageIndex: number, previousPageData: Query[] | null) => any[] | null;
+  fetcher: (...args: any[]) => Promise<Query[]>;
 };
 
 const QueryList = ({ getKey, fetcher }: Props) => {

@@ -23,11 +23,8 @@ export type Query = {
   tags: string[];
   createdAt: number;
   updatedAt: number;
+  likedAt?: number;
   forkedFrom?: string;
-};
-
-export type QueryWithLikedAt = Query & {
-  likedAt: number;
 };
 
 export type Comment = {

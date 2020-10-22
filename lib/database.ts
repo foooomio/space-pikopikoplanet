@@ -6,7 +6,6 @@ import type {
   Comment,
   Notification,
   SearchOptions,
-  QueryWithLikedAt,
 } from '@/lib/types';
 
 export const fetchUserData = (uid: string): Promise<UserData | null> => {
@@ -174,7 +173,7 @@ export const fetchQueryListLikedByUser = (
   uid: string,
   cursor: number,
   limit: number
-): Promise<QueryWithLikedAt[]> => {
+): Promise<Query[]> => {
   return db
     .collection('users')
     .doc(uid)

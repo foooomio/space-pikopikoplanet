@@ -8,15 +8,18 @@ type Props = {
 };
 
 const QuerySearchList = ({ searchOptions }: Props) => {
-  const getKey = (pageIndex: number, previousPageData: Query[] | null): any => {
+  const getKey = (
+    pageIndex: number,
+    previousPageData: Query[] | null
+  ): any[] | null => {
     const cursor =
-      pageIndex === 0
-        ? Infinity
-        : previousPageData![NUMBER_IN_QUERY_LIST - 1].createdAt;
+      pageIndex !== 0 && previousPageData
+        ? previousPageData[NUMBER_IN_QUERY_LIST - 1].createdAt
+        : Infinity;
     return [cursor, JSON.stringify(searchOptions)];
   };
 
-  const fetcher = (cursor: number): Promise<Partial<Query>[]> =>
+  const fetcher = (cursor: number): Promise<Query[]> =>
     fetchQueryList(cursor, NUMBER_IN_QUERY_LIST, searchOptions);
 
   return <QueryList getKey={getKey} fetcher={fetcher} />;

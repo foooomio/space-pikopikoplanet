@@ -12,12 +12,12 @@ const NotificationFeed = () => {
   const getKey = (
     pageIndex: number,
     previousPageData: Notification[] | null
-  ): any => {
+  ): any[] | null => {
     if (!user) return null;
     const cursor =
-      pageIndex === 0
-        ? Infinity
-        : previousPageData![NUMBER_IN_NOTIFICATION_FEED - 1].createdAt;
+      pageIndex !== 0 && previousPageData
+        ? previousPageData[NUMBER_IN_NOTIFICATION_FEED - 1].createdAt
+        : Infinity;
     return [cursor, 'notifications'];
   };
 
@@ -25,6 +25,10 @@ const NotificationFeed = () => {
     fetchNotifications(user!.uid, cursor, NUMBER_IN_NOTIFICATION_FEED);
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+
+  if (error) {
+    console.error(error);
+  }
 
   const notifications = data?.flat() ?? [];
 
