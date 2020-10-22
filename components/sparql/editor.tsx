@@ -1,11 +1,9 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Button } from 'semantic-ui-react';
 import SparqlEndpointInput from '@/components/sparql/endpoint-input';
 import SparqlResultTable from '@/components/sparql/result-table';
 import SparqlResultError from '@/components/sparql/result-error';
-import SparqlForkButton from '@/components/sparql/fork-button';
-import SparqlQueryButton from '@/components/sparql/query-button';
 import { useQuery } from '@/hooks/use-query';
 
 const SparqlEditorInner = dynamic(
@@ -56,8 +54,20 @@ const SparqlEditor = ({
         />
       </Segment>
       <Segment clearing attached={result || error ? true : 'bottom'}>
-        {viewer && <SparqlForkButton onClick={handleFork} />}
-        <SparqlQueryButton
+        {viewer && (
+          <Button
+            basic
+            color="grey"
+            content="Fork"
+            icon="fork"
+            onClick={handleFork}
+          />
+        )}
+        <Button
+          positive
+          content="Query"
+          icon="play"
+          labelPosition="left"
           floated="right"
           onClick={handleQuery}
           loading={loading}
