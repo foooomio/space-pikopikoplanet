@@ -40,10 +40,10 @@ const initialState = {
 };
 
 type Props = {
-  editId: string | null;
-  forkId: string | null;
-  endpoint: string | null;
-  query: string | null;
+  editId?: string;
+  forkId?: string;
+  endpoint?: string;
+  query?: string;
 };
 
 export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {

@@ -4,10 +4,10 @@ import TagEditor from '@/components/tag-editor';
 import { useComposeForm } from '@/hooks/use-compose-form';
 
 type Props = {
-  editId: string | null;
-  forkId: string | null;
-  endpoint: string | null;
-  query: string | null;
+  editId?: string;
+  forkId?: string;
+  endpoint?: string;
+  query?: string;
 };
 
 const ComposeForm = ({ editId, forkId, endpoint, query }: Props) => {

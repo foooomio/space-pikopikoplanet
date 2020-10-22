@@ -4,16 +4,8 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import ComposeForm from '@/components/compose-form';
 import { useUser } from '@/hooks/use-user';
-import type { GetServerSideProps } from 'next';
 
-type Props = {
-  editId: string | null;
-  forkId: string | null;
-  endpoint: string | null;
-  query: string | null;
-};
-
-const ComposePage = ({ editId, forkId, endpoint, query }: Props) => {
+const ComposePage = () => {
   const [user, loading] = useUser();
   const router = useRouter();
 
@@ -21,30 +13,7 @@ const ComposePage = ({ editId, forkId, endpoint, query }: Props) => {
     router.replace('/sign-in');
   }
 
-  const pageTitle = editId ? 'SPARQLクエリ編集' : 'SPARQLクエリ新規作成';
-
-  return (
-    <Layout>
-      <Head subtitle={pageTitle} />
-
-      <Segment clearing>
-        <Header as="h2">{pageTitle}</Header>
-
-        <ComposeForm
-          editId={editId}
-          forkId={forkId}
-          endpoint={endpoint}
-          query={query}
-        />
-      </Segment>
-    </Layout>
-  );
-};
-
-export default ComposePage;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { edit, fork, endpoint, query } = context.query;
+  const { edit, fork, endpoint, query } = router.query;
 
   if (
     Array.isArray(edit) ||
@@ -54,16 +23,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     (edit && fork) ||
     (fork && (!endpoint || !query))
   ) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    router.replace('/404');
+    return null;
   }
 
-  return {
-    props: {
-      editId: edit ?? null,
-      forkId: fork ?? null,
-      endpoint: endpoint ?? null,
-      query: query ?? null,
-    },
-  };
+  const pageTitle = edit ? 'SPARQLクエリ編集' : 'SPARQLクエリ新規作成';
+
+  return (
+    <Layout>
+      <Head subtitle={pageTitle} />
+
+      <Segment clearing>
+        <Header as="h2">{pageTitle}</Header>
+
+        <ComposeForm
+          editId={edit}
+          forkId={fork}
+          endpoint={endpoint}
+          query={query}
+        />
+      </Segment>
+    </Layout>
+  );
 };
+
+export default ComposePage;
