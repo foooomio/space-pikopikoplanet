@@ -1,10 +1,7 @@
+import { RDFTerm } from '@/lib/types';
+
 type Props = {
-  data?: {
-    type: 'uri' | 'literal' | 'bnode';
-    value: string;
-    datatype?: string;
-    'xml:lang'?: string;
-  };
+  data?: RDFTerm;
 };
 
 const SparqlResultCell = ({ data }: Props) => {
