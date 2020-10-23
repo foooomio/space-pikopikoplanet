@@ -57,18 +57,18 @@ export type SearchOptions = {
   tag?: string;
 };
 
+export type RDFTerm = {
+  type: 'uri' | 'literal' | 'bnode';
+  value: string;
+  datatype?: string;
+  'xml:lang'?: string;
+};
+
 export type SparqlResult = {
   head: {
     vars: string[];
   };
   results: {
-    bindings: {
-      [key: string]: {
-        type: 'uri' | 'literal' | 'bnode';
-        value: string;
-        datatype?: string;
-        'xml:lang'?: string;
-      };
-    }[];
+    bindings: Record<string, RDFTerm>[];
   };
 };

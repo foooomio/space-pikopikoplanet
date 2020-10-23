@@ -18,8 +18,8 @@ export const formatDate = (date: Date): string =>
     })
     .replace(/-/g, '/');
 
-export const tally = (array: string[]): { [key: string]: number } =>
+export const tally = (array: string[]): Record<string, number> =>
   array.reduce(
     (acc, curr) => ((acc[curr] = (acc[curr] ?? 0) + 1), acc),
-    {} as { [key: string]: number }
+    {} as Record<string, number>
   );
