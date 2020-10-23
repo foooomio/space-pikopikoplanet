@@ -46,6 +46,19 @@ const reducer: Reducer<State, Action> = (state, action) => {
   }
 };
 
+const buildUrl = (endpoint: string, query: string): URL => {
+  if (endpoint.startsWith('http://')) {
+    const url = new URL('/api/proxy', location.origin);
+    url.searchParams.set('endpoint', endpoint);
+    url.searchParams.set('query', query);
+    return url;
+  } else {
+    const url = new URL(endpoint);
+    url.searchParams.set('query', query);
+    return url;
+  }
+};
+
 export const useQuery = (endpoint: string, query: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -53,11 +66,12 @@ export const useQuery = (endpoint: string, query: string) => {
     try {
       dispatch({ type: 'loading' });
 
-      const url = new URL('/api/proxy', location.origin);
-      url.searchParams.set('endpoint', endpoint);
-      url.searchParams.set('query', query);
-
-      const response = await fetch(url.toString());
+      const url = buildUrl(endpoint, query);
+      const response = await fetch(url.toString(), {
+        headers: {
+          Accept: 'application/sparql-results+json',
+        },
+      });
 
       if (response.ok) {
         const result = await response.json();
