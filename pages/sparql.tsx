@@ -96,8 +96,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     'application/sparql-results+json; charset=utf-8'
   );
 
+  const origin = context.req.headers['origin'];
+  if (origin) {
+    context.res.setHeader('Access-Control-Allow-Origin', origin);
+    context.res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+
   if (!context.query.query || Array.isArray(context.query.query)) {
-    context.res.end('{}');
+    context.res.statusCode = 404;
+    context.res.end();
     return { props: {} };
   }
 
