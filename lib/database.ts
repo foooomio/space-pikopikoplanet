@@ -174,6 +174,7 @@ export const fetchQueryListLikedByUser = (
   cursor: number,
   limit: number
 ): Promise<Query[]> => {
+  const likes: any[] = [];
   return db
     .collection('users')
     .doc(uid)
@@ -183,24 +184,22 @@ export const fetchQueryListLikedByUser = (
     .limit(limit)
     .get()
     .then((querySnapshot) => {
-      const likes = querySnapshot.docs.map((doc) => doc.data());
-      if (likes.length === 0) return [];
-      const ids = likes.map((like) => like.queryId);
-      return db
-        .collection('queries')
-        .where('queryId', 'in', ids)
-        .get()
-        .then((querySnapshot) => {
-          const queries: Record<string, Query> = {};
-          querySnapshot.forEach((doc) => {
-            queries[doc.id] = doc.data() as Query;
-          });
-          return likes.map((like) => ({
-            ...queries[like.queryId],
-            likedAt: like.createdAt,
-          }));
-        });
-    });
+      if (querySnapshot.empty) throw [];
+      querySnapshot.forEach((doc) => likes.push(doc.data()));
+      return likes.map((like) => like.queryId);
+    })
+    .then((queryIds) =>
+      db.collection('queries').where('queryId', 'in', queryIds).get()
+    )
+    .then((querySnapshot) => {
+      const queries: Record<string, Query> = {};
+      querySnapshot.forEach((doc) => (queries[doc.id] = doc.data() as Query));
+      return likes.map((like) => ({
+        ...queries[like.queryId],
+        likedAt: like.createdAt,
+      }));
+    })
+    .catch((result) => result);
 };
 
 export const fetchLikeCount = (queryId: string): Promise<number> => {
