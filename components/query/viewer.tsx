@@ -10,6 +10,7 @@ import QueryTweetButton from '@/components/query/tweet-button';
 import QueryFacebookButton from '@/components/query/facebook-button';
 import QueryEditButton from '@/components/query/edit-button';
 import QueryDeleteButton from '@/components/query/delete-button';
+import { useForkedFrom } from '@/hooks/use-forked-from';
 import { useUser } from '@/hooks/use-user';
 import type { Query } from '@/lib/types';
 
@@ -34,6 +35,8 @@ const QueryViewer = ({
     setEditor({ endpoint, query });
   }, [endpoint, query]);
 
+  const queryForkedFrom = useForkedFrom(forkedFrom);
+
   return (
     <Segment>
       <Header as="h2">
@@ -47,12 +50,16 @@ const QueryViewer = ({
         </Header.Subheader>
       </Header>
 
-      {forkedFrom && (
+      {queryForkedFrom && (
         <div>
           Forked from{' '}
-          <Link href={`/query/[queryId]`} as={`/query/${forkedFrom}`}>
-            <a>{forkedFrom}</a>
-          </Link>
+          <Link
+            href={`/query/[queryId]`}
+            as={`/query/${queryForkedFrom.queryId}`}
+          >
+            <a>{queryForkedFrom.title}</a>
+          </Link>{' '}
+          by {queryForkedFrom.authorName}
         </div>
       )}
 

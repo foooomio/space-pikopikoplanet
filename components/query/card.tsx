@@ -3,6 +3,7 @@ import { Card, Header, Icon } from 'semantic-ui-react';
 import QueryMeta from '@/components/query/meta';
 import QueryDescription from '@/components/query/description';
 import QueryLikeButton from '@/components/query/like-button';
+import { useForkedFrom } from '@/hooks/use-forked-from';
 
 type Props = {
   queryId: string;
@@ -27,6 +28,8 @@ const QueryCard = ({
   createdAt,
   forkedFrom,
 }: Props) => {
+  const queryForkedFrom = useForkedFrom(forkedFrom);
+
   return (
     <Card fluid raised>
       <Card.Content>
@@ -48,12 +51,16 @@ const QueryCard = ({
           />
         </Card.Meta>
         <Card.Description>
-          {forkedFrom && (
+          {queryForkedFrom && (
             <div>
               Forked from{' '}
-              <Link href={`/query/[queryId]`} as={`/query/${forkedFrom}`}>
-                <a>{forkedFrom}</a>
-              </Link>
+              <Link
+                href={`/query/[queryId]`}
+                as={`/query/${queryForkedFrom.queryId}`}
+              >
+                <a>{queryForkedFrom.title}</a>
+              </Link>{' '}
+              by {queryForkedFrom.authorName}
             </div>
           )}
           <QueryDescription endpoint={endpoint} tags={tags} />
