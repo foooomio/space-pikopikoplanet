@@ -14,11 +14,7 @@ type Props = {
 
 const Layout: FunctionComponent<Props> = ({ children, hero }) => {
   useEffect(() => {
-    if (navigator.userAgent.indexOf('Trident') !== -1) {
-      location.href = 'https://www.microsoft.com/ja-jp/edge';
-    } else {
-      firebase.analytics().logEvent('page_view', {});
-    }
+    firebase.analytics().logEvent('page_view', {});
   }, []);
 
   const swrConfig = {

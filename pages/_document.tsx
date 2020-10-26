@@ -16,6 +16,11 @@ class MyDocument extends Document {
     return (
       <Html lang="ja">
         <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `if (navigator.userAgent.indexOf('Trident') !== -1) { location.href = 'https://www.microsoft.com/ja-jp/edge'; }`,
+            }}
+          />
           <link
             href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"
             rel="stylesheet"
