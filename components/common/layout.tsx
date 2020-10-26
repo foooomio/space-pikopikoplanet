@@ -4,7 +4,7 @@ import { Container } from 'semantic-ui-react';
 import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
 import PageLoader from '@/components/common/page-loader';
-import UserProvider from '@/lib/user-context';
+import { UserProvider } from '@/lib/user-context';
 import firebase from '@/lib/firebase';
 import type { FunctionComponent } from 'react';
 

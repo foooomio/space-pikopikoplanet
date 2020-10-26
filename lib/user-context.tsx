@@ -1,13 +1,15 @@
 import { useState, useEffect, createContext } from 'react';
+import { useRouter } from 'next/router';
+import { useUser } from '@/hooks/use-user';
 import firebase from '@/lib/firebase';
-import { User } from '@/lib/types';
+import type { User } from '@/lib/types';
 import type { FunctionComponent } from 'react';
 
 type ContextProps = [User | null, boolean];
 
 export const UserContext = createContext<ContextProps>([null, true]);
 
-const UserProvider: FunctionComponent = ({ children }) => {
+export const UserProvider: FunctionComponent = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -25,4 +27,15 @@ const UserProvider: FunctionComponent = ({ children }) => {
   );
 };
 
-export default UserProvider;
+export const SignInRequired = () => {
+  const [user, loading] = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && !loading) {
+      router.replace('/sign-in');
+    }
+  }, [user, loading]);
+
+  return null;
+};

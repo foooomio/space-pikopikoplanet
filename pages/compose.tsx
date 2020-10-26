@@ -3,15 +3,10 @@ import { Segment, Header } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import ComposeForm from '@/components/compose-form';
-import { useUser } from '@/hooks/use-user';
+import { SignInRequired } from '@/lib/user-context';
 
 const ComposePage = () => {
-  const [user, loading] = useUser();
   const router = useRouter();
-
-  if (typeof window !== 'undefined' && !loading && !user) {
-    router.replace('/sign-in');
-  }
 
   const { edit, fork, endpoint, query } = router.query;
 
@@ -32,6 +27,8 @@ const ComposePage = () => {
   return (
     <Layout>
       <Head subtitle={pageTitle} />
+
+      <SignInRequired />
 
       <Segment clearing>
         <Header as="h2">{pageTitle}</Header>
