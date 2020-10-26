@@ -6,8 +6,8 @@ export const generateId = (): string => Math.random().toString(16).slice(-10);
 export const doubleEscape = (str: string): string =>
   encodeURIComponent(encodeURIComponent(str));
 
-export const formatDate = (date: Date): string =>
-  date
+export const formatDateTime = (timestamp: number): string =>
+  new Date(timestamp)
     .toLocaleString('ja-JP', {
       year: 'numeric',
       month: 'numeric',

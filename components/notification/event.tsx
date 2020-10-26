@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Feed } from 'semantic-ui-react';
-import { formatDate } from '@/lib/util';
+import { formatDateTime } from '@/lib/util';
 import type { NotificationType } from '@/lib/types';
 
 const getIcon = (type: NotificationType) => {
@@ -53,7 +53,7 @@ const NotificationEvent = ({
           {getText(type)}
         </Feed.Summary>
         <Feed.Meta>
-          <Feed.Date>{formatDate(new Date(createdAt))}</Feed.Date>
+          <Feed.Date>{formatDateTime(createdAt)}</Feed.Date>
         </Feed.Meta>
       </Feed.Content>
     </Feed.Event>

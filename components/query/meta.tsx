@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { List } from 'semantic-ui-react';
-import { formatDate } from '@/lib/util';
+import { formatDateTime } from '@/lib/util';
 
 type Props = {
   authorId: string;
@@ -9,8 +9,6 @@ type Props = {
 };
 
 const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
-  const timestamp = formatDate(new Date(createdAt));
-
   return (
     <List horizontal>
       <List.Item>
@@ -21,7 +19,7 @@ const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
       </List.Item>
       <List.Item>
         <List.Icon name="calendar alternate outline" />
-        {timestamp}
+        {formatDateTime(createdAt)}
       </List.Item>
     </List>
   );

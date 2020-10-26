@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Comment, Icon } from 'semantic-ui-react';
 import { useUser } from '@/hooks/use-user';
-import { formatDate } from '@/lib/util';
+import { formatDateTime } from '@/lib/util';
 import { markdown } from '@/lib/markdown';
 
 type Props = {
@@ -32,7 +32,7 @@ const QueryComment = ({
             <a className="author">{authorName}</a>
           </Link>
         </Comment.Author>
-        <Comment.Metadata>{formatDate(new Date(createdAt))}</Comment.Metadata>
+        <Comment.Metadata>{formatDateTime(createdAt)}</Comment.Metadata>
         <Comment.Text>
           <div className="markdown-body">{markdown(text)}</div>
         </Comment.Text>
