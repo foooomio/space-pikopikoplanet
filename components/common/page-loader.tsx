@@ -7,8 +7,16 @@ const PageLoader = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    router.events.on('routeChangeStart', () => setLoading(true));
-    router.events.on('routeChangeComplete', () => setLoading(false));
+    const handleChangeStart = () => setLoading(true);
+    const handleChangeComplete = () => setLoading(false);
+
+    router.events.on('routeChangeStart', handleChangeStart);
+    router.events.on('routeChangeComplete', handleChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleChangeStart);
+      router.events.off('routeChangeComplete', handleChangeComplete);
+    };
   }, []);
 
   return <Loader active={loading} id="page-loader" />;
