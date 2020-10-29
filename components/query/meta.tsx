@@ -13,7 +13,7 @@ const QueryMeta = ({ authorId, authorName, createdAt }: Props) => {
     <List horizontal>
       <List.Item>
         <List.Icon name="user circle" />
-        <Link href="/user/[userId]" as={`/user/${authorId}`}>
+        <Link href={`/user/${authorId}`}>
           <a>{authorName}</a>
         </Link>
       </List.Item>

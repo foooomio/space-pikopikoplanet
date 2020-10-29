@@ -56,8 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const match = slug.match(/([0-9a-f]{10})\.?(.+)?/);
 
   if (!match) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return { notFound: true };
   }
 
   const [, queryId, ext] = match;
@@ -65,8 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const query = await fetchQuery(queryId);
 
   if (!query) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return { notFound: true };
   }
 
   const rdfType = determineRDFType(ext, context.req);

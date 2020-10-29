@@ -5,6 +5,9 @@ import 'codemirror/addon/edit/closebrackets';
 import { autocomplete, getPrefixes } from '@/lib/autocomplete';
 import type { Editor, EditorChange } from 'codemirror';
 
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/addon/hint/show-hint.css';
+
 type Props = {
   value: string;
   onBeforeChange: (editor: Editor, data: EditorChange, value: string) => void;

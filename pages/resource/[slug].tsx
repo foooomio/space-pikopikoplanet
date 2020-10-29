@@ -9,22 +9,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const match = slug.match(/([0-9a-f]{10})\.?(.+)?/);
 
   if (!match) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return { notFound: true };
   }
 
   const [, queryId, ext] = match;
 
+  let path: string;
+
   if (['ttl', 'rdf', 'xml', 'json', 'jsonld'].some((e) => e === ext)) {
-    context.res.writeHead(303, { Location: `/data/${queryId}.${ext}` }).end();
-    return { props: {} };
+    path = `/data/${queryId}.${ext}`;
+  } else if (accepts(context.req).type('html') === 'html') {
+    path = `/query/${queryId}`;
+  } else {
+    path = `/data/${queryId}`;
   }
 
-  if (accepts(context.req).type('html') === 'html') {
-    context.res.writeHead(303, { Location: `/query/${queryId}` }).end();
-    return { props: {} };
-  } else {
-    context.res.writeHead(303, { Location: `/data/${queryId}` }).end();
-    return { props: {} };
-  }
+  context.res.writeHead(303, { Location: path }).end();
+  return { props: {} };
 };

@@ -13,7 +13,7 @@ const FeatureItem = ({ id, title, caption }: Props) => {
       <List.Icon name="star outline" style={{ verticalAlign: 'middle' }} />
       <List.Content>
         <List.Header as="h4">
-          <Link href="/feature/[featureId]" as={`/feature/${id}`}>
+          <Link href={`/feature/${id}`}>
             <a>{title}</a>
           </Link>
         </List.Header>

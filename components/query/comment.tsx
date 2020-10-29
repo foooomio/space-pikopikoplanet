@@ -4,6 +4,8 @@ import { useUser } from '@/hooks/use-user';
 import { formatDateTime } from '@/lib/util';
 import { markdown } from '@/lib/markdown';
 
+import 'github-markdown-css/github-markdown.css';
+
 type Props = {
   authorUid: string;
   authorId: string;
@@ -28,7 +30,7 @@ const QueryComment = ({
       <Comment.Content>
         <Icon name="user circle" />
         <Comment.Author as="span">
-          <Link href="/user/[userId]" as={`/user/${authorId}`}>
+          <Link href={`/user/${authorId}`}>
             <a className="author">{authorName}</a>
           </Link>
         </Comment.Author>

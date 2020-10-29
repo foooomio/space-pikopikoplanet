@@ -34,7 +34,7 @@ const QueryCard = ({
     <Card fluid raised>
       <Card.Content>
         <Card.Header>
-          <Link href="/query/[queryId]" as={`/query/${queryId}`}>
+          <Link href={`/query/${queryId}`}>
             <a>
               <Header as="h3">
                 {title}

@@ -26,8 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const query = await fetchQuery(queryId);
 
   if (!query) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return { notFound: true };
   }
 
   return {

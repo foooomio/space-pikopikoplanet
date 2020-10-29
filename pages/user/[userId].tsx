@@ -87,8 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userData = await fetchUserDataByUserId(userId);
 
   if (!userData) {
-    context.res.writeHead(307, { Location: '/404' }).end();
-    return { props: {} };
+    return { notFound: true };
   }
 
   return {

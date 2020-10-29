@@ -43,11 +43,11 @@ const NotificationEvent = ({
       <Feed.Label icon={getIcon(type)} />
       <Feed.Content>
         <Feed.Summary>
-          <Link href={`/user/[userId]`} as={`/user/${authorId}`}>
+          <Link href={`/user/${authorId}`}>
             <a>{authorName}</a>
           </Link>
           さんが
-          <Link href={`/query/[queryId]`} as={`/query/${queryId}`}>
+          <Link href={`/query/${queryId}`}>
             <a>あなたのクエリ</a>
           </Link>
           {getText(type)}
