@@ -2,7 +2,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QueryViewer from '@/components/query/viewer';
 import { fetchQuery } from '@/lib/database';
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps, GetStaticPaths } from 'next';
 import type { Query } from '@/lib/types';
 
 const QueryPage = (query: Query) => {
@@ -21,7 +21,7 @@ const QueryPage = (query: Query) => {
 
 export default QueryPage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const queryId = context.params!.queryId as string;
   const query = await fetchQuery(queryId);
 
@@ -31,5 +31,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: query,
+    revalidate: 1,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 };

@@ -3,7 +3,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QuerySearchList from '@/components/query/search-list';
 import { fetchUserDataByUserId } from '@/lib/database';
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps, GetStaticPaths } from 'next';
 import type { UserData } from '@/lib/types';
 
 const UserPage = ({
@@ -82,7 +82,7 @@ const UserPage = ({
 
 export default UserPage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const userId = context.params!.userId as string;
   const userData = await fetchUserDataByUserId(userId);
 
@@ -92,5 +92,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: userData,
+    revalidate: 1,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
   };
 };

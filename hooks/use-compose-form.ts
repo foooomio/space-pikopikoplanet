@@ -139,12 +139,12 @@ export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
 
     if (newErrors.length === 0) {
       await saveQuery(data);
-      location.href = `/query/${data.queryId}`;
-      return;
+      await fetch(`/query/${data.queryId}`); // workaround for triggering ISR
+      setTimeout(() => (location.href = `/query/${data.queryId}`), 1000);
+    } else {
+      setErrors(newErrors);
+      setProcessing(false);
     }
-
-    setErrors(newErrors);
-    setProcessing(false);
   };
 
   return {
