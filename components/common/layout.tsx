@@ -6,10 +6,10 @@ import Footer from '@/components/common/footer';
 import PageLoader from '@/components/common/page-loader';
 import { UserProvider } from '@/lib/user-context';
 import firebase from '@/lib/firebase';
-import type { FunctionComponent } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 
 type Props = {
-  hero?: JSX.Element;
+  hero?: ReactNode;
 };
 
 const Layout: FunctionComponent<Props> = ({ children, hero }) => {
