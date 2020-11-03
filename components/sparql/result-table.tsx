@@ -16,7 +16,7 @@ const SparqlResultTable = ({ result }: Props) => {
     <Segment
       attached="bottom"
       style={{
-        borderBottom: result ? 'inherit' : 'none',
+        borderBottom: result ? undefined : 'none',
         padding: '0',
         overflow: 'auto',
       }}

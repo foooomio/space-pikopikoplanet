@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Segment, Header, List, Divider } from 'semantic-ui-react';
+import { useRouter } from 'next/router';
+import { Segment, Header, Button, List, Divider } from 'semantic-ui-react';
 import QueryMeta from '@/components/query/meta';
 import SparqlEditor from '@/components/sparql/editor';
 import QueryDescription from '@/components/query/description';
 import QueryCommentForm from '@/components/query/comment-form';
+import QueryEmbedCode from '@/components/query/embed-code';
 import QueryLikeButton from '@/components/query/like-button';
 import QueryTweetButton from '@/components/query/tweet-button';
 import QueryFacebookButton from '@/components/query/facebook-button';
@@ -12,6 +13,7 @@ import QueryEditButton from '@/components/query/edit-button';
 import QueryDeleteButton from '@/components/query/delete-button';
 import { useForkedFrom } from '@/hooks/use-forked-from';
 import { useUser } from '@/hooks/use-user';
+import { useEditor } from '@/hooks/use-editor';
 import type { Query } from '@/lib/types';
 
 const QueryViewer = ({
@@ -27,15 +29,23 @@ const QueryViewer = ({
   forkedFrom,
 }: Query) => {
   const [user] = useUser();
-
-  type EditorState = { endpoint: string; query: string };
-  const [editor, setEditor] = useState<EditorState>({ endpoint, query });
-
-  useEffect(() => {
-    setEditor({ endpoint, query });
-  }, [endpoint, query]);
-
+  const router = useRouter();
+  const { editor, handleEndpointChange, handleQueryChange } = useEditor(
+    endpoint,
+    query
+  );
   const queryForkedFrom = useForkedFrom(forkedFrom);
+
+  const handleFork = () => {
+    router.push({
+      pathname: '/compose',
+      query: {
+        fork: queryId,
+        endpoint: editor.endpoint,
+        query: editor.query,
+      },
+    });
+  };
 
   return (
     <Segment>
@@ -61,15 +71,24 @@ const QueryViewer = ({
       )}
 
       <SparqlEditor
-        viewer={true}
-        queryId={queryId}
         endpoint={editor.endpoint}
         query={editor.query}
-        onEndpointChange={(value) => setEditor({ ...editor, endpoint: value })}
-        onQueryChange={(value) => setEditor({ ...editor, query: value })}
+        onEndpointChange={handleEndpointChange}
+        onQueryChange={handleQueryChange}
+        subButton={
+          <Button
+            basic
+            color="grey"
+            content="Fork"
+            icon="fork"
+            onClick={handleFork}
+          />
+        }
       />
 
       <QueryDescription endpoint={endpoint} tags={tags} />
+
+      <QueryEmbedCode queryId={queryId} />
 
       <Divider />
 

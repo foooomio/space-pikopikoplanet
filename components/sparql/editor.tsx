@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { Segment, Button } from 'semantic-ui-react';
 import SparqlEndpointInput from '@/components/sparql/endpoint-input';
 import SparqlResultTable from '@/components/sparql/result-table';
 import SparqlResultError from '@/components/sparql/result-error';
 import { useQuery } from '@/hooks/use-query';
+import type { ReactNode } from 'react';
 
 const SparqlEditorInner = dynamic(
   () => import('@/components/sparql/editor-inner'),
@@ -12,32 +12,21 @@ const SparqlEditorInner = dynamic(
 );
 
 type Props = {
-  viewer?: boolean;
-  queryId?: string;
   endpoint: string;
   query: string;
   onEndpointChange: (value: string) => void;
   onQueryChange: (value: string) => void;
+  subButton?: ReactNode;
 };
 
 const SparqlEditor = ({
-  viewer,
-  queryId,
   endpoint,
   query,
   onEndpointChange,
   onQueryChange,
+  subButton,
 }: Props) => {
   const { result, loading, error, handleQuery } = useQuery(endpoint, query);
-
-  const router = useRouter();
-
-  const handleFork = () => {
-    router.push({
-      pathname: '/compose',
-      query: { fork: queryId, endpoint, query },
-    });
-  };
 
   return (
     <>
@@ -54,15 +43,7 @@ const SparqlEditor = ({
         />
       </Segment>
       <Segment clearing attached={result || error ? true : 'bottom'}>
-        {viewer && (
-          <Button
-            basic
-            color="grey"
-            content="Fork"
-            icon="fork"
-            onClick={handleFork}
-          />
-        )}
+        {subButton}
         <Button
           positive
           content="Query"
