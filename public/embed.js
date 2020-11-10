@@ -23,7 +23,7 @@
     if (event.origin === window.SPACE_PIKOPIKOPLANET.origin) {
       const iframe = findFrame(event.source);
       if (iframe && event.data.height) {
-        iframe.style.height = event.data.height;
+        iframe.style.height = event.data.height + 'px';
       }
     }
   };
