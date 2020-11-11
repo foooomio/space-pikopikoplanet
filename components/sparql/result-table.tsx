@@ -1,13 +1,15 @@
-import { Table, Segment } from 'semantic-ui-react';
+import { useState } from 'react';
+import { Segment, Table, Pagination } from 'semantic-ui-react';
 import SparqlResultCell from '@/components/sparql/result-cell';
+import { ROWS_IN_SPARQL_RESULT_TABLE } from '@/lib/constants';
 import type { SparqlResult } from '@/lib/types';
 
 type Props = {
-  result: SparqlResult | null;
+  result: SparqlResult;
 };
 
 const SparqlResultTable = ({ result }: Props) => {
-  if (!result) return null;
+  const [page, setPage] = useState<number>(1);
 
   const variables = result.head.vars;
   const bindings = result.results.bindings;
@@ -37,16 +39,44 @@ const SparqlResultTable = ({ result }: Props) => {
         </Table.Header>
 
         <Table.Body>
-          {bindings.map((binding, index) => (
-            <Table.Row key={index}>
-              {variables.map((variable, index) => (
-                <Table.Cell key={index}>
-                  <SparqlResultCell data={binding[variable]} />
-                </Table.Cell>
-              ))}
-            </Table.Row>
-          ))}
+          {bindings
+            .slice(
+              ROWS_IN_SPARQL_RESULT_TABLE * (page - 1),
+              ROWS_IN_SPARQL_RESULT_TABLE * page
+            )
+            .map((binding, index) => (
+              <Table.Row key={index}>
+                {variables.map((variable, index) => (
+                  <Table.Cell key={index}>
+                    <SparqlResultCell data={binding[variable]} />
+                  </Table.Cell>
+                ))}
+              </Table.Row>
+            ))}
         </Table.Body>
+
+        {bindings.length > ROWS_IN_SPARQL_RESULT_TABLE && (
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan={variables.length}>
+                <Pagination
+                  size="mini"
+                  floated="right"
+                  activePage={page}
+                  totalPages={Math.ceil(
+                    bindings.length / ROWS_IN_SPARQL_RESULT_TABLE
+                  )}
+                  onPageChange={(e, { activePage }) =>
+                    setPage(Number(activePage))
+                  }
+                  siblingRange={0}
+                  firstItem={null}
+                  lastItem={null}
+                />
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
+        )}
       </Table>
     </Segment>
   );

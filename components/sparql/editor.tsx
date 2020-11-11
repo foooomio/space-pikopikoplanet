@@ -54,8 +54,8 @@ const SparqlEditor = ({
           loading={loading}
         />
       </Segment>
-      <SparqlResultTable result={result} />
-      <SparqlResultError error={error} />
+      {result && <SparqlResultTable result={result} />}
+      {error && <SparqlResultError error={error} />}
     </>
   );
 };

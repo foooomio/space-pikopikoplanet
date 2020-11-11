@@ -1,12 +1,10 @@
 import { Segment, Header } from 'semantic-ui-react';
 
 type Props = {
-  error: Error | null;
+  error: Error;
 };
 
 const SparqlResultError = ({ error }: Props) => {
-  if (!error) return null;
-
   return (
     <Segment inverted color="red" attached="bottom">
       <Header
