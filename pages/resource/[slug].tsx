@@ -24,6 +24,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     path = `/data/${queryId}`;
   }
 
-  context.res.writeHead(303, { Location: path }).end();
-  return { props: {} };
+  return {
+    redirect: {
+      statusCode: 303,
+      destination: path,
+    },
+  };
 };
