@@ -7,13 +7,13 @@ type Props = {
   caption: string;
 };
 
-const FeatureItem = ({ id, title, caption }: Props) => {
+const FeaturedServiceItem = ({ id, title, caption }: Props) => {
   return (
     <List.Item>
       <List.Icon name="star outline" style={{ verticalAlign: 'middle' }} />
       <List.Content>
         <List.Header as="h4">
-          <Link href={`/feature/${id}`}>
+          <Link href={`/featured/${id}`}>
             <a>{title}</a>
           </Link>
         </List.Header>
@@ -23,4 +23,4 @@ const FeatureItem = ({ id, title, caption }: Props) => {
   );
 };
 
-export default FeatureItem;
+export default FeaturedServiceItem;

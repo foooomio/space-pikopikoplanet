@@ -3,7 +3,7 @@ import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
 import QuerySearchList from '@/components/query/search-list';
-import features from '@/lib/features';
+import featuredServices from '@/lib/featured-services';
 import type { GetStaticProps, GetStaticPaths } from 'next';
 import PopularTags from '@/components/popular-tags';
 
@@ -16,7 +16,7 @@ type Props = {
   inverted?: boolean;
 };
 
-const FeaturePage = ({
+const FeaturedServicePage = ({
   title,
   description,
   endpoint,
@@ -48,21 +48,23 @@ const FeaturePage = ({
   );
 };
 
-export default FeaturePage;
+export default FeaturedServicePage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const featureId = context.params!.featureId as string;
-  const feature = features.find(({ id }) => id === featureId)!;
+  const featuredServiceId = context.params!.featuredServiceId as string;
+  const featuredService = featuredServices.find(
+    ({ id }) => id === featuredServiceId
+  )!;
 
   return {
-    props: feature,
+    props: featuredService,
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: features.map(({ id }) => ({
-      params: { featureId: id },
+    paths: featuredServices.map(({ id }) => ({
+      params: { featuredServiceId: id },
     })),
     fallback: false,
   };

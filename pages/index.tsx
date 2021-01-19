@@ -2,10 +2,10 @@ import { Header, Segment, List } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import Hero from '@/components/common/hero';
-import FeatureItem from '@/components/feature-item';
+import FeaturedServiceItem from '@/components/featured-service-item';
 import PopularTags from '@/components/popular-tags';
 import QuerySearchList from '@/components/query/search-list';
-import features from '@/lib/features';
+import featuredServices from '@/lib/featured-services';
 
 const Home = () => {
   const hero = (
@@ -21,11 +21,16 @@ const Home = () => {
     <Layout hero={hero}>
       <Head title="☆ピコピコプラネット☆ SPACE - SPARQLクエリ共有サイト" />
 
-      <Header size="tiny" icon="bookmark" content="Features" />
+      <Header size="tiny" icon="bookmark" content="Featured Services" />
       <Segment padded>
         <List relaxed="very">
-          {features.map(({ id, title, caption }) => (
-            <FeatureItem id={id} title={title} caption={caption} key={id} />
+          {featuredServices.map(({ id, title, caption }) => (
+            <FeaturedServiceItem
+              id={id}
+              title={title}
+              caption={caption}
+              key={id}
+            />
           ))}
         </List>
       </Segment>
