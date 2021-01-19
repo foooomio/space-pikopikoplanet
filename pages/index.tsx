@@ -21,7 +21,7 @@ const Home = () => {
     <Layout hero={hero}>
       <Head title="☆ピコピコプラネット☆ SPACE - SPARQLクエリ共有サイト" />
 
-      <Header size="tiny" icon="bookmark" content="Featured Services" />
+      <Header size="tiny" icon="bookmark" content="Featured services" />
       <Segment padded>
         <List relaxed="very">
           {featuredServices.map(({ id, title, caption }) => (
