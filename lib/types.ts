@@ -1,7 +1,3 @@
-export type User = {
-  uid: string;
-};
-
 export type UserData = {
   uid: string;
   userId: string;
