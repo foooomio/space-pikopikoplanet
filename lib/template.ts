@@ -34,9 +34,9 @@ export const renderAsTurtle = ({
 
   if (forkedFrom) {
     const isBasedOn = `    schema:isBasedOn <${BASE_URL}/resource/${forkedFrom}> ;`;
-    const splitted = template.split('\n');
-    splitted.splice(-1, 0, isBasedOn);
-    return splitted.join('\n');
+    const lines = template.split('\n');
+    lines.splice(-1, 0, isBasedOn);
+    return lines.join('\n');
   }
 
   return template;
@@ -91,9 +91,9 @@ export const renderAsRDFXML = ({
 
   if (forkedFrom) {
     const isBasedOn = `    <schema:isBasedOn rdf:resource="${BASE_URL}/resource/${forkedFrom}" />`;
-    const splitted = template.split('\n');
-    splitted.splice(-3, 0, isBasedOn);
-    return splitted.join('\n');
+    const lines = template.split('\n');
+    lines.splice(-3, 0, isBasedOn);
+    return lines.join('\n');
   }
 
   return template;
