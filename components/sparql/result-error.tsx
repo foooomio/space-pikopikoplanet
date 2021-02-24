@@ -11,6 +11,7 @@ const SparqlResultError = ({ error }: Props) => {
         icon="exclamation triangle"
         size="medium"
         content={`Error - ${error.message}`}
+        style={{ whiteSpace: 'pre-wrap' }}
       />
     </Segment>
   );
