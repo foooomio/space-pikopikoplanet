@@ -6,6 +6,8 @@ import Document, {
   DocumentContext,
 } from 'next/document';
 
+const script = `if (!Array.prototype.flat) location.href = '/not-supported.html';`;
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -15,7 +17,9 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="ja">
-        <Head />
+        <Head>
+          <script dangerouslySetInnerHTML={{ __html: script }} />
+        </Head>
         <body>
           <Main />
           <NextScript />
