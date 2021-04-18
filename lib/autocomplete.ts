@@ -28,7 +28,11 @@ export const autocomplete = async (cm: CodeMirror.Editor): Promise<void> => {
 };
 
 const STORAGE_KEY = 'prefixes';
-const PREFIX_CC_URL = 'https://prefix.cc/popular/all.file.json';
+const PREFIX_CC_URL = (() => {
+  const url = new URL('/api/proxy', location.origin);
+  url.searchParams.set('url', 'http://prefix.cc/popular/all.file.json');
+  return url.toString();
+})();
 
 let cache: string[] | undefined;
 
