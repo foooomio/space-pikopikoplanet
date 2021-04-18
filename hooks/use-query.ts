@@ -47,16 +47,16 @@ const reducer: Reducer<State, Action> = (state, action) => {
 };
 
 const buildUrl = (endpoint: string, query: string): URL => {
+  const url = new URL(endpoint);
+  url.searchParams.set('query', query);
+
   if (endpoint.startsWith('http://')) {
-    const url = new URL('/api/proxy', location.origin);
-    url.searchParams.set('endpoint', endpoint);
-    url.searchParams.set('query', query);
-    return url;
-  } else {
-    const url = new URL(endpoint);
-    url.searchParams.set('query', query);
-    return url;
+    const proxy = new URL('/api/proxy', location.origin);
+    proxy.searchParams.set('url', url.toString());
+    return proxy;
   }
+
+  return url;
 };
 
 export const useQuery = (endpoint: string, query: string) => {

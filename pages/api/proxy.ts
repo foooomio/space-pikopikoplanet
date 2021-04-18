@@ -1,16 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { URL } from 'url';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { endpoint, query } = req.query;
+    const { url } = req.query;
 
-    const url = new URL(endpoint as string);
-    url.searchParams.set('query', query as string);
-
-    const response = await fetch(url.toString(), {
+    const response = await fetch(url as string, {
       headers: {
-        Accept: 'application/sparql-results+json',
+        Accept: req.headers.accept!,
       },
     });
 
