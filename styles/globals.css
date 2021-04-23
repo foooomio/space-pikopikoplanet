@@ -96,3 +96,8 @@ h3.ui.header > .icon {
 .CodeMirror-scroll {
   min-height: 300px;
 }
+
+.markdown-body {
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif !important;
+  font-size: 1em !important;
+}
