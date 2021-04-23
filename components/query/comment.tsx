@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { Comment, Icon } from 'semantic-ui-react';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
+import breaks from 'remark-breaks';
 import { useUser } from '@/hooks/use-user';
 import { formatDateTime } from '@/lib/util';
-import { markdown } from '@/lib/markdown';
 
 import 'github-markdown-css/github-markdown.css';
 
@@ -36,7 +38,9 @@ const QueryComment = ({
         </Comment.Author>
         <Comment.Metadata>{formatDateTime(createdAt)}</Comment.Metadata>
         <Comment.Text>
-          <div className="markdown-body">{markdown(text)}</div>
+          <div className="markdown-body">
+            <ReactMarkdown plugins={[gfm, breaks]} children={text} />
+          </div>
         </Comment.Text>
         <Comment.Actions>
           {authorUid === user?.uid && (
