@@ -7,7 +7,7 @@ import { NUMBER_IN_NOTIFICATION_FEED } from '@/lib/constants';
 import type { Notification } from '@/lib/types';
 
 const NotificationFeed = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const getKey = (
     pageIndex: number,

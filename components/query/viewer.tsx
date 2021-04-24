@@ -22,13 +22,14 @@ const QueryViewer = ({
   authorUid,
   authorId,
   authorName,
+  authorAvatar,
   endpoint,
   query,
   tags,
   createdAt,
   forkedFrom,
 }: Query) => {
-  const [user] = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const { editor, handleEndpointChange, handleQueryChange } = useEditor(
     endpoint,
@@ -55,6 +56,7 @@ const QueryViewer = ({
           <QueryMeta
             authorId={authorId}
             authorName={authorName}
+            authorAvatar={authorAvatar}
             createdAt={createdAt}
           />
         </Header.Subheader>

@@ -2,14 +2,14 @@ import { Segment, Container, Header } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import NotificationFeed from '@/components/notification/feed';
-import { SignInRequired } from '@/lib/user-context';
+import { useSignInRequired } from '@/hooks/use-sign-in-required';
 
 const NotificationsPage = () => {
+  useSignInRequired();
+
   return (
     <Layout>
       <Head subtitle="通知" />
-
-      <SignInRequired />
 
       <Segment>
         <Container text>

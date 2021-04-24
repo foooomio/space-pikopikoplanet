@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Comment, Icon } from 'semantic-ui-react';
+import { Comment } from 'semantic-ui-react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import breaks from 'remark-breaks';
@@ -12,6 +12,7 @@ type Props = {
   authorUid: string;
   authorId: string;
   authorName: string;
+  authorAvatar: string;
   text: string;
   createdAt: number;
   onDelete: () => void;
@@ -21,16 +22,17 @@ const QueryComment = ({
   authorUid,
   authorId,
   authorName,
+  authorAvatar,
   text,
   createdAt,
   onDelete,
 }: Props) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   return (
     <Comment>
+      <Comment.Avatar src={`${authorAvatar}?default=identicon`} />
       <Comment.Content>
-        <Icon name="user circle" />
         <Comment.Author as="span">
           <Link href={`/user/${authorId}`}>
             <a className="author">{authorName}</a>

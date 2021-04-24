@@ -2,6 +2,7 @@ export type UserData = {
   uid: string;
   userId: string;
   userName: string;
+  avatar: string;
   website: string;
   facebookId: string;
   twitterId: string;
@@ -13,6 +14,7 @@ export type Query = {
   authorUid: string;
   authorId: string;
   authorName: string;
+  authorAvatar: string;
   title: string;
   endpoint: string;
   query: string;
@@ -29,6 +31,7 @@ export type Comment = {
   authorUid: string;
   authorId: string;
   authorName: string;
+  authorAvatar: string;
   text: string;
   createdAt: number;
   updatedAt: number;

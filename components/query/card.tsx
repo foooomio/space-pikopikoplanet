@@ -11,6 +11,7 @@ type Props = {
   authorUid: string;
   authorId: string;
   authorName: string;
+  authorAvatar: string;
   endpoint: string;
   tags: string[];
   createdAt: number;
@@ -23,6 +24,7 @@ const QueryCard = ({
   authorUid,
   authorId,
   authorName,
+  authorAvatar,
   endpoint,
   tags,
   createdAt,
@@ -47,6 +49,7 @@ const QueryCard = ({
           <QueryMeta
             authorId={authorId}
             authorName={authorName}
+            authorAvatar={authorAvatar}
             createdAt={createdAt}
           />
         </Card.Meta>

@@ -9,7 +9,7 @@ type Props = {
 };
 
 const QueryCommentForm = ({ queryId, queryAuthorUid }: Props) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const {
     comments,

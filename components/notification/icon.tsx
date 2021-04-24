@@ -5,7 +5,7 @@ import { useUser } from '@/hooks/use-user';
 import { fetchUnreadNotificationCount } from '@/lib/database';
 
 const NotificationIcon = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const { data: count, error } = useSWR(
     user ? 'unreadNotificationCount' : null,

@@ -1,4 +1,12 @@
-import { Form, Message, Button, Divider, Icon } from 'semantic-ui-react';
+import {
+  Form,
+  Message,
+  Button,
+  Divider,
+  Icon,
+  Header,
+  Image,
+} from 'semantic-ui-react';
 import { useSettingsForm } from '@/hooks/use-settings-form';
 
 const SettingsForm = () => {
@@ -16,6 +24,22 @@ const SettingsForm = () => {
     <>
       {errors.length !== 0 && <Message error header="エラー" list={errors} />}
       <Form loading={loading}>
+        <Header size="tiny">Avatar</Header>
+        {form.avatar && (
+          <Image avatar size="tiny" src={`${form.avatar}?default=identicon`} />
+        )}
+        <div>
+          <a
+            href="https://ja.gravatar.com/"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+          >
+            Gravatarで変更する
+          </a>
+        </div>
+
+        <Divider hidden />
+
         <Form.Field>
           <Form.Input
             type="text"

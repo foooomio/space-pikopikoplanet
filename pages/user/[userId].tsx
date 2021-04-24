@@ -1,4 +1,4 @@
-import { Segment, Item, List, Divider, Icon } from 'semantic-ui-react';
+import { Segment, Item, List, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QuerySearchList from '@/components/query/search-list';
@@ -10,6 +10,7 @@ const UserPage = ({
   uid,
   userId,
   userName,
+  avatar,
   website,
   facebookId,
   twitterId,
@@ -22,9 +23,11 @@ const UserPage = ({
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size="small">
-              <Icon name="user circle" size="massive" />
-            </Item.Image>
+            <Item.Image
+              avatar
+              size="tiny"
+              src={`${avatar}?default=identicon`}
+            />
             <Item.Content>
               <Item.Header>{userName}</Item.Header>
               <Item.Meta>{userId}</Item.Meta>

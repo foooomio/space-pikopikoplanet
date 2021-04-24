@@ -5,7 +5,7 @@ import { NUMBER_IN_QUERY_LIST } from '@/lib/constants';
 import type { Query } from '@/lib/types';
 
 const QueryLikesList = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const getKey = (
     pageIndex: number,

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import gravatarUrl from 'gravatar-url';
 import { useUser } from '@/hooks/use-user';
 import {
   fetchUserData,
@@ -32,10 +33,11 @@ const validateUserName = (userName: string): string | null => {
   return null;
 };
 
-const initialState = {
+const initialState: UserData = {
   uid: '',
   userId: '',
   userName: '',
+  avatar: '',
   website: '',
   facebookId: '',
   twitterId: '',
@@ -43,7 +45,7 @@ const initialState = {
 };
 
 export const useSettingsForm = () => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const [form, setForm] = useState<UserData>(initialState);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,6 +59,8 @@ export const useSettingsForm = () => {
     fetchUserData(user.uid).then((userData) => {
       if (userData) {
         setForm(userData);
+      } else {
+        setForm({ ...form, uid: user.uid, avatar: gravatarUrl(user.email!) });
       }
       setLoading(false);
     });
@@ -76,7 +80,7 @@ export const useSettingsForm = () => {
     ].filter((e): e is string => e !== null);
 
     if (newErrors.length === 0) {
-      await saveUserData({ ...form, uid: user!.uid });
+      await saveUserData(form);
       setDone(true);
     }
 

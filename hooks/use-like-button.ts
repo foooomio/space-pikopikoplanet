@@ -13,7 +13,7 @@ import {
 import { likeId } from '@/lib/util';
 
 export const useLikeButton = (queryId: string, queryAuthorUid: string) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const [likeCount, setLikeCount] = useState<number | null>(null);
   const [likedByUser, setLikedByUser] = useState<boolean>(false);

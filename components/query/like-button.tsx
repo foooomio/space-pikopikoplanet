@@ -8,7 +8,7 @@ type Props = {
 };
 
 const QueryLikeButton = ({ queryId, queryAuthorUid }: Props) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const { likeCount, likedByUser, handleLike, handleUnlike } = useLikeButton(
     queryId,

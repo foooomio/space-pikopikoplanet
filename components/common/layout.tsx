@@ -4,7 +4,6 @@ import { Container } from 'semantic-ui-react';
 import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
 import PageLoader from '@/components/common/page-loader';
-import { UserProvider } from '@/lib/user-context';
 import firebase from '@/lib/firebase';
 import type { FunctionComponent, ReactNode } from 'react';
 
@@ -25,13 +24,11 @@ const Layout: FunctionComponent<Props> = ({ children, hero }) => {
 
   return (
     <SWRConfig value={swrConfig}>
-      <UserProvider>
-        <Navbar />
-        {hero}
-        <Container as="main">{children}</Container>
-        <Footer />
-        <PageLoader />
-      </UserProvider>
+      <Navbar />
+      {hero}
+      <Container as="main">{children}</Container>
+      <Footer />
+      <PageLoader />
     </SWRConfig>
   );
 };

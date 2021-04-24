@@ -30,6 +30,7 @@ const initialState = {
   authorUid: null,
   authorId: null,
   authorName: null,
+  authorAvatar: null,
   title: '',
   endpoint: '',
   query: '',
@@ -47,7 +48,7 @@ type Props = {
 };
 
 export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const [form, setForm] = useState<Query | typeof initialState>(initialState);
   const [processing, setProcessing] = useState<boolean>(false);
@@ -109,6 +110,7 @@ export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
       authorUid: user!.uid,
       authorId: form.authorId ?? '',
       authorName: form.authorName ?? '',
+      authorAvatar: form.authorAvatar ?? '',
       title: form.title,
       endpoint: form.endpoint,
       query: form.query,
@@ -132,6 +134,7 @@ export const useComposeForm = ({ editId, forkId, endpoint, query }: Props) => {
       if (userData && userData.userId && userData.userName) {
         data.authorId = userData.userId;
         data.authorName = userData.userName;
+        data.authorAvatar = userData.avatar;
       } else {
         newErrors.unshift('ユーザーIDまたはユーザー名が設定されていません。');
       }

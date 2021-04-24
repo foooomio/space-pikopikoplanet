@@ -20,7 +20,7 @@ const validateText = (text: string): string | null => {
 };
 
 export const useCommentForm = (queryId: string, queryAuthorUid: string) => {
-  const [user] = useUser();
+  const { user } = useUser();
 
   const [text, setText] = useState<string>('');
   const [errors, setErrors] = useState<string[]>([]);
@@ -43,6 +43,7 @@ export const useCommentForm = (queryId: string, queryAuthorUid: string) => {
       authorUid: user!.uid,
       authorId: '',
       authorName: '',
+      authorAvatar: '',
       text,
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -56,6 +57,7 @@ export const useCommentForm = (queryId: string, queryAuthorUid: string) => {
     if (userData && userData.userId && userData.userName) {
       data.authorId = userData.userId;
       data.authorName = userData.userName;
+      data.authorAvatar = userData.avatar;
     } else {
       newErrors.unshift('ユーザーIDまたはユーザー名が設定されていません。');
     }

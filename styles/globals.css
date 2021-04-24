@@ -28,6 +28,11 @@ header h1 .subtitle {
   font-size: min(1.6rem, 4vw);
 }
 
+header .ui.avatar.image {
+  width: 1.5em;
+  height: 1.5em;
+}
+
 main {
   margin-top: 1rem;
 }
@@ -83,8 +88,18 @@ h3.ui.header > .icon {
   margin-bottom: 0.7em;
 }
 
-.ui.horizontal.list > .item > i.icon {
-  vertical-align: baseline;
+.ui.horizontal.list > .item > .icon + .content {
+  width: auto;
+}
+
+.ui.horizontal.list > .item > .ui.avatar.image {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.3em;
+}
+
+.ui.comments .comment .avatar img {
+  border-radius: 500rem !important;
 }
 
 .CodeMirror {
