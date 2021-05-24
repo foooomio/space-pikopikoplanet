@@ -26,9 +26,11 @@ export const useCommentForm = (queryId: string, queryAuthorUid: string) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [processing, setProcessing] = useState<boolean>(false);
 
-  const { data: comments, error, mutate } = useSWR(['comments', queryId], () =>
-    fetchCommentList(queryId)
-  );
+  const {
+    data: comments,
+    error,
+    mutate,
+  } = useSWR(['comments', queryId], () => fetchCommentList(queryId));
 
   if (error) {
     console.error(error);
