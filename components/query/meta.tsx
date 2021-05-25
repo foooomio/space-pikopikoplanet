@@ -21,7 +21,7 @@ const QueryMeta = ({
       <List.Item>
         <Image avatar src={getAvatar(authorAvatar)} />
         <List.Content>
-          <Link href={`/user/${authorId}`}>
+          <Link href={`/user/${authorId}`} prefetch={false}>
             <a>{authorName}</a>
           </Link>
         </List.Content>

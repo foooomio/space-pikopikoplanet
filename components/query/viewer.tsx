@@ -65,7 +65,7 @@ const QueryViewer = ({
       {queryForkedFrom && (
         <div>
           Forked from{' '}
-          <Link href={`/query/${queryForkedFrom.queryId}`}>
+          <Link href={`/query/${queryForkedFrom.queryId}`} prefetch={false}>
             <a>{queryForkedFrom.title}</a>
           </Link>{' '}
           by {queryForkedFrom.authorName}

@@ -36,7 +36,7 @@ const QueryCard = ({
     <Card fluid raised>
       <Card.Content>
         <Card.Header>
-          <Link href={`/query/${queryId}`}>
+          <Link href={`/query/${queryId}`} prefetch={false}>
             <a>
               <Header as="h3">
                 {title}
@@ -57,7 +57,7 @@ const QueryCard = ({
           {queryForkedFrom && (
             <div>
               Forked from{' '}
-              <Link href={`/query/${queryForkedFrom.queryId}`}>
+              <Link href={`/query/${queryForkedFrom.queryId}`} prefetch={false}>
                 <a>{queryForkedFrom.title}</a>
               </Link>{' '}
               by {queryForkedFrom.authorName}

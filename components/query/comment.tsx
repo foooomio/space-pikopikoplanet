@@ -35,7 +35,7 @@ const QueryComment = ({
       <Comment.Avatar src={getAvatar(authorAvatar)} />
       <Comment.Content>
         <Comment.Author as="span">
-          <Link href={`/user/${authorId}`}>
+          <Link href={`/user/${authorId}`} prefetch={false}>
             <a className="author">{authorName}</a>
           </Link>
         </Comment.Author>
