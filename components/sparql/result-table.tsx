@@ -10,7 +10,7 @@ type Props = {
 
 const SparqlResultTable = ({ result }: Props) => {
   const [page, setPage] = useState<number>(1);
-  const narrowPagination = document.body.clientWidth < 500;
+  const narrowPagination = document.body.clientWidth < 600;
 
   const variables = result.head.vars;
   const bindings = result.results.bindings;
@@ -70,7 +70,7 @@ const SparqlResultTable = ({ result }: Props) => {
                     setPage(Number(activePage))
                   }
                   size={narrowPagination ? 'mini' : 'tiny'}
-                  siblingRange={narrowPagination ? 0 : 1}
+                  siblingRange={narrowPagination ? 0 : 2}
                   firstItem={narrowPagination ? null : undefined}
                   lastItem={narrowPagination ? null : undefined}
                 />
