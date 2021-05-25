@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useSWR from 'swr';
-import gravatarUrl from 'gravatar-url';
+import { getUserAvatar } from '@/lib/avatar';
 import firebase from '@/lib/firebase';
 
 type Auth = {
@@ -9,12 +9,10 @@ type Auth = {
   avatar: string;
 };
 
-const defaultAvatar = gravatarUrl('default', { default: 'mm' });
-
 const initialData: Auth = {
   user: null,
   loading: true,
-  avatar: defaultAvatar,
+  avatar: getUserAvatar(null),
 };
 
 export const useUser = (): Auth => {
@@ -22,10 +20,7 @@ export const useUser = (): Auth => {
 
   useEffect(() => {
     return firebase.auth().onAuthStateChanged((user) => {
-      const avatar = user
-        ? gravatarUrl(user.email!, { default: 'identicon' })
-        : defaultAvatar;
-      mutate({ user, loading: false, avatar });
+      mutate({ user, loading: false, avatar: getUserAvatar(user?.email) });
     });
   }, []);
 

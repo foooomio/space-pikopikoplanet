@@ -2,6 +2,7 @@ import { Segment, Item, List, Divider } from 'semantic-ui-react';
 import Layout from '@/components/common/layout';
 import Head from '@/components/common/head';
 import QuerySearchList from '@/components/query/search-list';
+import { getAvatar } from '@/lib/avatar';
 import { fetchUserDataByUserId } from '@/lib/database';
 import type { GetStaticProps, GetStaticPaths } from 'next';
 import type { UserData } from '@/lib/types';
@@ -23,11 +24,7 @@ const UserPage = ({
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image
-              avatar
-              size="tiny"
-              src={`${avatar}?default=identicon`}
-            />
+            <Item.Image avatar size="tiny" src={getAvatar(avatar)} />
             <Item.Content>
               <Item.Header>{userName}</Item.Header>
               <Item.Meta>{userId}</Item.Meta>

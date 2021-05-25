@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { List, Image } from 'semantic-ui-react';
+import { getAvatar } from '@/lib/avatar';
 import { formatDateTime } from '@/lib/util';
 
 type Props = {
@@ -18,7 +19,7 @@ const QueryMeta = ({
   return (
     <List horizontal>
       <List.Item>
-        <Image avatar src={`${authorAvatar}?default=identicon`} />
+        <Image avatar src={getAvatar(authorAvatar)} />
         <List.Content>
           <Link href={`/user/${authorId}`}>
             <a>{authorName}</a>

@@ -8,6 +8,7 @@ import {
   Image,
 } from 'semantic-ui-react';
 import { useSettingsForm } from '@/hooks/use-settings-form';
+import { getAvatar } from '@/lib/avatar';
 
 const SettingsForm = () => {
   const {
@@ -26,7 +27,7 @@ const SettingsForm = () => {
       <Form loading={loading}>
         <Header size="tiny">Avatar</Header>
         {form.avatar && (
-          <Image avatar size="tiny" src={`${form.avatar}?default=identicon`} />
+          <Image avatar size="tiny" src={getAvatar(form.avatar)} />
         )}
         <div>
           <a

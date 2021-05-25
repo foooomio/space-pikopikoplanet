@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import gravatarUrl from 'gravatar-url';
 import { useUser } from '@/hooks/use-user';
+import { generateAvatar } from '@/lib/avatar';
 import {
   fetchUserData,
   fetchUserDataByUserId,
@@ -60,7 +60,11 @@ export const useSettingsForm = () => {
       if (userData) {
         setForm(userData);
       } else {
-        setForm({ ...form, uid: user.uid, avatar: gravatarUrl(user.email!) });
+        setForm({
+          ...form,
+          uid: user.uid,
+          avatar: generateAvatar(user.email!),
+        });
       }
       setLoading(false);
     });

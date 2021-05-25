@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import breaks from 'remark-breaks';
 import { useUser } from '@/hooks/use-user';
+import { getAvatar } from '@/lib/avatar';
 import { formatDateTime } from '@/lib/util';
 
 import 'github-markdown-css/github-markdown.css';
@@ -31,7 +32,7 @@ const QueryComment = ({
 
   return (
     <Comment>
-      <Comment.Avatar src={`${authorAvatar}?default=identicon`} />
+      <Comment.Avatar src={getAvatar(authorAvatar)} />
       <Comment.Content>
         <Comment.Author as="span">
           <Link href={`/user/${authorId}`}>
