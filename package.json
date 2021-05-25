@@ -15,7 +15,7 @@
     "firebase": "^8.6.2",
     "github-markdown-css": "^4.0.0",
     "n3": "^1.10.0",
-    "next": "10.2.2",
+    "next": "10.2.3",
     "react": "17.0.2",
     "react-codemirror2": "^7.2.1",
     "react-dom": "17.0.2",
