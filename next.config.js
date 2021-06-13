@@ -19,7 +19,7 @@ module.exports = {
             key: 'Content-Security-Policy',
             value: getCSP({
               directives: {
-                'default-src': [NONE],
+                'default-src': [SELF],
                 'script-src': [
                   SELF,
                   UNSAFE_INLINE,
@@ -57,7 +57,7 @@ module.exports = {
             key: 'Content-Security-Policy',
             value: getCSP({
               directives: {
-                'default-src': [NONE],
+                'default-src': [SELF],
                 'script-src': [SELF, UNSAFE_INLINE, UNSAFE_EVAL],
                 'style-src': [
                   SELF,
