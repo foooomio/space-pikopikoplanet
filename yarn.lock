@@ -2491,6 +2491,11 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+csp-header@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/csp-header/-/csp-header-5.0.0.tgz#eb2d503190af251087c4e24a8ab1915960212f1c"
+  integrity sha512-LpX/S65JxI9ks3dPfQS4XcCKLcAipSQenjZFYncWQs+u1O5hmP8GrD1itc7w5MTgce3BpWlC/00Qx/vJlt7FMQ==
+
 css.escape@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
